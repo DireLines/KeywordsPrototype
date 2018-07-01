@@ -13,14 +13,6 @@ public class DoorCollisionCheck : MonoBehaviour {
 	}
 	void Update(){
 		SetDoorCollisions ();
-		if (Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.Joystick1Button16)) {
-			keys++;
-			print ("number of keys: " + keys);
-		}
-		if (((Input.GetKeyDown(KeyCode.N) || Input.GetKeyDown(KeyCode.Joystick1Button17)) && keys > 0)) {
-			keys--;
-			print ("number of keys: " + keys);
-		}
 	}
 	private void SetDoorCollisions(){
 		foreach (Transform child in doors) {

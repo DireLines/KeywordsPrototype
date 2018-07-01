@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 241915444}
   - component: {fileID: 241915443}
   - component: {fileID: 241915445}
+  - component: {fileID: 241915446}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -434,6 +435,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.006601016, y: 0.005490084}
   m_EdgeRadius: 0
+--- !u!114 &241915446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 241915438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44dcdc9cce3ec4277adc0666f3bfa380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorySlot: 0
 --- !u!1001 &361422008
 Prefab:
   m_ObjectHideFlags: 0
@@ -473,23 +486,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 212111130375400878, guid: f2c8f2487583c4c89bc6dd4a23624369,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: d43a9bf8fd9a047289f88ae06f1f7f6f,
-        type: 3}
-    - target: {fileID: 212111130375400878, guid: f2c8f2487583c4c89bc6dd4a23624369,
-        type: 2}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212013414820059294, guid: f2c8f2487583c4c89bc6dd4a23624369,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 3c284ef58a6ef4a76909011205983d7d,
-        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f2c8f2487583c4c89bc6dd4a23624369, type: 2}
   m_IsPrefabParent: 0

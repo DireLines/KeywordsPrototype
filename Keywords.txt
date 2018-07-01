@@ -10,11 +10,12 @@ TODO:
         -adjust weights on doors according to loot
     -Scrabble Thing:
         -Make Letter Tile Object
-            -Letter Sprite
-            -Lives Sprite
             -Collider properties:
                 -Enabled only when sitting on the ground, not on a grid or player's inventory
         -Make player inventory
+            -5 inventory slots, cycled through
+            -A / E to pick up/swap/interact
+            -B / R to drop
     -Make stuff multiplayer
 
 Concept: Scrabble but a local multiplayer cooperative/competitive dungeon crawler. Letter tiles are physical objects that players have to discover and carry back to a room with a Scrabble board.
