@@ -5,11 +5,11 @@ using System.IO;
 
 public class Words : MonoBehaviour {
 	private const int numLettersInSource = 6;
-	string[] words;
-	string[] numletterwords;
-	string[] currentSourceWords;
-	public int numLevels;
-	string[] currentLevelWords;
+	string[] words;//all words in the dictionary file
+	string[] numletterwords;//all words of exactly numLettersInSource letters in length
+	string[] currentSourceWords;//a selection of words which each floor in the dungeon will be based on
+	public int numLevels;//how many levels in the dungeon
+	string[] currentLevelWords;//all words it's possible to make with the letters of the current source word
 
 	void Awake(){
 		words = File.ReadAllLines("Assets/Words.txt");

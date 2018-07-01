@@ -13,7 +13,9 @@ public class GridControl : MonoBehaviour {
 	}
 
 	void Start(){
-		print (GetHorizontalWord (3, 3));
+		foreach (string thing in GetWordsInGrid(2,4)) {
+			print (thing);
+		}
 	}
 
 	public void SetActive(GameObject newSquare){

@@ -9,8 +9,9 @@ public class GridSquare : MonoBehaviour {
 	[HideInInspector]
 	public Color normalColor;
 	private SpriteRenderer sr;
-	void Start(){
+	void Awake(){
 		letter =  transform.parent.gameObject.GetComponent<GridControl> ().placeholder;
+//		letter = (char)Random.Range (97, 123);
 		sr = GetComponent<SpriteRenderer> ();
 		normalColor = sr.color;
 	}

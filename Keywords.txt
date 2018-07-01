@@ -1,0 +1,103 @@
+Keywords.txt
+
+TODO:
+    -Dungeons:
+        -improve base room generation algo
+        -add secret rooms, required rooms
+        -convert generated rooms into set of walls and doors
+        -convert that into real GameObjects
+        -place loot
+        -adjust weights on doors according to loot
+    -Scrabble Thing:
+        -Make Letter Tile Object
+            -Letter Sprite
+            -Lives Sprite
+            -Collider properties:
+                -Enabled only when sitting on the ground, not on a grid or player's inventory
+        -Make player inventory
+    -Make stuff multiplayer
+
+Concept: Scrabble but a local multiplayer cooperative/competitive dungeon crawler. Letter tiles are physical objects that players have to discover and carry back to a room with a Scrabble board.
+Players race other players to make as many words as possible in as short a time as possible.
+
+Basic Gameplay: 2.5D Top Down, Played using controllers exclusively
+
+Behind the locked doors are
+
+-more locked doors
+-kinda weak enemies which drop letter tiles
+-free keys (rarely)
+-free letter tiles
+-puzzles
+    -doors locked by things other than keys
+        -riddle/tiny grid to make the answer on.
+        -opened by placing a particular letter tile on a slot next to the door
+        -secret rooms: each secret room has a special 5-character password which is not an English word. Making this word on any grid will open the room.
+-hints about various things in the level, on little scraps of paper
+    -passwords to open secret rooms
+    -set of letters that will be used next level
+    -words on the current level nobody has made yet (or maybe definitions of them, as hints)
+-weapons: pretty basic set of weapons. Infinite ammo and all that (combat is not really a focus of the game)
+    -sword
+    -mace
+    -warhammer
+    -crossbow
+    -pistol
+    -shotgun
+-movement modifiers: Moving around quickly is a focus of the game, however. All kinds of crazy items for optimizing movement efficiency are present.
+    -walking speed buffs
+    -temporary stacking walking speed buffs (like Skooma)
+    -slime: walk faster anywhere you've walked before, slower everywhere else
+    -grappling hook: shoot at a wall and you will get dragged to the point on the wall the hook hits real fast. You can do that swing around thing like in all those grappling hook platformers.
+    -teleporter remote: see Teleporter
+    -blink: a local teleporter just like the one in Spelunky. Can teleport you through walls but only into rooms you would normally be able to access and secret rooms (you are limited by your number of keys)
+    -dash: A dash like the one in Hyper Light Drifter.
+-misc. reusable items
+    -Tile Freeze: used on a tile placed on a grid, freezing it in its place. Has a cooldown of 30 seconds.
+    -Tile Unfreeze: used on a tile placed on a grid, negating the effect of a Tile Freeze. Has a cooldown of 15 seconds.
+    -Minimap Watch: Reveals a minimap of the player's surrounding rooms (not present by default)
+    -Perfectionist Watch: Reveals the maximum number of words possible to make on the current floor.
+    -Robo Arms: Strong mech arms which allow a player to pick up and carry machines. While carrying a machine, the player can only move by walking and is slowed a bit.
+    -Privacy Watch: holding this in your inventory will hide your inventory HUD, preventing others from figuring out your plans just by screenpeeking your inventory (and preventing you from seeing it too)
+-misc. consumables
+    -Poison Vial: thrown at a player or enemy, dealing 0 damage and knocking the player/enemy out cold for 10 seconds
+    -Tile Heal: Heals a tile to its full health.
+    -Shield: Creates a shield which lasts 20 seconds. During that time the player cannot be bonked.
+    -Barrier: Used on a doorway. Prevents anybody from going through that doorway for 2 minutes.
+    -Lockpick: Used on a door. Decreases the key barrier for that door by 1. Cannot be used on the boss door or ultra boss door.
+-stationary machines which do various things
+    -Duplicator: has a slot where you can put a letter tile. Leaving it there for one minute will create a fresh duplicate of it.
+    -Deleter: has a slot where you can put a letter tile. Leaving it there for one minute will delete it.
+    -Oracle: has a slot where you can put a letter tile. Leaving it there for one minute will delete it and it will spit out a piece of paper with a previously uncreated valid word on it.
+    -Altar: has a slot where you can put a letter tile. Leaving it there for one minute will delete it and unlock a random currently locked door.
+    -Generator: Has a button which, when pushed, immediately completes all cooldowns of all other machines (including other Generators). Has a cooldown of one minute.
+        This creates a kind of exploit thing with 2 generators, a duplicator and an altar. 2 Generators can recharge each other and allow all devices to be used arbitrarily frequently.
+    -Evil Red Button: A button which, when pressed, immediately freezes all tiles on all grids in place (just like the Tile Freeze device). Pressing it again immediately unfreezes all tiles. Has no cooldown, but each player can only press it twice.
+    -Teleporter: Comes with the teleporter remote item. When the player with the teleporter remote activates it, they will get teleported to the Teleporter. Cooldown of one minute.
+    -Dumbwaiter: Used to send letter tiles to lower levels and retrieve them from higher levels. There is at least one per floor (exactly one, plus maybe one in a secret room), and it can only be used once per floor. Placing a letter tile on its slot will send the tile down to the next floor. If the dumbwaiter on the next floor is reached, the slot will initially contain that tile.
+-The Level Boss
+    -The boss is behind a door which is close to the starting area but requires many keys to enter.
+    -The boss chamber is large and has an 8x8 global grid in it.
+    -The boss has a "kill word" which is the longest word less than 9 characters long which can be made using the floor letters.
+    -Making this kill word kills the boss instantly.
+        -Since the word is often 8 characters, it must often be made in the boss chamber.
+        -However, if it's less than that it can be made on any grid.
+    -The boss will spawn waves of dark enemies who chase players through the level and deal high-damage attacks which quickly destroy tiles.
+    -You can lose to these enemies by allowing too many tiles to be destroyed and being unable to make the kill word anymore
+    -Reward for beating the boss:
+        -Elevator to next floor unlocked. However, upon entering it all letter tiles the player is carrying are destroyed.
+        -One piece of loot per player. Like, there's one locked chest per player and each player can only open one chest.
+        -The first person to enter the elevator wins the floor and gets a victory point
+-The Level Ultra Boss
+    -The Ultra Boss is behind a door which is very far from the starting area and requires even more keys than the regular boss (enough that you'll have to get into some weird words to open it)
+    -Very similar to a normal boss fight, but harder in some way and more intense boss fight music.
+    -Reward for beating the Ultra Boss:
+        -Elevator to next floor unlocked. The player who enters it first gets to keep all tiles in their inventory.
+        -One piece of loot per player, but it's a free for all
+        -The first person to enter the elevator wins the floor and gets TWO victory points
+-The Final Boss
+    -In all floors past the first 3, if somebody makes all possible words in the floor, then the boss chamber and ultra boss chamber will be replaced with the Final Boss fight.
+    -In the first 3 floors, if somebody makes all possible words in the floor, they will get a great deal of sweet loot
+    -Reward for beating the Final Boss:
+        -Game is over
+        -The person who deals the final blow to the boss gets FIVE victory points

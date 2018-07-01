@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DoorCollisionCheck : MonoBehaviour {
 
-	public Transform doors;
-	public int keys;
+	public Transform doors;//door container object
+	public int keys;//how many keys does the player have?
 
 	void Start(){
 		keys = 0;
