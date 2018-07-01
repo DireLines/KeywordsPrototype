@@ -5,4 +5,49 @@ using UnityEngine;
 public class LetterTile : MonoBehaviour {
 	public char letter;//what is my letter?
 	public int matches;//how many matches can you make with me?
+	private GameObject letterSprite;
+	private GameObject numberSprite;
+
+
+	void Start(){
+		letterSprite = transform.GetChild (0).gameObject;
+		numberSprite = transform.GetChild (1).gameObject;
+//		SetLetter ('p');
+//		SetMatches (3);
+//		MinusOne ();
+
+	}
+	public void SetLetter(char newletter){
+		if((int)newletter < 97 || (int)newletter > 122){//not in a-z
+			print("tried to set letter tile to weird char");
+			return;
+		}
+		letter = newletter;
+		string spriteName = "LetterSprites/" + letter.ToString ();
+		letterSprite.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> (spriteName);
+	}
+
+	public void SetMatches(int newmatches){
+		if (newmatches < 0 || newmatches > 16) {//out of range
+			print("tried to set to weird number");
+			return;
+		}
+		if (newmatches == 0) {
+			print ("tile dead");
+			Destroy (gameObject);
+			return;
+		}
+		matches = newmatches;
+		string spriteName = "NumberSprites/" + matches.ToString ();
+		if (matches == 16) {
+			spriteName = "NumberSprites/inf";
+		}
+		numberSprite.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> (spriteName);
+	}
+
+	public void MinusOne(){
+		if (matches != 16) {
+			SetMatches (matches - 1);
+		}
+	}
 }

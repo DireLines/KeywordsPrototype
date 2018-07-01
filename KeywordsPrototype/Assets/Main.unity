@@ -434,6 +434,65 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.006601016, y: 0.005490084}
   m_EdgeRadius: 0
+--- !u!1001 &361422008
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4537571153075542, guid: f2c8f2487583c4c89bc6dd4a23624369, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.708
+      objectReference: {fileID: 0}
+    - target: {fileID: 4537571153075542, guid: f2c8f2487583c4c89bc6dd4a23624369, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.941
+      objectReference: {fileID: 0}
+    - target: {fileID: 4537571153075542, guid: f2c8f2487583c4c89bc6dd4a23624369, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4537571153075542, guid: f2c8f2487583c4c89bc6dd4a23624369, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4537571153075542, guid: f2c8f2487583c4c89bc6dd4a23624369, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4537571153075542, guid: f2c8f2487583c4c89bc6dd4a23624369, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4537571153075542, guid: f2c8f2487583c4c89bc6dd4a23624369, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4537571153075542, guid: f2c8f2487583c4c89bc6dd4a23624369, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 212111130375400878, guid: f2c8f2487583c4c89bc6dd4a23624369,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d43a9bf8fd9a047289f88ae06f1f7f6f,
+        type: 3}
+    - target: {fileID: 212111130375400878, guid: f2c8f2487583c4c89bc6dd4a23624369,
+        type: 2}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212013414820059294, guid: f2c8f2487583c4c89bc6dd4a23624369,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3c284ef58a6ef4a76909011205983d7d,
+        type: 3}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: f2c8f2487583c4c89bc6dd4a23624369, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &541289253
 GameObject:
   m_ObjectHideFlags: 0
