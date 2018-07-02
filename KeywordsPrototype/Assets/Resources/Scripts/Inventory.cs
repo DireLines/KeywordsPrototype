@@ -121,16 +121,18 @@ public class Inventory : MonoBehaviour {
 
 	private void Drop(){
 		print ("dropping");
-		if (items [inventorySlot] != null) {
-			items [inventorySlot].transform.SetParent (null);
-			if (items [inventorySlot].GetComponent<BoxCollider2D> () != null) {
-				items [inventorySlot].GetComponent<BoxCollider2D> ().enabled = true;
+		if (activeSquare == null) {
+			if (items [inventorySlot] != null) {
+				items [inventorySlot].transform.SetParent (null);
+				if (items [inventorySlot].GetComponent<BoxCollider2D> () != null) {
+					items [inventorySlot].GetComponent<BoxCollider2D> ().enabled = true;
+				}
+				if (items [inventorySlot].GetComponent<Rigidbody2D> () != null) {
+					items [inventorySlot].GetComponent<Rigidbody2D> ().isKinematic = false;
+					items [inventorySlot].GetComponent<Rigidbody2D> ().freezeRotation = false;
+				}
+				items [inventorySlot] = null;
 			}
-			if (items [inventorySlot].GetComponent<Rigidbody2D> () != null) {
-				items [inventorySlot].GetComponent<Rigidbody2D> ().isKinematic = false;
-				items [inventorySlot].GetComponent<Rigidbody2D> ().freezeRotation = false;
-			}
-			items [inventorySlot] = null;
 		}
 	}
 }
