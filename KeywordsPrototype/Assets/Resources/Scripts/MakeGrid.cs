@@ -20,6 +20,8 @@ public class MakeGrid : MonoBehaviour {
 				);
 				newSquare.name = "Square_" + i + "_" + j;
 				GetComponent<GridControl> ().grid [i, j] = newSquare;
+				newSquare.GetComponent<GridSquare> ().x = i;
+				newSquare.GetComponent<GridSquare> ().y = j;
 			}
 		}
 		this.GetComponent<SpriteRenderer> ().enabled = false;

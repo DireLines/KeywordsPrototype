@@ -101,7 +101,8 @@ public class Inventory : MonoBehaviour {
 		bool x = (activeSquare != null); print (x);
 		bool y = (items [inventorySlot] != null); print (y);
 		bool z = y ? items [inventorySlot].CompareTag ("LetterTile") : false; print (z);
-		bool w = x ? activeSquare.GetComponent<GridSquare> ().GetLetter () != activeSquare.GetComponent<GridControl> ().placeholder : false; print (w);
+//		print (activeSquare.GetComponent<GridSquare>().GetLetter());
+		bool w = x ? activeSquare.GetComponent<GridSquare> ().GetLetter () != activeSquare.transform.parent.gameObject.GetComponent<GridControl> ().placeholder : false; print (w);
 
 		print (x + " " + y + " " + z + " " + w);
 		if (!y && !z && !w) {
@@ -115,6 +116,8 @@ public class Inventory : MonoBehaviour {
 				} else {
 					PlaceOnSquare ();
 				}
+			} else if (!y && !z && w) {
+				TakeFromSquare ();
 			}
 		}
 	}
@@ -132,6 +135,7 @@ public class Inventory : MonoBehaviour {
 					items [inventorySlot].GetComponent<BoxCollider2D> ().enabled = true;
 				}
 				if (items [inventorySlot].GetComponent<Rigidbody2D> () != null) {
+					items [inventorySlot].GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 					items [inventorySlot].GetComponent<Rigidbody2D> ().isKinematic = false;
 					items [inventorySlot].GetComponent<Rigidbody2D> ().freezeRotation = false;
 				}
@@ -187,6 +191,7 @@ public class Inventory : MonoBehaviour {
 				closestObject.GetComponent<BoxCollider2D> ().enabled = false;
 			}
 			if (closestObject.GetComponent<Rigidbody2D> () != null) {
+				items [inventorySlot].GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 				closestObject.GetComponent<Rigidbody2D> ().isKinematic = true;
 				closestObject.GetComponent<Rigidbody2D> ().freezeRotation = true;
 			}
