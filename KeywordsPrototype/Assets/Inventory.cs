@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour {
-	public int inventorySlot;
-	public const float pickupRadius = 0.3f;
-	const int inventorySize = 5;
-	GameObject[] items;
-//	float[] oldLinearDrags;
+	const int inventorySize = 5; //how big is the inventory?
+	public int inventorySlot;//which slot is currently active?
+	public const float pickupRadius = 0.3f; //how far away can the player pick up an object?
+	public GameObject activeSquare;//the grid square the player's curently on
+	GameObject[] items; //references to the gameobjects in inventory
+	public Vector3 holdOffset; //what's the hold position of the inventory item?
 	// Use this for initialization
 	void Start () {
 		items = new GameObject[inventorySize];
@@ -47,6 +48,19 @@ public class Inventory : MonoBehaviour {
 	int correctmod(int a,int n){
 		return ((a % n) + n) % n;
 	}
+		
+	public void SetActive(GameObject newSquare){
+		if (activeSquare != null) {
+			activeSquare.GetComponent<SpriteRenderer> ().color = activeSquare.GetComponent<GridSquare> ().normalColor;
+		}
+		activeSquare = newSquare;
+		activeSquare.GetComponent<SpriteRenderer> ().color = activeSquare.GetComponent<GridSquare> ().highlightedColor;
+	}
+
+	public void SetInactive(){
+		activeSquare = null;
+	}
+
 
 	private void SwitchSlot(int n){
 		if (n < 0 || n >= inventorySize) {
@@ -62,6 +76,19 @@ public class Inventory : MonoBehaviour {
 		}
 
 	}
+
+	//pseudocode of this:
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 	private void Interact(){
 		print ("interacting");
 		if (items [inventorySlot] == null) {
@@ -76,10 +103,17 @@ public class Inventory : MonoBehaviour {
 						closestObject = item.gameObject;
 					}
 				}
+				//put item in inventory
 				items [inventorySlot] = closestObject;
-				closestObject.transform.parent = transform;
+				closestObject.transform.SetParent (transform);
+				closestObject.transform.localPosition = holdOffset;
+				closestObject.transform.rotation = Quaternion.identity;
 				if (closestObject.GetComponent<BoxCollider2D> () != null) {
 					closestObject.GetComponent<BoxCollider2D> ().enabled = false;
+				}
+				if (closestObject.GetComponent<Rigidbody2D> () != null) {
+					closestObject.GetComponent<Rigidbody2D> ().isKinematic = true;
+					closestObject.GetComponent<Rigidbody2D> ().freezeRotation = true;
 				}
 			}
 		}
@@ -89,9 +123,14 @@ public class Inventory : MonoBehaviour {
 		print ("dropping");
 		if (items [inventorySlot] != null) {
 			items [inventorySlot].transform.SetParent (null);
-			items [inventorySlot].GetComponent<BoxCollider2D> ().enabled = true;
+			if (items [inventorySlot].GetComponent<BoxCollider2D> () != null) {
+				items [inventorySlot].GetComponent<BoxCollider2D> ().enabled = true;
+			}
+			if (items [inventorySlot].GetComponent<Rigidbody2D> () != null) {
+				items [inventorySlot].GetComponent<Rigidbody2D> ().isKinematic = false;
+				items [inventorySlot].GetComponent<Rigidbody2D> ().freezeRotation = false;
+			}
 			items [inventorySlot] = null;
 		}
 	}
-
 }

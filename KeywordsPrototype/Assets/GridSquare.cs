@@ -18,12 +18,13 @@ public class GridSquare : MonoBehaviour {
 	//TODO: improve this system for selecting the current grid square
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.gameObject.name.Contains ("Player") && other.isTrigger) {
-			transform.parent.gameObject.GetComponent<GridControl> ().SetActive (gameObject);
+			other.transform.gameObject.GetComponent<Inventory> ().SetActive (gameObject);
 		}
 	}
 	void OnTriggerExit2D(Collider2D other){
 		if (other.gameObject.name.Contains ("Player") && other.isTrigger) {
 			sr.color = normalColor;
+			other.transform.gameObject.GetComponent<Inventory> ().SetInactive ();
 		}
 	}
 }

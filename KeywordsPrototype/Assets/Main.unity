@@ -469,7 +469,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 241915438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.27, y: 0.79, z: 10}
+  m_LocalPosition: {x: -0.235, y: 1.263, z: 10}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -571,6 +571,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventorySlot: 0
+  activeSquare: {fileID: 0}
+  holdOffset: {x: 0.1, y: 0.1, z: 0}
 --- !u!1001 &308728808
 Prefab:
   m_ObjectHideFlags: 0

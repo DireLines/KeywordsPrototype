@@ -18,14 +18,6 @@ public class GridControl : MonoBehaviour {
 		}
 	}
 
-	public void SetActive(GameObject newSquare){
-		if (activeSquare != null) {
-			activeSquare.GetComponent<SpriteRenderer> ().color = activeSquare.GetComponent<GridSquare> ().normalColor;
-		}
-		activeSquare = newSquare;
-		activeSquare.GetComponent<SpriteRenderer> ().color = activeSquare.GetComponent<GridSquare> ().highlightedColor;
-	}
-
 	//called on any space in the grid the player just interacted with to see if any new words have formed
 	public List<string> GetWordsInGrid(int x,int y){
 		List<string> words = new List<string> ();

@@ -15,6 +15,14 @@ TODO:
         -Make player inventory
             -5 inventory slots, cycled through
             -A / E to pick up/swap/interact
+                If current inventory slot is null:
+                    -find closest "pickup" object within range
+                    If the player is on top of a grid square: 
+                        If there is no such object:
+                            If there is a tile in the grid square:
+                                -pick up that tile and put it in the slot
+                        Else:
+                            If there is a tile in the grid square:
             -B / R to drop
     -Make stuff multiplayer
 
