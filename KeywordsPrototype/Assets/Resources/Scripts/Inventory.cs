@@ -42,6 +42,9 @@ public class Inventory : MonoBehaviour {
 			SwitchSlot (4);
 		}
 //		print (inventorySlot);
+//		if (activeSquare != null) {
+//			print (activeSquare.GetComponent<GridSquare> ().x + " " + activeSquare.GetComponent<GridSquare> ().y);
+//		}
 	}
 
 	//C# mod is not too useful
@@ -98,13 +101,12 @@ public class Inventory : MonoBehaviour {
 	 */
 	private void Interact(){
 		print ("interacting");
-		bool x = (activeSquare != null); print (x);
-		bool y = (items [inventorySlot] != null); print (y);
-		bool z = y ? items [inventorySlot].CompareTag ("LetterTile") : false; print (z);
-//		print (activeSquare.GetComponent<GridSquare>().GetLetter());
-		bool w = x ? activeSquare.GetComponent<GridSquare> ().GetLetter () != activeSquare.transform.parent.gameObject.GetComponent<GridControl> ().placeholder : false; print (w);
-
+		bool x = (activeSquare != null);
+		bool y = (items [inventorySlot] != null); 
+		bool z = y ? items [inventorySlot].CompareTag ("LetterTile") : false;
+		bool w = x ? activeSquare.GetComponent<GridSquare> ().GetLetter () != activeSquare.transform.parent.gameObject.GetComponent<GridControl> ().placeholder : false;
 		print (x + " " + y + " " + z + " " + w);
+
 		if (!y && !z && !w) {
 			NormalGrab ();
 		} else if (y && !z && !w) {
@@ -154,10 +156,12 @@ public class Inventory : MonoBehaviour {
 
 
 	private void TakeFromSquare(){
+		print ("taking from square");
 		items [inventorySlot] = activeSquare.GetComponent<GridSquare> ().tile;
 		items [inventorySlot].transform.SetParent (transform);
 		items [inventorySlot].transform.localPosition = holdOffset;
 		items [inventorySlot].transform.rotation = Quaternion.identity;
+		activeSquare.GetComponent<GridSquare> ().SetTile (null);
 	}
 	private void SwapWithSquare(){
 		print ("swapping tile with square");
@@ -171,6 +175,7 @@ public class Inventory : MonoBehaviour {
 
 
 	private void NormalGrab(){
+		print ("grabbing");
 		//pick up nearest item within pickup radius
 		Collider2D[] itemsWithinRadius = Physics2D.OverlapCircleAll(transform.position,pickupRadius,1<<LayerMask.NameToLayer("Pickup"));
 		if (itemsWithinRadius.Length > 0) {

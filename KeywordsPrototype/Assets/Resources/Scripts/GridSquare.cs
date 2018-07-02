@@ -39,7 +39,7 @@ public class GridSquare : MonoBehaviour {
 	}
 
 	public void SetTile(GameObject newTile){
-		if (!newTile.CompareTag ("LetterTile")) {
+		if (newTile != null && !newTile.CompareTag ("LetterTile")) {
 			print ("tried to set tile to something not tagged as LetterTile");
 		}
 		tile = newTile;
