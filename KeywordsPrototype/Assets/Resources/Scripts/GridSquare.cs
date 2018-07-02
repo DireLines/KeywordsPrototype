@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GridSquare : MonoBehaviour {
-
-	public char letter;
+	public GameObject tile;
+//	public char letter;
 	public Color highlightedColor;
 	[HideInInspector]
 	public Color normalColor;
 	private SpriteRenderer sr;
 	void Awake(){
-		letter =  transform.parent.gameObject.GetComponent<GridControl> ().placeholder;
+//		letter = transform.parent.gameObject.GetComponent<GridControl> ().placeholder;
 //		letter = (char)Random.Range (97, 123);
+		tile = null;
 		sr = GetComponent<SpriteRenderer> ();
 		normalColor = sr.color;
 	}
@@ -26,5 +27,19 @@ public class GridSquare : MonoBehaviour {
 			sr.color = normalColor;
 			other.transform.gameObject.GetComponent<Inventory> ().SetInactive ();
 		}
+	}
+
+	public char GetLetter(){
+		if (tile == null) {
+			return transform.parent.gameObject.GetComponent<GridControl>().placeholder;
+		}
+		return tile.GetComponent<LetterTile>().letter;
+	}
+
+	public void SetTile(GameObject newTile){
+		if (!newTile.CompareTag ("LetterTile")) {
+			print ("tried to set tile to something not tagged as LetterTile");
+		}
+		tile = newTile;
 	}
 }

@@ -5,8 +5,8 @@ using UnityEngine;
 public class Inventory : MonoBehaviour {
 	const int inventorySize = 5; //how big is the inventory?
 	public int inventorySlot;//which slot is currently active?
-	public const float pickupRadius = 0.3f; //how far away can the player pick up an object?
-	public GameObject activeSquare;//the grid square the player's curently on
+	const float pickupRadius = 0.2f; //how far away can the player pick up an object?
+	public GameObject activeSquare;//the grid square the player's currently on
 	GameObject[] items; //references to the gameobjects in inventory
 	public Vector3 holdOffset; //what's the hold position of the inventory item?
 	// Use this for initialization
@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour {
 			Drop ();
 		}
 
-		//Change which item is 
+		//Change which item is active
 		if (Input.GetKeyDown (KeyCode.Joystick1Button13)){
 			SwitchSlot(correctmod(inventorySlot-1,inventorySize));
 		} else if (Input.GetKeyDown (KeyCode.Joystick1Button14)) {
@@ -79,44 +79,48 @@ public class Inventory : MonoBehaviour {
 
 	//pseudocode of this:
 	/*
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
+
+	x = is player hovering over a grid square?
+	y = is player currently holding something in inventory?
+	z = is player holding a letter tile?
+	w = is there a letter tile on the grid square?
+
+
+	x y z w : swap inventory item with thing on the square
+	x y z !w : place inventory item on the square 
+	x y !z !w : Perform item’s action
+	x !y !z w : take tile on square into inventory
+	x !y !z !w : normal grab
+	!x y !z !w : Perform item’s action
+	!x !y !z !w : normal grab
+
+	all other combinations are impossible or do nothing
 	 */
 	private void Interact(){
 		print ("interacting");
-		if (items [inventorySlot] == null) {
-			//pick up nearest item within pickup radius
-			Collider2D[] itemsWithinRadius = Physics2D.OverlapCircleAll(transform.position,pickupRadius,1<<LayerMask.NameToLayer("Pickup"));
-			if (itemsWithinRadius.Length > 0) {
-				float minDistance = (itemsWithinRadius [0].gameObject.transform.position - transform.position).magnitude;
-				GameObject closestObject = itemsWithinRadius [0].gameObject;
-				foreach (Collider2D item in itemsWithinRadius) {
-					if ((item.gameObject.transform.position - transform.position).magnitude < minDistance) {
-						minDistance = (item.gameObject.transform.position - transform.position).magnitude;
-						closestObject = item.gameObject;
-					}
-				}
-				//put item in inventory
-				items [inventorySlot] = closestObject;
-				closestObject.transform.SetParent (transform);
-				closestObject.transform.localPosition = holdOffset;
-				closestObject.transform.rotation = Quaternion.identity;
-				if (closestObject.GetComponent<BoxCollider2D> () != null) {
-					closestObject.GetComponent<BoxCollider2D> ().enabled = false;
-				}
-				if (closestObject.GetComponent<Rigidbody2D> () != null) {
-					closestObject.GetComponent<Rigidbody2D> ().isKinematic = true;
-					closestObject.GetComponent<Rigidbody2D> ().freezeRotation = true;
+		bool x = (activeSquare != null); print (x);
+		bool y = (items [inventorySlot] != null); print (y);
+		bool z = y ? items [inventorySlot].CompareTag ("LetterTile") : false; print (z);
+		bool w = x ? activeSquare.GetComponent<GridSquare> ().GetLetter () != activeSquare.GetComponent<GridControl> ().placeholder : false; print (w);
+
+		print (x + " " + y + " " + z + " " + w);
+		if (!y && !z && !w) {
+			NormalGrab ();
+		} else if (y && !z && !w) {
+			PerformItemAction ();
+		} else if (x) {
+			if (y && z) {
+				if (w) {
+					SwapWithSquare ();
+				} else {
+					PlaceOnSquare ();
 				}
 			}
 		}
+	}
+
+	private void PerformItemAction(){
+		print ("performing super cool item action");
 	}
 
 	private void Drop(){
@@ -132,6 +136,59 @@ public class Inventory : MonoBehaviour {
 					items [inventorySlot].GetComponent<Rigidbody2D> ().freezeRotation = false;
 				}
 				items [inventorySlot] = null;
+			}
+		}
+	}
+
+	private void PlaceOnSquare(){
+		print ("placing tile on square");
+		items [inventorySlot].transform.SetParent (null);
+		items [inventorySlot].transform.position = activeSquare.transform.position;
+		activeSquare.GetComponent<GridSquare> ().SetTile (items [inventorySlot]);
+		items [inventorySlot] = null;
+	}
+
+
+	private void TakeFromSquare(){
+		items [inventorySlot] = activeSquare.GetComponent<GridSquare> ().tile;
+		items [inventorySlot].transform.SetParent (transform);
+		items [inventorySlot].transform.localPosition = holdOffset;
+		items [inventorySlot].transform.rotation = Quaternion.identity;
+	}
+	private void SwapWithSquare(){
+		print ("swapping tile with square");
+		GameObject temp = activeSquare.GetComponent<GridSquare> ().tile;
+		temp.transform.SetParent (transform);
+		temp.transform.localPosition = holdOffset;
+		temp.transform.rotation = Quaternion.identity;
+		PlaceOnSquare ();
+		items [inventorySlot] = temp;
+	}
+
+
+	private void NormalGrab(){
+		//pick up nearest item within pickup radius
+		Collider2D[] itemsWithinRadius = Physics2D.OverlapCircleAll(transform.position,pickupRadius,1<<LayerMask.NameToLayer("Pickup"));
+		if (itemsWithinRadius.Length > 0) {
+			float minDistance = (itemsWithinRadius [0].gameObject.transform.position - transform.position).magnitude;
+			GameObject closestObject = itemsWithinRadius [0].gameObject;
+			foreach (Collider2D item in itemsWithinRadius) {
+				if ((item.gameObject.transform.position - transform.position).magnitude < minDistance) {
+					minDistance = (item.gameObject.transform.position - transform.position).magnitude;
+					closestObject = item.gameObject;
+				}
+			}
+			//put item in inventory
+			items [inventorySlot] = closestObject;
+			closestObject.transform.SetParent (transform);
+			closestObject.transform.localPosition = holdOffset;
+			closestObject.transform.rotation = Quaternion.identity;
+			if (closestObject.GetComponent<BoxCollider2D> () != null) {
+				closestObject.GetComponent<BoxCollider2D> ().enabled = false;
+			}
+			if (closestObject.GetComponent<Rigidbody2D> () != null) {
+				closestObject.GetComponent<Rigidbody2D> ().isKinematic = true;
+				closestObject.GetComponent<Rigidbody2D> ().freezeRotation = true;
 			}
 		}
 	}
