@@ -26,6 +26,24 @@ TODO:
             -B / R to drop
     -Make stuff multiplayer
 
+
+x-is player hovering over a grid square?
+y-is player currently holding something in inventory?
+z-is player holding a letter tile?
+w-is there a letter tile on the grid square?
+
+
+x y z w : swap inventory item with thing on the square
+x y z !w : place inventory item on the square 
+x y !z !w : Perform item’s action
+x !y !z w : take tile on square into inventory
+x !y !z !w : normal grab
+!x y !z !w : Perform item’s action
+!x !y !z !w : normal grab
+
+
+
+
 Concept: Scrabble but a local multiplayer cooperative/competitive dungeon crawler. Letter tiles are physical objects that players have to discover and carry back to a room with a Scrabble board.
 Players race other players to make as many words as possible in as short a time as possible.
 
@@ -70,8 +88,8 @@ Behind the locked doors are
     -Privacy Watch: holding this in your inventory will hide your inventory HUD, preventing others from figuring out your plans just by screenpeeking your inventory (and preventing you from seeing it too)
 -misc. consumables
     -Poison Vial: thrown at a player or enemy, dealing 0 damage and knocking the player/enemy out cold for 10 seconds
-    -Tile Heal: Heals a tile to its full health.
-    -Shield: Creates a shield which lasts 20 seconds. During that time the player cannot be bonked.
+    -Tile Heal: Used on a tile, healing it to its full health.
+    -Shield Potion: Creates a shield which lasts 20 seconds. During that time the player cannot be bonked.
     -Barrier: Used on a doorway. Prevents anybody from going through that doorway for 2 minutes.
     -Lockpick: Used on a door. Decreases the key barrier for that door by 1. Cannot be used on the boss door or ultra boss door.
 -stationary machines which do various things

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GridControl : MonoBehaviour {
-	public GameObject activeSquare;
-	[SerializeField]
 	public GameObject[,] grid;
 	public char placeholder = ' ';
 
@@ -33,7 +31,7 @@ public class GridControl : MonoBehaviour {
 		return words;
 	}
 
-	//called if a letter was just placed
+	//Gets the longest word including tile [x,y] which is horizontal
 	public string GetHorizontalWord(int x, int y){
 		int width = GetComponent<MakeGrid> ().width;
 		if (x < 0 || x >= width || y < 0 || y >= width || grid [x, y].GetComponent<GridSquare> ().letter == placeholder) {
@@ -64,7 +62,7 @@ public class GridControl : MonoBehaviour {
 		return result;
 	}
 
-	//called if a letter was just placed
+	//Gets the longest word including tile [x,y] which is vertical
 	public string GetVerticalWord(int x, int y){
 		int width = GetComponent<MakeGrid> ().width;
 		if (x < 0 || x >= width || y < 0 || y >= width || grid [x, y].GetComponent<GridSquare> ().letter == placeholder) {

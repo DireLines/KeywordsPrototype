@@ -838,8 +838,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 593435239}
-  - component: {fileID: 593435240}
   - component: {fileID: 593435241}
+  - component: {fileID: 593435240}
   m_Layer: 0
   m_Name: GM
   m_TagString: Untagged

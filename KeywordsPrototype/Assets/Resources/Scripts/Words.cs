@@ -10,16 +10,19 @@ public class Words : MonoBehaviour {
 	string[] currentSourceWords;//a selection of words which each floor in the dungeon will be based on
 	public int numLevels;//how many levels in the dungeon
 	string[] currentLevelWords;//all words it's possible to make with the letters of the current source word
+	char[] currentSourceChars;//all chars in the current source word.
 
 	void Awake(){
 		words = File.ReadAllLines("Assets/Words.txt");
 		numletterwords = GetNumLetterWords ();
 		currentSourceWords = GetSomeSourceWords (numLevels, 30, 250);
+		currentSourceChars = new char[numLettersInSource];
 		UpdateLevelWords (0);
 	}
 
 	public void UpdateLevelWords(int level){
 		currentLevelWords = GetWords (currentSourceWords[level]);
+		currentSourceChars = currentLevelWords [level].ToCharArray ();
 	}
 
 	string[] GetNumLetterWords(){

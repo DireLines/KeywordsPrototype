@@ -14,7 +14,7 @@ public class LetterTile : MonoBehaviour {
 		numberSprite = transform.GetChild (1).gameObject;
 		SetLetter ((char)Random.Range (97, 123));
 		SetMatches (Random.Range(1,17));
-//		MinusOne ();
+//		Dec ();
 
 	}
 	public void SetLetter(char newletter){
@@ -45,7 +45,8 @@ public class LetterTile : MonoBehaviour {
 		numberSprite.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> (spriteName);
 	}
 
-	public void MinusOne(){
+	//decrement
+	public void Dec(){
 		if (matches != 16) {
 			SetMatches (matches - 1);
 		}
