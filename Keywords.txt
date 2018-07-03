@@ -9,24 +9,12 @@ TODO:
         -place loot
         -adjust weights on doors according to loot
     -Scrabble Thing:
-        -Call Dec() on letters that were part of valid words
-        -Cross words that have already been made off the list so they can't be double counted.
+        -Call Dec() on any letters that were part of valid words during the last tile swap
+            -set of letter tiles ever encountered in search for words
+            -separate set of tiles that turned out to be part of valid words
+        -Make some kind of flash effect or animation to indicate that a word was made
+            -sufficient to make an effect for decremrnting a letter tile.
     -Make stuff multiplayer
-
-
-x-is player hovering over a grid square?
-y-is player currently holding something in inventory?
-z-is player holding a letter tile?
-w-is there a letter tile on the grid square?
-
-
-x y z w : swap inventory item with thing on the square
-x y z !w : place inventory item on the square 
-x y !z !w : Perform item’s action
-x !y !z w : take tile on square into inventory
-x !y !z !w : normal grab
-!x y !z !w : Perform item’s action
-!x !y !z !w : normal grab
 
 
 

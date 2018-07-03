@@ -12,8 +12,6 @@ public class GridSquare : MonoBehaviour {
 	public int x;
 	public int y;
 	void Awake(){
-//		letter = transform.parent.gameObject.GetComponent<GridControl> ().placeholder;
-//		letter = (char)Random.Range (97, 123);
 		tile = null;
 		sr = GetComponent<SpriteRenderer> ();
 		normalColor = sr.color;

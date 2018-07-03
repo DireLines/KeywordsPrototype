@@ -43,7 +43,7 @@ public class GridControl : MonoBehaviour {
 	public string GetHorizontalWord(int x, int y){
 		int width = GetComponent<MakeGrid> ().width;
 		if (x < 0 || x >= width || y < 0 || y >= width || grid [x, y].GetComponent<GridSquare> ().GetLetter() == placeholder) {
-			print ("out of bounds - GetHorizontalWord returning empty string");
+//			print ("out of bounds - GetHorizontalWord returning empty string");
 			return "";
 		}
 		string result = grid [x, y].GetComponent<GridSquare> ().GetLetter().ToString();
@@ -74,7 +74,7 @@ public class GridControl : MonoBehaviour {
 	public string GetVerticalWord(int x, int y){
 		int width = GetComponent<MakeGrid> ().width;
 		if (x < 0 || x >= width || y < 0 || y >= width || grid [x, y].GetComponent<GridSquare> ().GetLetter() == placeholder) {
-			print ("out of bounds - GetVerticalWord returning empty string");
+//			print ("out of bounds - GetVerticalWord returning empty string");
 			return "";
 		}
 		string result = grid [x, y].GetComponent<GridSquare> ().GetLetter().ToString();

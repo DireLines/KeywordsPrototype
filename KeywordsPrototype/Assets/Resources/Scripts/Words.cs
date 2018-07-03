@@ -11,19 +11,25 @@ public class Words : MonoBehaviour {
 	public int numLevels;//how many levels in the dungeon
 	List<string> currentLevelWords;//all words it's possible to make with the letters of the current source word
 	List<string> unmadeLevelWords;//all words from currentLevelWords not yet made (by somebody). 
-	char[] currentSourceChars;//all chars in the current source word.
+	List<char> currentSourceChars;//all chars in the current source word.
 
 	void Awake(){
 		words = File.ReadAllLines("Assets/Words.txt");
 		numletterwords = GetNumLetterWords ();
 		currentSourceWords = GetSomeSourceWords (numLevels, 30, 250);
-		currentSourceChars = new char[numLettersInSource];
+		currentSourceChars = new List<char> ();
 		UpdateLevelWords (0);
 	}
 
 	public void UpdateLevelWords(int level){
 		currentLevelWords = GetWords (currentSourceWords[level]);
-		currentSourceChars = currentSourceWords [level].ToCharArray ();
+		char[] sourceChars = currentSourceWords [level].ToCharArray ();
+		currentSourceChars.Clear ();
+		foreach (char c in sourceChars) {
+			if (!currentSourceChars.Contains (c)) {
+				currentSourceChars.Add (c);
+			}
+		}
 		unmadeLevelWords = currentLevelWords;
 	}
 
@@ -61,7 +67,7 @@ public class Words : MonoBehaviour {
 
 
 	public char GetRandomSourceChar(){
-		return currentSourceChars [Random.Range (0, numLettersInSource)];
+		return currentSourceChars [Random.Range (0, currentSourceChars.Count)];
 	}
 
 	public bool ValidateWord(string word){
@@ -84,7 +90,6 @@ public class Words : MonoBehaviour {
 			print (randomword + score);
 			result.Add (randomword);
 		}
-//		result [0] = "abcdefghijklmnopqrstuvwxyz";
 		return result.ToArray ();
 	}
 }

@@ -42,10 +42,6 @@ public class Inventory : MonoBehaviour {
 		} else if (Input.GetKeyDown (KeyCode.Alpha5)) {
 			SwitchSlot (4);
 		}
-//		print (inventorySlot);
-//		if (activeSquare != null) {
-//			print (activeSquare.GetComponent<GridSquare> ().x + " " + activeSquare.GetComponent<GridSquare> ().y);
-//		}
 	}
 
 	//C# mod is not too useful
@@ -83,7 +79,6 @@ public class Inventory : MonoBehaviour {
 
 	//pseudocode of this:
 	/*
-
 	x = is player hovering over a grid square?
 	y = is player currently holding something in inventory?
 	z = is player holding a letter tile?
@@ -98,15 +93,15 @@ public class Inventory : MonoBehaviour {
 	!x y !z !w : Perform item’s action
 	!x !y !z !w : normal grab
 
-	all other combinations are impossible or do nothing
+	all other combinations are impossible or should do nothing
 	 */
 	private void Interact(){
-		print ("interacting");
+//		print ("interacting");
 		bool x = (activeSquare != null);
 		bool y = (items [inventorySlot] != null); 
 		bool z = y ? items [inventorySlot].CompareTag ("LetterTile") : false;
 		bool w = x ? activeSquare.GetComponent<GridSquare> ().GetLetter () != activeSquare.transform.parent.gameObject.GetComponent<GridControl> ().placeholder : false;
-		print (x + " " + y + " " + z + " " + w);
+//		print (x + " " + y + " " + z + " " + w);
 
 		if (!y && !z && !w) {
 			NormalGrab ();
@@ -130,7 +125,7 @@ public class Inventory : MonoBehaviour {
 	}
 
 	private void Drop(){
-		print ("dropping");
+//		print ("dropping");
 		if (activeSquare == null) {
 			if (items [inventorySlot] != null) {
 				items [inventorySlot].transform.SetParent (null);
@@ -148,7 +143,7 @@ public class Inventory : MonoBehaviour {
 	}
 
 	private void PlaceOnSquare(){
-		print ("placing tile on square");
+//		print ("placing tile on square");
 		items [inventorySlot].transform.SetParent (null);
 		items [inventorySlot].transform.position = activeSquare.transform.position;
 		activeSquare.GetComponent<GridSquare> ().SetTile (items [inventorySlot]);
@@ -160,7 +155,7 @@ public class Inventory : MonoBehaviour {
 
 
 	private void TakeFromSquare(){
-		print ("taking from square");
+//		print ("taking from square");
 		items [inventorySlot] = activeSquare.GetComponent<GridSquare> ().tile;
 		items [inventorySlot].transform.SetParent (transform);
 		items [inventorySlot].transform.localPosition = holdOffset;
@@ -171,7 +166,7 @@ public class Inventory : MonoBehaviour {
 		activeSquare.transform.parent.gameObject.GetComponent<GridControl> ().ValidateWords (x, y,gameObject);
 	}
 	private void SwapWithSquare(){
-		print ("swapping tile with square");
+//		print ("swapping tile with square");
 		GameObject temp = activeSquare.GetComponent<GridSquare> ().tile;
 		temp.transform.SetParent (transform);
 		temp.transform.localPosition = holdOffset;
@@ -182,7 +177,7 @@ public class Inventory : MonoBehaviour {
 
 
 	private void NormalGrab(){
-		print ("grabbing");
+//		print ("grabbing");
 		//pick up nearest item within pickup radius
 		Collider2D[] itemsWithinRadius = Physics2D.OverlapCircleAll(transform.position,pickupRadius,1<<LayerMask.NameToLayer("Pickup"));
 		if (itemsWithinRadius.Length > 0) {
