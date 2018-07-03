@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour {
 	public GameObject activeSquare;//the grid square the player's currently on
 	GameObject[] items; //references to the gameobjects in inventory
 	public Vector3 holdOffset; //what's the hold position of the inventory item?
+	public Words words;
 	// Use this for initialization
 	void Start () {
 		items = new GameObject[inventorySize];
@@ -152,6 +153,9 @@ public class Inventory : MonoBehaviour {
 		items [inventorySlot].transform.position = activeSquare.transform.position;
 		activeSquare.GetComponent<GridSquare> ().SetTile (items [inventorySlot]);
 		items [inventorySlot] = null;
+		int x = activeSquare.GetComponent<GridSquare> ().x;
+		int y = activeSquare.GetComponent<GridSquare> ().y;
+		activeSquare.transform.parent.gameObject.GetComponent<GridControl> ().ValidateWords (x, y,gameObject);
 	}
 
 
@@ -162,6 +166,9 @@ public class Inventory : MonoBehaviour {
 		items [inventorySlot].transform.localPosition = holdOffset;
 		items [inventorySlot].transform.rotation = Quaternion.identity;
 		activeSquare.GetComponent<GridSquare> ().SetTile (null);
+		int x = activeSquare.GetComponent<GridSquare> ().x;
+		int y = activeSquare.GetComponent<GridSquare> ().y;
+		activeSquare.transform.parent.gameObject.GetComponent<GridControl> ().ValidateWords (x, y,gameObject);
 	}
 	private void SwapWithSquare(){
 		print ("swapping tile with square");

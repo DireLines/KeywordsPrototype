@@ -9,7 +9,7 @@ public class Words : MonoBehaviour {
 	string[] numletterwords;//all words of exactly numLettersInSource letters in length
 	string[] currentSourceWords;//a selection of words which each floor in the dungeon will be based on
 	public int numLevels;//how many levels in the dungeon
-	string[] currentLevelWords;//all words it's possible to make with the letters of the current source word
+	List<string> currentLevelWords;//all words it's possible to make with the letters of the current source word
 	char[] currentSourceChars;//all chars in the current source word.
 
 	void Awake(){
@@ -22,7 +22,8 @@ public class Words : MonoBehaviour {
 
 	public void UpdateLevelWords(int level){
 		currentLevelWords = GetWords (currentSourceWords[level]);
-		currentSourceChars = currentLevelWords [level].ToCharArray ();
+		currentSourceChars = currentSourceWords [level].ToCharArray ();
+
 	}
 
 	string[] GetNumLetterWords(){
@@ -32,11 +33,10 @@ public class Words : MonoBehaviour {
 				result.Add (word);
 			}
 		}
-
-		return result.ToArray ();
+		return result.ToArray();
 	}
 
-	string[] GetWords(string letters){
+	List<string> GetWords(string letters){
 		List<string> result = new List<string> ();
 		foreach (string word in words) {
 			int c = 0;
@@ -51,11 +51,15 @@ public class Words : MonoBehaviour {
 				result.Add (word);
 			}
 		}
-		return result.ToArray ();
+		return result;
 	}
 
 	int GetScore(string letters){
-		return GetWords (letters).Length;
+		return GetWords (letters).Count;
+	}
+
+	public bool ValidateWord(string word){
+		return currentLevelWords.Contains (word);
 	}
 
 	string[] GetSomeSourceWords(int howMany,int lowerThreshold,int upperThreshold){
@@ -70,6 +74,7 @@ public class Words : MonoBehaviour {
 			print (randomword + score);
 			result.Add (randomword);
 		}
+		result [0] = "abcdefghijklmnopqrstuvwxyz";
 		return result.ToArray ();
 	}
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class GridControl : MonoBehaviour {
 	public GameObject[,] grid;
 	public char placeholder = ' ';
+	public Words words;
 
 	void Awake(){
 		grid = new GameObject[GetComponent<MakeGrid> ().width, GetComponent<MakeGrid> ().width]; 
@@ -13,6 +14,14 @@ public class GridControl : MonoBehaviour {
 	void Start(){
 		foreach (string thing in GetWordsInGrid(2,4)) {
 			print (thing);
+		}
+	}
+
+	public void ValidateWords(int x,int y, GameObject player){
+		foreach (string word in GetWordsInGrid(x,y)) {
+			if (words.ValidateWord (word)) {
+				player.GetComponent<DoorCollisionCheck> ().keys++;
+			}
 		}
 	}
 
