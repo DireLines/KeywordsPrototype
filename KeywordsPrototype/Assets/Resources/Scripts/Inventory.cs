@@ -129,6 +129,10 @@ public class Inventory : MonoBehaviour {
 		if (activeSquare == null) {
 			if (items [inventorySlot] != null) {
 				items [inventorySlot].transform.SetParent (null);
+				items [inventorySlot].GetComponent<SpriteRenderer> ().sortingOrder -= 2;
+				foreach (Transform child in items [inventorySlot].transform) {
+					child.gameObject.GetComponent<SpriteRenderer> ().sortingOrder -= 2;
+				}
 				if (items [inventorySlot].GetComponent<BoxCollider2D> () != null) {
 					items [inventorySlot].GetComponent<BoxCollider2D> ().enabled = true;
 				}
@@ -146,6 +150,10 @@ public class Inventory : MonoBehaviour {
 //		print ("placing tile on square");
 		items [inventorySlot].transform.SetParent (null);
 		items [inventorySlot].transform.position = activeSquare.transform.position;
+		items [inventorySlot].GetComponent<SpriteRenderer> ().sortingOrder -= 4;
+		foreach (Transform child in items [inventorySlot].transform) {
+			child.gameObject.GetComponent<SpriteRenderer> ().sortingOrder -= 4;
+		}
 		activeSquare.GetComponent<GridSquare> ().SetTile (items [inventorySlot]);
 		items [inventorySlot] = null;
 		int x = activeSquare.GetComponent<GridSquare> ().x;
@@ -160,6 +168,10 @@ public class Inventory : MonoBehaviour {
 		items [inventorySlot].transform.SetParent (transform);
 		items [inventorySlot].transform.localPosition = holdOffset;
 		items [inventorySlot].transform.rotation = Quaternion.identity;
+		items [inventorySlot].GetComponent<SpriteRenderer> ().sortingOrder += 4;
+		foreach (Transform child in items [inventorySlot].transform) {
+			child.gameObject.GetComponent<SpriteRenderer> ().sortingOrder += 4;
+		}
 		activeSquare.GetComponent<GridSquare> ().SetTile (null);
 		int x = activeSquare.GetComponent<GridSquare> ().x;
 		int y = activeSquare.GetComponent<GridSquare> ().y;
@@ -171,6 +183,10 @@ public class Inventory : MonoBehaviour {
 		temp.transform.SetParent (transform);
 		temp.transform.localPosition = holdOffset;
 		temp.transform.rotation = Quaternion.identity;
+		temp.GetComponent<SpriteRenderer> ().sortingOrder += 4;
+		foreach (Transform child in temp.transform) {
+			child.gameObject.GetComponent<SpriteRenderer> ().sortingOrder += 4;
+		}
 		PlaceOnSquare ();
 		items [inventorySlot] = temp;
 	}
@@ -194,6 +210,10 @@ public class Inventory : MonoBehaviour {
 			closestObject.transform.SetParent (transform);
 			closestObject.transform.localPosition = holdOffset;
 			closestObject.transform.rotation = Quaternion.identity;
+			closestObject.GetComponent<SpriteRenderer> ().sortingOrder += 2;
+			foreach (Transform child in closestObject.transform) {
+				child.gameObject.GetComponent<SpriteRenderer> ().sortingOrder += 2;
+			}
 			if (closestObject.GetComponent<BoxCollider2D> () != null) {
 				closestObject.GetComponent<BoxCollider2D> ().enabled = false;
 			}
