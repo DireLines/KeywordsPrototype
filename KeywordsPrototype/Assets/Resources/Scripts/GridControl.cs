@@ -71,10 +71,6 @@ public class GridControl : MonoBehaviour {
 				}
 			}
 		}
-		print (validWordTiles.Count);
-		foreach (GameObject tile in validWordTiles) {
-			print (tile.GetComponent<LetterTile> ().letter);
-		}
 		foreach (GameObject tile in validWordTiles) {
 			tile.GetComponent<LetterTile> ().Dec ();
 		}

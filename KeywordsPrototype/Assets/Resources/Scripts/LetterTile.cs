@@ -37,6 +37,10 @@ public class LetterTile : MonoBehaviour {
 		}
 		if (newmatches == 0) {
 			print ("tile dead");
+			GridSquare gc = transform.parent.gameObject.GetComponent<GridSquare> ();
+			if (gc != null) {
+				gc.SetTile (null);
+			}
 			Destroy (gameObject);
 			return;
 		}

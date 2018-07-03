@@ -147,7 +147,7 @@ public class Inventory : MonoBehaviour {
 
 	private void PlaceOnSquare(){
 //		print ("placing tile on square");
-		items [inventorySlot].transform.SetParent (null);
+		items [inventorySlot].transform.SetParent (activeSquare.transform);
 		items [inventorySlot].transform.position = activeSquare.transform.position;
 		items [inventorySlot].GetComponent<SpriteRenderer> ().sortingOrder -= 4;
 		foreach (Transform child in items [inventorySlot].transform) {
