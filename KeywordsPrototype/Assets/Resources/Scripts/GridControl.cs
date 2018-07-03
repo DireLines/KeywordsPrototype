@@ -71,6 +71,10 @@ public class GridControl : MonoBehaviour {
 				}
 			}
 		}
+		print (validWordTiles.Count);
+		foreach (GameObject tile in validWordTiles) {
+			print (tile.GetComponent<LetterTile> ().letter);
+		}
 		foreach (GameObject tile in validWordTiles) {
 			tile.GetComponent<LetterTile> ().Dec ();
 		}
@@ -129,7 +133,7 @@ public class GridControl : MonoBehaviour {
 				i = -1;
 			} else {
 				result = grid [x,i].GetComponent<GridSquare> ().GetLetter() + result;
-				reachedTiles.Add (grid [i, y].GetComponent<GridSquare> ().tile);
+				reachedTiles.Add (grid [x,i].GetComponent<GridSquare> ().tile);
 				i--;
 			}
 		}
@@ -140,7 +144,7 @@ public class GridControl : MonoBehaviour {
 				i = -1;
 			} else {
 				result += grid [x,i].GetComponent<GridSquare> ().GetLetter();
-				reachedTiles.Add (grid [i, y].GetComponent<GridSquare> ().tile);
+				reachedTiles.Add (grid [x,i].GetComponent<GridSquare> ().tile);
 				i++;
 			}
 		}
