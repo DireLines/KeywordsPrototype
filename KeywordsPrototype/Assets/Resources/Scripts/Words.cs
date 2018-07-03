@@ -10,6 +10,7 @@ public class Words : MonoBehaviour {
 	string[] currentSourceWords;//a selection of words which each floor in the dungeon will be based on
 	public int numLevels;//how many levels in the dungeon
 	List<string> currentLevelWords;//all words it's possible to make with the letters of the current source word
+	List<string> unmadeLevelWords;//all words from currentLevelWords not yet made (by somebody). 
 	char[] currentSourceChars;//all chars in the current source word.
 
 	void Awake(){
@@ -23,7 +24,7 @@ public class Words : MonoBehaviour {
 	public void UpdateLevelWords(int level){
 		currentLevelWords = GetWords (currentSourceWords[level]);
 		currentSourceChars = currentSourceWords [level].ToCharArray ();
-
+		unmadeLevelWords = currentLevelWords;
 	}
 
 	string[] GetNumLetterWords(){
@@ -58,8 +59,17 @@ public class Words : MonoBehaviour {
 		return GetWords (letters).Count;
 	}
 
+
+	public char GetRandomSourceChar(){
+		return currentSourceChars [Random.Range (0, numLettersInSource)];
+	}
+
 	public bool ValidateWord(string word){
-		return currentLevelWords.Contains (word);
+		if (unmadeLevelWords.Contains (word)) {
+			unmadeLevelWords.Remove (word);
+			return true;
+		}
+		return false;
 	}
 
 	string[] GetSomeSourceWords(int howMany,int lowerThreshold,int upperThreshold){
@@ -74,7 +84,7 @@ public class Words : MonoBehaviour {
 			print (randomword + score);
 			result.Add (randomword);
 		}
-		result [0] = "abcdefghijklmnopqrstuvwxyz";
+//		result [0] = "abcdefghijklmnopqrstuvwxyz";
 		return result.ToArray ();
 	}
 }

@@ -8,11 +8,14 @@ public class LetterTile : MonoBehaviour {
 	private GameObject letterSprite;
 	private GameObject numberSprite;
 
+	private Words words;
 
 	void Start(){
+		words = GameObject.Find ("GM").GetComponent<Words> ();
 		letterSprite = transform.GetChild (0).gameObject;
 		numberSprite = transform.GetChild (1).gameObject;
-		SetLetter ((char)Random.Range (97, 123));
+		SetLetter (words.GetRandomSourceChar ());
+//		SetLetter ((char)Random.Range (97, 123));
 		SetMatches (Random.Range(1,17));
 //		Dec ();
 

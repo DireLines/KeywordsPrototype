@@ -5,22 +5,21 @@ using UnityEngine;
 public class GridControl : MonoBehaviour {
 	public GameObject[,] grid;
 	public char placeholder = ' ';
-	public Words words;
+	private Words words;
 
 	void Awake(){
 		grid = new GameObject[GetComponent<MakeGrid> ().width, GetComponent<MakeGrid> ().width]; 
 	}
 
 	void Start(){
-		foreach (string thing in GetWordsInGrid(2,4)) {
-			print (thing);
-		}
+		words = GameObject.Find ("GM").GetComponent<Words> ();
 	}
 
 	public void ValidateWords(int x,int y, GameObject player){
 		foreach (string word in GetWordsInGrid(x,y)) {
 			if (words.ValidateWord (word)) {
 				player.GetComponent<DoorCollisionCheck> ().keys++;
+				print (word);
 			}
 		}
 	}
