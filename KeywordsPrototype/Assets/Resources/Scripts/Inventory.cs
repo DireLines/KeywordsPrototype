@@ -9,7 +9,6 @@ public class Inventory : MonoBehaviour {
 	public GameObject activeSquare;//the grid square the player's currently on
 	GameObject[] items; //references to the gameobjects in inventory
 	public Vector3 holdOffset; //what's the hold position of the inventory item?
-	public Words words;
 	// Use this for initialization
 	void Start () {
 		items = new GameObject[inventorySize];

@@ -6,6 +6,7 @@ public class GridControl : MonoBehaviour {
 	public GameObject[,] grid;
 	public char placeholder = ' ';
 	private Words words;
+	private AudioSource getKeySource;
 
 	void Awake(){
 		grid = new GameObject[GetComponent<MakeGrid> ().width, GetComponent<MakeGrid> ().width]; 
@@ -13,12 +14,14 @@ public class GridControl : MonoBehaviour {
 
 	void Start(){
 		words = GameObject.Find ("GM").GetComponent<Words> ();
+		getKeySource = GameObject.Find ("GetKeySFX").GetComponent<AudioSource> ();
 	}
 
 	public void ValidateWords(int x,int y, GameObject player){
 		foreach (string word in GetWordsInGrid(x,y)) {
 			if (words.ValidateWord (word)) {
 				player.GetComponent<DoorCollisionCheck> ().keys++;
+				getKeySource.Play ();
 				print (word);
 			}
 		}

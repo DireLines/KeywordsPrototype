@@ -16,7 +16,7 @@ public class Words : MonoBehaviour {
 	void Awake(){
 		words = File.ReadAllLines("Assets/Words.txt");
 		numletterwords = GetNumLetterWords ();
-		currentSourceWords = GetSomeSourceWords (numLevels, 30, 250);
+		currentSourceWords = GetSomeSourceWords (numLevels, 40, 250);
 		currentSourceChars = new List<char> ();
 		UpdateLevelWords (0);
 	}
