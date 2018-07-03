@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
-  highlightedColor: {r: 0.8014706, g: 0.767526, b: 0.7071799, a: 1}
+  highlightedColor: {r: 0.8088235, g: 0.79811853, b: 0.77908736, a: 1}
   normalColor: {r: 0, g: 0, b: 0, a: 0}
   x: 0
   y: 0
@@ -118,7 +118,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -15
   m_Sprite: {fileID: 21300000, guid: b29241ba67ba54476b85e6b7bf95d187, type: 3}
-  m_Color: {r: 0.5661765, g: 0.5407961, b: 0.49540442, a: 1}
+  m_Color: {r: 0.5661765, g: 0.5572187, b: 0.5411981, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

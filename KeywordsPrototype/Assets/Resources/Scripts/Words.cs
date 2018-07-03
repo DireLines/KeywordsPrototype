@@ -13,12 +13,20 @@ public class Words : MonoBehaviour {
 	List<string> unmadeLevelWords;//all words from currentLevelWords not yet made (by somebody). 
 	List<char> currentSourceChars;//all chars in the current source word.
 
+	private AudioSource GetKeySFX;
+	private AudioSource AlreadyMadeWordSFX;
+
 	void Awake(){
 		words = File.ReadAllLines("Assets/Words.txt");
 		numletterwords = GetNumLetterWords ();
 		currentSourceWords = GetSomeSourceWords (numLevels, 40, 250);
 		currentSourceChars = new List<char> ();
 		UpdateLevelWords (0);
+	}
+
+	void Start(){
+		GetKeySFX = GameObject.Find ("GetKeySFX").GetComponent<AudioSource> ();
+		AlreadyMadeWordSFX = GameObject.Find ("MadeWordSFX").GetComponent<AudioSource> ();
 	}
 
 	public void UpdateLevelWords(int level){
@@ -72,8 +80,12 @@ public class Words : MonoBehaviour {
 
 	public bool ValidateWord(string word){
 		if (unmadeLevelWords.Contains (word)) {
+			GetKeySFX.Play ();
 			unmadeLevelWords.Remove (word);
 			return true;
+		}
+		if(currentLevelWords.Contains(word)){
+			AlreadyMadeWordSFX.Play ();
 		}
 		return false;
 	}

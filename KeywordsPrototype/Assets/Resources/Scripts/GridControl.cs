@@ -27,28 +27,24 @@ public class GridControl : MonoBehaviour {
 		if (grid [x, y].GetComponent<GridSquare> ().GetLetter() == placeholder) {
 			if(words.ValidateWord(GetHorizontalWord(x-1,y))){
 				player.GetComponent<DoorCollisionCheck>().keys++;
-				getKeySource.Play ();
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
 			if(words.ValidateWord(GetHorizontalWord(x+1,y))){
 				player.GetComponent<DoorCollisionCheck>().keys++;
-				getKeySource.Play ();
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
 			if(words.ValidateWord(GetVerticalWord(x,y-1))){
 				player.GetComponent<DoorCollisionCheck>().keys++;
-				getKeySource.Play ();
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
 			if(words.ValidateWord(GetVerticalWord(x,y+1))){
 				player.GetComponent<DoorCollisionCheck>().keys++;
-				getKeySource.Play ();
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
@@ -56,14 +52,12 @@ public class GridControl : MonoBehaviour {
 		} else {
 			if(words.ValidateWord(GetHorizontalWord(x,y))){
 				player.GetComponent<DoorCollisionCheck>().keys++;
-				getKeySource.Play ();
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
 			if(words.ValidateWord(GetVerticalWord(x,y))){
 				player.GetComponent<DoorCollisionCheck>().keys++;
-				getKeySource.Play ();
 				foreach(GameObject tile in reachedTiles){
 					if (!validWordTiles.Contains (tile)) {
 						validWordTiles.Add (tile);
