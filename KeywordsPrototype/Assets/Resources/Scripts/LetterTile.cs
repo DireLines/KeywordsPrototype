@@ -16,7 +16,7 @@ public class LetterTile : MonoBehaviour {
 		numberSprite = transform.GetChild (1).gameObject;
 		SetLetter (words.GetRandomSourceChar ());
 //		SetLetter ((char)Random.Range (97, 123));
-		SetMatches (Random.Range(3,7));
+		SetMatches (Random.Range(3,9));
 //		Dec ();
 
 	}

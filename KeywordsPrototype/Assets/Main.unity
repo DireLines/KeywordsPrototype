@@ -1731,8 +1731,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e97317da1214185ad745df1773f47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  width: 50
+  height: 50
+  wallSpacing: 2.5
   DoorContainer: {fileID: 541289253}
   WallContainer: {fileID: 95303994}
+  VerticalWall: {fileID: 1902885538303810, guid: aecd7f508751e471e9e7019f3e971344,
+    type: 2}
+  HorizontalWall: {fileID: 1902885538303810, guid: 947cea93a1f5f4e46bd68f1911a272e1,
+    type: 2}
+  Door: {fileID: 1205634193462772, guid: 4e0646f5e112f43669cf661613e4cb1e, type: 2}
+  VerticalWallSmall: {fileID: 1205634193462772, guid: 9958b88502c1241bb87b51cece9be140,
+    type: 2}
+  HorizontalWallSmall: {fileID: 1205634193462772, guid: 974c4157089604355b88a0b286bb4f89,
+    type: 2}
 --- !u!114 &1569157445
 MonoBehaviour:
   m_ObjectHideFlags: 0
