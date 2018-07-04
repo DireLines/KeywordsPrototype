@@ -15,11 +15,15 @@ public class MakeWalls : MonoBehaviour {
 	//translation - variables for turning grid into gameobjects
 
 	//front end - generated game objects
-	public float wallSpacing;
+	private const float epsilon = 0.005f; //makes borders between walls/corners look better
+	private float cellSize;
+	private Vector3 basePosition;
+	private Quaternion verticalWallOrientation;
 	public GameObject DoorContainer;
 	public GameObject WallContainer;
 	public GameObject VerticalWall;
 	public GameObject HorizontalWall;
+	public GameObject Corner;
 	public GameObject Door;
 	public GameObject VerticalWallSmall;
 	public GameObject HorizontalWallSmall;
@@ -27,6 +31,9 @@ public class MakeWalls : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake(){
+		cellSize = HorizontalWall.transform.localScale.x + Corner.transform.localScale.x - epsilon;
+		basePosition = new Vector3 (-(width / 2) * cellSize, (height / 2) * cellSize,0f);
+		verticalWallOrientation = VerticalWall.transform.rotation;
 		FillRooms ();
 //		PrintRooms ();
 		GenerateWalls ();
@@ -42,6 +49,8 @@ public class MakeWalls : MonoBehaviour {
 		while (numCheckedOff < numSquares) {
 			MakeRoom (Random.Range(0,width),Random.Range(0,width),Random.Range(5,10),Random.Range(5,10));
 		}
+		//Starting Room
+		MakeRoom(width/2,height/2,4,4);
 	}
 
 	//is this coordinate in bounds?
@@ -55,7 +64,6 @@ public class MakeWalls : MonoBehaviour {
 			for (int j = -h / 2; j <= h / 2; j++) {
 				int a = i + x;
 				int b = j + y;
-//				print(a+" "+b);
 				if (InBounds (a, b)) {
 					if (rooms [a, b] == 0) {
 						numCheckedOff++;
@@ -85,9 +93,76 @@ public class MakeWalls : MonoBehaviour {
 		print (result);
 	}
 
-
-
 	void GenerateWalls(){
-		print ("yo");
+		print ("makin dungeon walls");
+		for (int x = -1; x < width; x++) {
+			for (int y = -1; y < height; y++) {
+				if (ThereShouldBeARightWallAt(x,y)) {
+					PlaceRightWallAt(x,y);
+				}
+				if (ThereShouldBeABottomWallAt(x,y)) {
+					PlaceBottomWallAt(x,y);
+				}
+				if (ThereShouldBeABottomRightCornerAt (x,y)) {
+					PlaceBottomRightCornerAt(x,y);
+				}
+			}
+		}
+	}
+
+	bool ThereShouldBeARightWallAt(int x, int y){
+		if (!InBounds (x, y) && !InBounds (x + 1, y)) {
+			return false;
+		}
+		if (!InBounds (x, y)) {
+			return true;
+		}
+		if (!InBounds(x+1,y)){
+			return true;
+		}
+		if (rooms [x, y] != rooms [x + 1, y]) {
+			return true;
+		}
+		return false;
+	}
+	bool ThereShouldBeABottomWallAt(int x, int y){
+		if (!InBounds (x, y) && !InBounds (x, y+1)) {
+			return false;
+		}
+		if (!InBounds (x, y)) {
+			return true;
+		}
+		if (!InBounds(x,y+1)) {
+			return true;
+		}
+		if (rooms [x, y] != rooms [x, y + 1]) {
+			return true;
+		}
+		return false;
+	}
+	bool ThereShouldBeABottomRightCornerAt(int x, int y){
+		if (!InBounds (x, y)) {
+			return true;
+		}
+		if(!InBounds(x+1,y+1)){
+			return true;
+		}
+		if (rooms [x, y] != rooms [x + 1, y] || rooms [x, y] != rooms [x, y + 1] || rooms [x, y] != rooms [x + 1, y + 1]) {
+			return true;
+		}
+		return false;
+	}
+
+	Vector3 GetCellPositionFor(int x, int y){
+		return new Vector3 (basePosition.x + x * cellSize, basePosition.y - y * cellSize,0f);
+	}
+	void PlaceRightWallAt(int x, int y){
+		GameObject.Instantiate(VerticalWall,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,0f,0f),verticalWallOrientation, WallContainer.transform);
+	}
+	void PlaceBottomWallAt(int x, int y){
+		GameObject.Instantiate(HorizontalWall,GetCellPositionFor(x,y) + new Vector3(0f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
+	}
+	void PlaceBottomRightCornerAt(int x, int y){
+		GameObject.Instantiate(Corner,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
 	}
 }
