@@ -10,7 +10,7 @@ public class Words : MonoBehaviour {
 	string[] currentSourceWords;//a selection of words which each floor in the dungeon will be based on
 	public int numLevels;//how many levels in the dungeon
 	List<string> currentLevelWords;//all words it's possible to make with the letters of the current source word
-	List<string> unmadeLevelWords;//all words from currentLevelWords not yet made (by somebody). 
+	List<string> madeLevelWords;//all words from currentLevelWords not yet made (by somebody). 
 	List<char> currentSourceChars;//all chars in the current source word.
 
 	private AudioSource GetKeySFX;
@@ -21,6 +21,7 @@ public class Words : MonoBehaviour {
 		numletterwords = GetNumLetterWords ();
 		currentSourceWords = GetSomeSourceWords (numLevels, 40, 250);
 		currentSourceChars = new List<char> ();
+		madeLevelWords = new List<string> ();
 		UpdateLevelWords (0);
 	}
 
@@ -30,6 +31,7 @@ public class Words : MonoBehaviour {
 	}
 
 	public void UpdateLevelWords(int level){
+		madeLevelWords.Clear ();
 		currentLevelWords = GetWords (currentSourceWords[level]);
 		char[] sourceChars = currentSourceWords [level].ToCharArray ();
 		currentSourceChars.Clear ();
@@ -38,7 +40,6 @@ public class Words : MonoBehaviour {
 				currentSourceChars.Add (c);
 			}
 		}
-		unmadeLevelWords = currentLevelWords;
 	}
 
 	string[] GetNumLetterWords(){
@@ -79,13 +80,14 @@ public class Words : MonoBehaviour {
 	}
 
 	public bool ValidateWord(string word){
-		if (unmadeLevelWords.Contains (word)) {
-			GetKeySFX.Play ();
-			unmadeLevelWords.Remove (word);
-			return true;
+		if (madeLevelWords.Contains (word)) {
+//			AlreadyMadeWordSFX.Play ();
+			return false;
 		}
 		if(currentLevelWords.Contains(word)){
-			AlreadyMadeWordSFX.Play ();
+			madeLevelWords.Add (word);
+			GetKeySFX.Play ();
+			return true;
 		}
 		return false;
 	}
