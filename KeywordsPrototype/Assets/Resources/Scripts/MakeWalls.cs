@@ -18,7 +18,7 @@ public class MakeWalls : MonoBehaviour {
 	private const float epsilon = 0.005f; //makes borders between walls/corners look better
 	private float cellSize;
 	private Vector3 basePosition;
-	private Quaternion verticalWallOrientation;
+	private Quaternion vertical;
 	public GameObject DoorContainer;
 	public GameObject WallContainer;
 	public GameObject VerticalWall;
@@ -31,9 +31,11 @@ public class MakeWalls : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake(){
+		Destroy (GetComponent<SpriteRenderer> ());
 		cellSize = HorizontalWall.transform.localScale.x + Corner.transform.localScale.x - epsilon;
+		print ("cellSize: " + cellSize);
 		basePosition = new Vector3 (-(width / 2) * cellSize, (height / 2) * cellSize,0f);
-		verticalWallOrientation = VerticalWall.transform.rotation;
+		vertical = VerticalWall.transform.rotation;
 		FillRooms ();
 //		PrintRooms ();
 		GenerateWalls ();
@@ -157,7 +159,7 @@ public class MakeWalls : MonoBehaviour {
 		return new Vector3 (basePosition.x + x * cellSize, basePosition.y - y * cellSize,0f);
 	}
 	void PlaceRightWallAt(int x, int y){
-		GameObject.Instantiate(VerticalWall,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,0f,0f),verticalWallOrientation, WallContainer.transform);
+		GameObject.Instantiate(VerticalWall,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,0f,0f),vertical, WallContainer.transform);
 	}
 	void PlaceBottomWallAt(int x, int y){
 		GameObject.Instantiate(HorizontalWall,GetCellPositionFor(x,y) + new Vector3(0f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
