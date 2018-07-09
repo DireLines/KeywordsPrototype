@@ -9,7 +9,6 @@ public class DoorCollisionCheck : MonoBehaviour {
 
 	void Start(){
 		keys = 0;
-		print ("number of keys: " + keys);
 	}
 	void Update(){
 		SetDoorCollisions ();

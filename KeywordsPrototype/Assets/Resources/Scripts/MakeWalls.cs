@@ -41,6 +41,7 @@ public class MakeWalls : MonoBehaviour {
 		FillRooms ();
 //		PrintRooms ();
 		GenerateWalls ();
+//		MakeLoot ();
 	}
 
 
@@ -51,10 +52,10 @@ public class MakeWalls : MonoBehaviour {
 		numCheckedOff = 0;
 		numSquares = width * height;
 		while (numCheckedOff < numSquares) {
-			MakeRoom (Random.Range(0,width),Random.Range(0,width),Random.Range(5,10),Random.Range(5,10));
+			MakeRoom (Random.Range(0,width),Random.Range(0,width),Random.Range(4,7),Random.Range(4,7));
 		}
 		//Starting Room
-		MakeRoom(width/2,height/2,4,4);
+		MakeRoom(width/2,height/2,3,3);
 
 	}
 
@@ -65,8 +66,8 @@ public class MakeWalls : MonoBehaviour {
 
 	//makes a room of width w and height h centered at [x,y]
 	void MakeRoom(int x, int y, int w, int h){
-		for (int i = -w / 2; i <= w / 2; i++) {
-			for (int j = -h / 2; j <= h / 2; j++) {
+		for (int i = -(w / 2); i <= w / 2; i++) {
+			for (int j = -(h / 2); j <= h / 2; j++) {
 				int a = i + x;
 				int b = j + y;
 				if (InBounds (a, b)) {
@@ -103,17 +104,17 @@ public class MakeWalls : MonoBehaviour {
 		for (int x = -1; x < width; x++) {
 			for (int y = -1; y < height; y++) {
 				if (ThereShouldBeARightWallAt(x,y)) {
-					if (InBounds (x, y) && !InBounds (x + 1, y)) {
+					if (!InBounds(x,y) || !InBounds (x + 1, y)) {
 						PlaceRightWallAt (x, y, 0f);
 					} else {
-						PlaceRightWallAt (x, y, 0.1f);
+						PlaceRightWallAt (x, y, 0.2f);
 					}
 				}
 				if (ThereShouldBeABottomWallAt(x,y)) {
-					if (InBounds (x, y) && !InBounds (x, y+1)) {
+					if (!InBounds(x,y) || !InBounds (x, y+1)) {
 						PlaceBottomWallAt (x, y, 0f);
 					} else {
-						PlaceBottomWallAt (x, y, 0.1f);
+						PlaceBottomWallAt (x, y, 0.2f);
 					}
 				}
 				if (ThereShouldBeABottomRightCornerAt (x,y)) {
@@ -167,7 +168,7 @@ public class MakeWalls : MonoBehaviour {
 	}
 
 	Vector3 GetCellPositionFor(int x, int y){
-		return new Vector3 (basePosition.x + x * cellSize, basePosition.y - y * cellSize,0f);
+		return new Vector3 (basePosition.x + x * cellSize, basePosition.y - y * cellSize,basePosition.z);
 	}
 	void PlaceRightWallAt(int x, int y, float doorChance){
 		float randy = Random.value;
