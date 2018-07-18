@@ -44,25 +44,15 @@ public class PlayerInfo : MonoBehaviour {
 
 	public float GetAxis(string axisName){
 		if (axisName == "Horizontal") {
-//			return Input.GetAxis ("Horizontal");
 			if (playerNum > 0 && playerNum < 5) {
-//				if (playerNum == 1) {
-//					string resultAxis = "P" + playerNum + "_Horizontal";
-//					print (Input.GetAxis ("Horizontal") - Input.GetAxis (resultAxis));
-//				}
-				return Input.GetAxisRaw ("P" + playerNum + "_Horizontal");
+				return Input.GetAxis ("P" + playerNum + "_Horizontal");
 			} else {
 				print ("playerNum not a valid number fix it");
 				return 0f;
 			}
 		} else if (axisName == "Vertical") {
-//			return Input.GetAxis ("Vertical");
 			if (playerNum > 0 && playerNum < 5) {
-//				if (playerNum == 1) {
-//					string resultAxis = "P" + playerNum + "_Vertical";
-//					print (Input.GetAxis ("Vertical") - Input.GetAxis (resultAxis));
-//				}
-				return Input.GetAxisRaw ("P" + playerNum + "_Vertical");
+				return Input.GetAxis ("P" + playerNum + "_Vertical");
 			} else {
 				print ("playerNum not a valid number fix it");
 				return 0f;
