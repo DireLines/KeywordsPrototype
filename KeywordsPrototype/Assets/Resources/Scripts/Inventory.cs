@@ -10,28 +10,36 @@ public class Inventory : MonoBehaviour {
 	GameObject[] items; //references to the gameobjects in inventory
 	private GameObject TileContainer; //the parent object for the letter tiles
 	public Vector3 holdOffset; //what's the hold position of the inventory item?
+
+	//controls
 	private PlayerInfo me;
+	private KeyCode LeftBumper;
+	private KeyCode RightBumper;
+	private KeyCode AButton;
+	private KeyCode BButton;
+
 	// Use this for initialization
 	void Start () {
 		me = GetComponent<PlayerInfo> ();
 		items = new GameObject[inventorySize];
 		TileContainer = GameObject.Find ("Tiles");
 		inventorySlot = 0;
+		SetControls ();
 	}
 
 	// Update is called once per frame
 	void Update () {
 		//Interact with world
-		if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown (me.GetKeyCode("A"))) {
+		if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown (AButton)) {
 			Interact ();
-		} else if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown (me.GetKeyCode("B"))) {
+		} else if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown (BButton)) {
 			Drop ();
 		}
 
 		//Change which item is active
-		if (Input.GetKeyDown (me.GetKeyCode("LeftBumper"))) {
+		if (Input.GetKeyDown (LeftBumper)) {
 			SwitchSlot (correctmod (inventorySlot - 1, inventorySize));
-		} else if (Input.GetKeyDown (me.GetKeyCode("RightBumper"))) {
+		} else if (Input.GetKeyDown (RightBumper)) {
 			SwitchSlot (correctmod (inventorySlot + 1, inventorySize));
 		}
 		if (Input.GetKeyDown (KeyCode.Alpha1)) {
@@ -64,7 +72,12 @@ public class Inventory : MonoBehaviour {
 		activeSquare = null;
 	}
 
-
+	private void SetControls(){
+		AButton = me.GetKeyCode ("A");
+		BButton = me.GetKeyCode ("B");
+		LeftBumper = me.GetKeyCode ("LeftBumper");
+		RightBumper = me.GetKeyCode ("RightBumper");
+	}
 	private void SwitchSlot(int n){
 		if (n < 0 || n >= inventorySize) {
 			print ("tried to change inventory slot to a weird number");

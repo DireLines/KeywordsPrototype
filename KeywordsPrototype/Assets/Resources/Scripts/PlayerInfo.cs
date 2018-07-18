@@ -6,6 +6,10 @@ public class PlayerInfo : MonoBehaviour {
 
 	public int playerNum;
 
+	public void SetInvis(GameObject target){
+		target.layer = LayerMask.NameToLayer ("Hidden" + playerNum);
+	}
+
 	public KeyCode GetKeyCode(string controlName){
 		KeyCode[] controlSet = new KeyCode[4];
 		if (controlName == "A") {

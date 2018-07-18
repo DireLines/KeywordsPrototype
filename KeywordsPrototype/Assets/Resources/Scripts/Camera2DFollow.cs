@@ -22,6 +22,7 @@ namespace UnityStandardAssets._2D
             m_LastTargetPosition = target.position;
             m_OffsetZ = (transform.position - target.position).z;
             transform.parent = null;
+			GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer ("Hidden" + target.gameObject.GetComponent<PlayerInfo>().playerNum));
         }
 
 
