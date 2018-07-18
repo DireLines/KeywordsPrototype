@@ -1,20 +1,28 @@
 Keywords.txt
 
 TODO:
+    -Doors:
+        -Display number of keys needed to open the door
+        -Make them able to be seen differently by different players
+            -Blue if locked
+            -Green if unlocked
     -Dungeons:
-        -improve base room generation algo
+        -place doors intelligently
         -add secret rooms, required rooms
-        -convert generated rooms into set of walls and doors
-        -convert that into real GameObjects
-        -place loot
+        -place loot intelligently
+        -fog of war objects (which disappear upon collision along with their neighbors)
+            -start with one per grid cell
+            -Make neighbors any fog of war objects in the same room
+            -If that's too many objects, figure out the largest rectangle method (i.e. rescaling a fog of war object to fit the largest rectangle entirely within its room)
         -adjust weights on doors according to loot
     -Scrabble Thing:
-        -Call Dec() on any letters that were part of valid words during the last tile swap
-            -set of letter tiles ever encountered in search for words
-            -separate set of tiles that turned out to be part of valid words
         -Make some kind of flash effect or animation to indicate that a word was made
-            -sufficient to make an effect for decremrnting a letter tile.
-    -Make stuff multiplayer
+            -sufficient to make an effect for decrementing a letter tile.
+    -Make stuff multiplayer:
+        -Make UI element for each player's number of keys
+        -Split list of already made words into one for each player, check against that
+        -Door thing
+        -Visible inventory
 
 
 

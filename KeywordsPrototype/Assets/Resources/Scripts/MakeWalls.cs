@@ -216,8 +216,8 @@ public class MakeWalls : MonoBehaviour {
 	}
 
 	void MakeLoot(){
-		for (int i = 0; i < 100; i++) {
-			GameObject.Instantiate (Tile, Random.insideUnitCircle * (width / 2), Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
+		for (int i = 0; i < 150; i++) {
+			GameObject.Instantiate (Tile, Random.insideUnitCircle * cellSize*width/2, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
 		}
 	}
 }

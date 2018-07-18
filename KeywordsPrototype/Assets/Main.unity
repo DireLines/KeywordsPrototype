@@ -159,9 +159,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.51
-    width: 0.49
-    height: 0.49
+    y: 0.5
+    width: 0.495
+    height: 0.495
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1097,8 +1097,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.49
-    height: 0.49
+    width: 0.495
+    height: 0.495
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1302,10 +1302,10 @@ Camera:
   m_BackGroundColor: {r: 0.42352945, g: 0.7058824, b: 0.8470589, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.51
-    y: 0.51
-    width: 0.49
-    height: 0.49
+    x: 0.5
+    y: 0.5
+    width: 0.495
+    height: 0.495
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1410,10 +1410,10 @@ Camera:
   m_BackGroundColor: {r: 0.42352945, g: 0.7058824, b: 0.8470589, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.51
+    x: 0.5
     y: 0
-    width: 0.49
-    height: 0.49
+    width: 0.495
+    height: 0.495
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
