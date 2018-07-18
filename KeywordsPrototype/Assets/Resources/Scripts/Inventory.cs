@@ -20,16 +20,16 @@ public class Inventory : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Interact with world
-		if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown (me.GetControl("A"))) {
+		if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown (me.GetKeyCode("A"))) {
 			Interact ();
-		} else if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown (me.GetControl("B"))) {
+		} else if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown (me.GetKeyCode("B"))) {
 			Drop ();
 		}
 
 		//Change which item is active
-		if (Input.GetKeyDown (me.GetControl("LeftBumper"))) {
+		if (Input.GetKeyDown (me.GetKeyCode("LeftBumper"))) {
 			SwitchSlot (correctmod (inventorySlot - 1, inventorySize));
-		} else if (Input.GetKeyDown (me.GetControl("RightBumper"))) {
+		} else if (Input.GetKeyDown (me.GetKeyCode("RightBumper"))) {
 			SwitchSlot (correctmod (inventorySlot + 1, inventorySize));
 		}
 		if (Input.GetKeyDown (KeyCode.Alpha1)) {

@@ -6,7 +6,7 @@ public class PlayerInfo : MonoBehaviour {
 
 	public int playerNum;
 
-	public KeyCode GetControl(string controlName){
+	public KeyCode GetKeyCode(string controlName){
 		KeyCode[] controlSet = new KeyCode[4];
 		if (controlName == "A") {
 			controlSet = new KeyCode[4] {
@@ -44,29 +44,21 @@ public class PlayerInfo : MonoBehaviour {
 
 	public float GetAxis(string axisName){
 		if (axisName == "Horizontal") {
-			return Input.GetAxis ("Horizontal");
-			if (playerNum == 1) {
-				return Input.GetAxis ("P1_Horizontal");
-			} else if (playerNum == 2) {
-				return Input.GetAxis ("P2_Horizontal");
-			} else if (playerNum == 3) {
-				return Input.GetAxis ("P3_Horizontal");
-			} else if (playerNum == 4) {
-				return Input.GetAxis ("P4_Horizontal");
+//			return Input.GetAxis ("Horizontal");
+			if (playerNum > 0 && playerNum < 5) {
+				string resultAxis = "P" + playerNum + "_Horizontal";
+//				print (resultAxis);
+				return Input.GetAxisRaw ("P" + playerNum + "_Horizontal");
 			} else {
 				print ("playerNum not a valid number fix it");
 				return 0f;
 			}
 		} else if (axisName == "Vertical") {
-			return Input.GetAxis ("Vertical");
-			if (playerNum == 1) {
-				return Input.GetAxis ("P1_Vertical");
-			} else if (playerNum == 2) {
-				return Input.GetAxis ("P2_Vertical");
-			} else if (playerNum == 3) {
-				return Input.GetAxis ("P3_Vertical");
-			} else if (playerNum == 4) {
-				return Input.GetAxis ("P4_Vertical");
+//			return Input.GetAxis ("Vertical");
+			if (playerNum > 0 && playerNum < 5) {
+				string resultAxis = "P" + playerNum + "_Vertical";
+//				print (resultAxis);
+				return Input.GetAxisRaw ("P" + playerNum + "_Vertical");
 			} else {
 				print ("playerNum not a valid number fix it");
 				return 0f;
