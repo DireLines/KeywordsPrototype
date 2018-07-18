@@ -9,8 +9,10 @@ public class Inventory : MonoBehaviour {
 	public GameObject activeSquare;//the grid square the player's currently on
 	GameObject[] items; //references to the gameobjects in inventory
 	public Vector3 holdOffset; //what's the hold position of the inventory item?
+	private PlayerInfo me;
 	// Use this for initialization
 	void Start () {
+		me = GetComponent<PlayerInfo> ();
 		items = new GameObject[inventorySize];
 		inventorySlot = 0;
 	}
@@ -18,17 +20,17 @@ public class Inventory : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Interact with world
-		if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown (KeyCode.Joystick1Button16)) {
+		if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown (me.GetControl("A"))) {
 			Interact ();
-		} else if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown (KeyCode.Joystick1Button17)) {
+		} else if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown (me.GetControl("B"))) {
 			Drop ();
 		}
 
 		//Change which item is active
-		if (Input.GetKeyDown (KeyCode.Joystick1Button13)){
-			SwitchSlot(correctmod(inventorySlot-1,inventorySize));
-		} else if (Input.GetKeyDown (KeyCode.Joystick1Button14)) {
-			SwitchSlot(correctmod(inventorySlot+1,inventorySize));
+		if (Input.GetKeyDown (me.GetControl("LeftBumper"))) {
+			SwitchSlot (correctmod (inventorySlot - 1, inventorySize));
+		} else if (Input.GetKeyDown (me.GetControl("RightBumper"))) {
+			SwitchSlot (correctmod (inventorySlot + 1, inventorySize));
 		}
 		if (Input.GetKeyDown (KeyCode.Alpha1)) {
 			SwitchSlot (0);
