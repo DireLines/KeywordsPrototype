@@ -8,12 +8,14 @@ public class Inventory : MonoBehaviour {
 	const float pickupRadius = 0.2f; //how far away can the player pick up an object?
 	public GameObject activeSquare;//the grid square the player's currently on
 	GameObject[] items; //references to the gameobjects in inventory
+	private GameObject TileContainer; //the parent object for the letter tiles
 	public Vector3 holdOffset; //what's the hold position of the inventory item?
 	private PlayerInfo me;
 	// Use this for initialization
 	void Start () {
 		me = GetComponent<PlayerInfo> ();
 		items = new GameObject[inventorySize];
+		TileContainer = GameObject.Find ("Tiles");
 		inventorySlot = 0;
 	}
 
@@ -129,7 +131,7 @@ public class Inventory : MonoBehaviour {
 //		print ("dropping");
 		if (activeSquare == null) {
 			if (items [inventorySlot] != null) {
-				items [inventorySlot].transform.SetParent (null);
+				items [inventorySlot].transform.SetParent (TileContainer.transform);
 				items [inventorySlot].GetComponent<SpriteRenderer> ().sortingOrder -= 2;
 				foreach (Transform child in items [inventorySlot].transform) {
 					child.gameObject.GetComponent<SpriteRenderer> ().sortingOrder -= 2;

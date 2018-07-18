@@ -24,10 +24,12 @@ public class MakeWalls : MonoBehaviour {
 	private Quaternion vertical;
 	public GameObject DoorContainer;
 	public GameObject WallContainer;
+	public GameObject TileContainer;
 	public GameObject Wall;
 	public GameObject Corner;
 	public GameObject Door;
 	public GameObject WallSmall;
+	public GameObject Tile;
 
 	// Use this for initialization
 	void Awake(){
@@ -40,7 +42,7 @@ public class MakeWalls : MonoBehaviour {
 		FillRooms ();
 //		PrintRooms ();
 		GenerateWalls ();
-//		MakeLoot ();
+		MakeLoot ();
 	}
 
 
@@ -211,5 +213,11 @@ public class MakeWalls : MonoBehaviour {
 //	}
 	void PlaceBottomRightCornerAt(int x, int y){
 		GameObject.Instantiate(Corner,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
+	}
+
+	void MakeLoot(){
+		for (int i = 0; i < 100; i++) {
+			GameObject.Instantiate (Tile, Random.insideUnitCircle * (width / 2), Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
+		}
 	}
 }
