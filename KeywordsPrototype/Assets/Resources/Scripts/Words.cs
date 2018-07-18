@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 
 public class Words : MonoBehaviour {
-	private const int numLettersInSource = 7;
+	private const int numLettersInSource = 6;
 	string[] words;//all words in the dictionary file
 	string[] numletterwords;//all words of exactly numLettersInSource letters in length
 	string[] currentSourceWords;//a selection of words which each floor in the dungeon will be based on

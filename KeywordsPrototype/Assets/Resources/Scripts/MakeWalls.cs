@@ -13,6 +13,8 @@ public class MakeWalls : MonoBehaviour {
 	public int[,] rooms;
 
 	//translation - variables for turning grid into gameobjects
+	List<Vector2Int> rightDoorSquares;
+	List<Vector2Int> bottomDoorSquares;
 
 	//front end - generated game objects
 	private const float epsilon = 0.005f; //makes borders between walls/corners look better
@@ -22,21 +24,18 @@ public class MakeWalls : MonoBehaviour {
 	private Quaternion vertical;
 	public GameObject DoorContainer;
 	public GameObject WallContainer;
-	public GameObject VerticalWall;
-	public GameObject HorizontalWall;
+	public GameObject Wall;
 	public GameObject Corner;
 	public GameObject Door;
-	public GameObject VerticalWallSmall;
-	public GameObject HorizontalWallSmall;
-
+	public GameObject WallSmall;
 
 	// Use this for initialization
 	void Awake(){
 		Destroy (GetComponent<SpriteRenderer> ());
-		cellSize = HorizontalWall.transform.localScale.x + Corner.transform.localScale.x - epsilon;
+		cellSize = Wall.transform.localScale.x + Corner.transform.localScale.x - epsilon;
 		print ("cellSize: " + cellSize);
 		basePosition = new Vector3 (-(width / 2) * cellSize, (height / 2) * cellSize,0f);
-		vertical = VerticalWall.transform.rotation;
+		vertical = Quaternion.Euler (0, 0, 90);
 
 		FillRooms ();
 //		PrintRooms ();
@@ -173,25 +172,43 @@ public class MakeWalls : MonoBehaviour {
 	void PlaceRightWallAt(int x, int y, float doorChance){
 		float randy = Random.value;
 		if (randy < doorChance) {
-			GameObject.Instantiate (VerticalWallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * 0.5f, cellSize * smallWallOffset, 0f), vertical, WallContainer.transform);
+			GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * 0.5f, cellSize * smallWallOffset, 0f), vertical, WallContainer.transform);
 			GameObject newDoor = GameObject.Instantiate (Door, GetCellPositionFor (x, y) + new Vector3 (cellSize * 0.5f,0f, 0f), vertical, DoorContainer.transform);
-			GameObject.Instantiate (VerticalWallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * 0.5f, -cellSize * smallWallOffset, 0f), vertical, WallContainer.transform);
+			GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * 0.5f, -cellSize * smallWallOffset, 0f), vertical, WallContainer.transform);
 			newDoor.GetComponent<Door> ().keyNum = (int)((Vector2)newDoor.transform.position).magnitude;
 			return;
 		}
-		GameObject.Instantiate(VerticalWall,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,0f,0f),vertical, WallContainer.transform);
+		GameObject.Instantiate(Wall,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,0f,0f),vertical, WallContainer.transform);
 	}
 	void PlaceBottomWallAt(int x, int y, float doorChance){
 		float randy = Random.value;
 		if (randy < doorChance) {
-			GameObject.Instantiate (HorizontalWallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * smallWallOffset, -cellSize * 0.5f, 0f), Quaternion.identity, WallContainer.transform);
+			GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * smallWallOffset, -cellSize * 0.5f, 0f), Quaternion.identity, WallContainer.transform);
 			GameObject newDoor = GameObject.Instantiate (Door, GetCellPositionFor (x, y) + new Vector3 (0f,-cellSize * 0.5f, 0f), Quaternion.identity, DoorContainer.transform);
-			GameObject.Instantiate (HorizontalWallSmall, GetCellPositionFor (x, y) + new Vector3 (-cellSize * smallWallOffset, -cellSize * 0.5f, 0f), Quaternion.identity, WallContainer.transform);
+			GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (-cellSize * smallWallOffset, -cellSize * 0.5f, 0f), Quaternion.identity, WallContainer.transform);
 			newDoor.GetComponent<Door> ().keyNum = (int)((Vector2)newDoor.transform.position).magnitude;
 			return;
 		}
-		GameObject.Instantiate(HorizontalWall,GetCellPositionFor(x,y) + new Vector3(0f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
+		GameObject.Instantiate(Wall,GetCellPositionFor(x,y) + new Vector3(0f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
 	}
+//	void PlaceRightDoorAt(int x, int y){
+//		GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * 0.5f, cellSize * smallWallOffset, 0f), vertical, WallContainer.transform);
+//		GameObject newDoor = GameObject.Instantiate (Door, GetCellPositionFor (x, y) + new Vector3 (cellSize * 0.5f,0f, 0f), vertical, DoorContainer.transform);
+//		GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * 0.5f, -cellSize * smallWallOffset, 0f), vertical, WallContainer.transform);
+//		newDoor.GetComponent<Door> ().keyNum = (int)((Vector2)newDoor.transform.position).magnitude;
+//	}
+//	void PlaceBottomDoorAt(int x, int y){
+//		GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * smallWallOffset, -cellSize * 0.5f, 0f), Quaternion.identity, WallContainer.transform);
+//		GameObject newDoor = GameObject.Instantiate (Door, GetCellPositionFor (x, y) + new Vector3 (0f,-cellSize * 0.5f, 0f), Quaternion.identity, DoorContainer.transform);
+//		GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (-cellSize * smallWallOffset, -cellSize * 0.5f, 0f), Quaternion.identity, WallContainer.transform);
+//		newDoor.GetComponent<Door> ().keyNum = (int)((Vector2)newDoor.transform.position).magnitude;
+//	}
+//	void PlaceRightWallAt(int x, int y){
+//		GameObject.Instantiate(VerticalWall,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,0f,0f),vertical, WallContainer.transform);
+//	}
+//	void PlaceBottomWallAt(int x, int y){
+//		GameObject.Instantiate(HorizontalWall,GetCellPositionFor(x,y) + new Vector3(0f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
+//	}
 	void PlaceBottomRightCornerAt(int x, int y){
 		GameObject.Instantiate(Corner,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
 	}
