@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour {
-	const int inventorySize = 5; //how big is the inventory?
+	private int inventorySize = 7; //how big is the inventory?
 	public int inventorySlot;//which slot is currently active?
 	const float pickupRadius = 0.2f; //how far away can the player pick up an object?
 	public GameObject activeSquare;//the grid square the player's currently on
@@ -42,17 +42,25 @@ public class Inventory : MonoBehaviour {
 		} else if (Input.GetKeyDown (RightBumper)) {
 			SwitchSlot (correctmod (inventorySlot + 1, inventorySize));
 		}
-		if (Input.GetKeyDown (KeyCode.Alpha1)) {
-			SwitchSlot (0);
-		} else if (Input.GetKeyDown (KeyCode.Alpha2)) {
-			SwitchSlot (1);
-		} else if (Input.GetKeyDown (KeyCode.Alpha3)) {
-			SwitchSlot (2);
-		} else if (Input.GetKeyDown (KeyCode.Alpha4)) {
-			SwitchSlot (3);
-		} else if (Input.GetKeyDown (KeyCode.Alpha5)) {
-			SwitchSlot (4);
-		}
+//		if (Input.GetKeyDown (KeyCode.Alpha1)) {
+//			SwitchSlot (0);
+//		} else if (Input.GetKeyDown (KeyCode.Alpha2)) {
+//			SwitchSlot (1);
+//		} else if (Input.GetKeyDown (KeyCode.Alpha3)) {
+//			SwitchSlot (2);
+//		} else if (Input.GetKeyDown (KeyCode.Alpha4)) {
+//			SwitchSlot (3);
+//		} else if (Input.GetKeyDown (KeyCode.Alpha5)) {
+//			SwitchSlot (4);
+//		} else if (Input.GetKeyDown (KeyCode.Alpha6)) {
+//			SwitchSlot (5);
+//		} else if (Input.GetKeyDown (KeyCode.Alpha7)) {
+//			SwitchSlot (6);
+//		} else if (Input.GetKeyDown (KeyCode.Alpha8)) {
+//			SwitchSlot (7);
+//		} else if (Input.GetKeyDown (KeyCode.Alpha9)) {
+//			SwitchSlot (8);
+//		}
 	}
 
 	//C# mod is not too useful

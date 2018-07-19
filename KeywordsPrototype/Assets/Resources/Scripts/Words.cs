@@ -23,6 +23,7 @@ public class Words : MonoBehaviour {
 		currentSourceChars = new List<char> ();
 		madeLevelWords = new List<string> ();
 		UpdateLevelWords (0);
+		DontDestroyOnLoad (gameObject);
 	}
 
 	void Start(){

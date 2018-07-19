@@ -2,7 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+class GraphNode {
+	public int value;
+	public List<GraphNode> neighbors;
+}
 public class MakeWalls : MonoBehaviour {
+//	public MakeWalls(int w, int h){
+//		width = w;
+//		height = h;
+//	}
 	//back end - grid of rooms
 	public int width;
 	public int height;
@@ -15,6 +23,7 @@ public class MakeWalls : MonoBehaviour {
 	//translation - variables for turning grid into gameobjects
 	List<Vector2Int> rightDoorSquares;
 	List<Vector2Int> bottomDoorSquares;
+	List<GraphNode> borderGraph;
 
 	//front end - generated game objects
 	private const float epsilon = 0.005f; //makes borders between walls/corners look better
@@ -45,6 +54,23 @@ public class MakeWalls : MonoBehaviour {
 		MakeLoot ();
 	}
 
+	public void MakeFloor(){
+		//clear out old stuff
+		foreach (Transform child in DoorContainer.transform) {
+			Destroy (child.gameObject);
+		}
+		foreach (Transform child in WallContainer.transform) {
+			Destroy (child.gameObject);
+		}
+		foreach (Transform child in TileContainer.transform) {
+			Destroy (child.gameObject);
+		}
+
+		//make new stuff
+		FillRooms ();
+		GenerateWalls ();
+		MakeLoot ();
+	}
 
 	//BACK END
 	void FillRooms(){

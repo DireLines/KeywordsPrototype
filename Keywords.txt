@@ -11,10 +11,14 @@ TODO:
             -start with one per grid cell
             -Make neighbors any fog of war objects in the same room
             -If that's too many objects, figure out the largest rectangle method (i.e. rescaling a fog of war object to fit the largest rectangle entirely within its room)
+        -Minimap
         -adjust weights on doors according to loot
     -Scrabble Thing:
         -Make some kind of flash effect or animation to indicate that a word was made
             -sufficient to make an effect for decrementing a letter tile.
+        -Make a flashy effect for showing a door was unlocked
+            -flash starts at word just made, moves toward unlocked door
+            -only player who sees it is the player who unlocked the door
     -Make stuff multiplayer:
         -Make UI element for each player's number of keys
         -Split list of already made words into one for each player, check against that
@@ -60,6 +64,7 @@ Behind the locked doors are
     -teleporter remote: see Teleporter
     -blink: a local teleporter just like the one in Spelunky. Can teleport you through walls but only into rooms you would normally be able to access and secret rooms (you are limited by your number of keys)
     -dash: A dash like the one in Hyper Light Drifter.
+    -Item that reduces cooldown on any of these that are activated (blink, grappling hook, etc)
 -misc. reusable items
     -Tile Freeze: used on a tile placed on a grid, freezing it in its place. Has a cooldown of 30 seconds.
     -Tile Unfreeze: used on a tile placed on a grid, negating the effect of a Tile Freeze. Has a cooldown of 15 seconds.
