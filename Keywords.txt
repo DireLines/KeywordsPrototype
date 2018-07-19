@@ -18,7 +18,7 @@ TODO:
     -Make stuff multiplayer:
         -Make UI element for each player's number of keys
         -Split list of already made words into one for each player, check against that
-        -Visible inventory
+        -Visible inventory UI
 
 
 
@@ -54,6 +54,7 @@ Behind the locked doors are
     -walking speed buffs
     -temporary stacking walking speed buffs (like Skooma)
     -Making a word longer than four letters gives you substantial walking speed boosts (like 5 seconds for each letter longer than 4)
+        -This is to compensate for smaller words being more tile-efficient
     -slime: walk faster anywhere you've walked before, slower everywhere else
     -grappling hook: shoot at a wall and you will get dragged to the point on the wall the hook hits real fast. You can do that swing around thing like in all those grappling hook platformers.
     -teleporter remote: see Teleporter
