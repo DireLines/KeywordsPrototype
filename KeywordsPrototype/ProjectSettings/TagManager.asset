@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pickup
   - LetterTile
+  - Wall
   layers:
   - Default
   - TransparentFX

@@ -2167,7 +2167,7 @@ MonoBehaviour:
   TileContainer: {fileID: 1350805110}
   Wall: {fileID: 1902885538303810, guid: 947cea93a1f5f4e46bd68f1911a272e1, type: 2}
   Corner: {fileID: 1385444544092320, guid: 3001233bf52604d7dafab8eca4f32900, type: 2}
-  Door: {fileID: 1205634193462772, guid: 4e0646f5e112f43669cf661613e4cb1e, type: 2}
+  Door: {fileID: 1224114833238022, guid: 4e0646f5e112f43669cf661613e4cb1e, type: 2}
   WallSmall: {fileID: 1205634193462772, guid: 974c4157089604355b88a0b286bb4f89, type: 2}
   Tile: {fileID: 1328259343011714, guid: f2c8f2487583c4c89bc6dd4a23624369, type: 2}
 --- !u!114 &1569157445

@@ -8,16 +8,19 @@ public class Door : MonoBehaviour {
 	private AudioSource unlockDoorSFX;
 	private bool locked;
 	private SetInvis invis;
+	private GameObject lockedSprite;//child sprite object showing door as locked to players who haven't unlocked it
 
 	void Start(){
 		invis = GameObject.Find ("GM").GetComponent<SetInvis> ();
 		unlockDoorSFX = GameObject.Find ("UnlockDoorSFX").GetComponent<AudioSource>();
 		locked = true;
+		lockedSprite = transform.GetChild (0).gameObject;
 	}
 
-	public void Unlock(){
+	public void Unlock(GameObject ByWhom){
 		if (locked) {
 			locked = false;
+			ByWhom.GetComponent<PlayerInfo> ().SetInvis (lockedSprite);
 			unlockDoorSFX.Play ();
 		}
 	}

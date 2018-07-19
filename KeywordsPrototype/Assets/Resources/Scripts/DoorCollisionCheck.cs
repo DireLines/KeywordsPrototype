@@ -18,8 +18,7 @@ public class DoorCollisionCheck : MonoBehaviour {
 			Door door = child.gameObject.GetComponent<Door> ();
 			if (keys >= door.keyNum) {
 //				print ("Ayy");
-				GetComponent<PlayerInfo>().SetInvis(child.gameObject);
-				door.Unlock();
+				door.Unlock(gameObject);
 				Physics2D.IgnoreCollision (GetComponent<CircleCollider2D> (), door.GetComponent<BoxCollider2D> ());
 			}
 			else {

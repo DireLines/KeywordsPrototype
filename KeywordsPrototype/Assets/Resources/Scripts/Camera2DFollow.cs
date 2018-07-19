@@ -22,9 +22,34 @@ namespace UnityStandardAssets._2D
             m_LastTargetPosition = target.position;
             m_OffsetZ = (transform.position - target.position).z;
             transform.parent = null;
-			GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer ("Hidden" + target.gameObject.GetComponent<PlayerInfo>().playerNum));
+			ConstructCullingMask(target.gameObject.GetComponent<PlayerInfo>().playerNum);
         }
 
+		private void ConstructCullingMask(int playerNum){
+			if (playerNum == 1) {
+				for (int i = 1; i < 16; i += 2) {
+					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i, 2).PadLeft(4,'0')));
+				}
+			} else if (playerNum == 2) {
+				for (int i = 2; i < 16; i += 4) {
+					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i, 2).PadLeft(4,'0')));
+					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i + 1, 2).PadLeft(4,'0')));
+				}
+			} else if (playerNum == 3) {
+				for (int i = 4; i < 16; i += 8) {
+					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i, 2).PadLeft(4,'0')));
+					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i + 1, 2).PadLeft(4,'0')));
+					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i + 2, 2).PadLeft(4,'0')));
+					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i + 3, 2).PadLeft(4,'0')));
+				}
+			} else if (playerNum == 4) {
+				for (int i = 8; i < 16; i++) {
+					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i, 2).PadLeft(4,'0')));
+				}
+			} else {
+				print ("ConstructCullingMask called on weird value of playerNum");
+			}
+		}
 
         // Update is called once per frame
         private void Update()

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,8 +7,10 @@ public class PlayerInfo : MonoBehaviour {
 
 	public int playerNum;
 
-	public void SetInvis(GameObject target){
-		target.layer = LayerMask.NameToLayer ("Hidden" + playerNum);
+	public void SetInvis(GameObject obj){
+		int oldLayerValue = Convert.ToInt32(LayerMask.LayerToName (obj.layer),2);
+		oldLayerValue |= (1 << (playerNum - 1));
+		obj.layer = LayerMask.NameToLayer(Convert.ToString (oldLayerValue, 2).PadLeft(4,'0'));
 	}
 
 	public KeyCode GetKeyCode(string controlName){
