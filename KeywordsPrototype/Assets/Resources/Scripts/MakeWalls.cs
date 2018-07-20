@@ -52,8 +52,8 @@ public class MakeWalls : MonoBehaviour {
 		vertical = Quaternion.Euler (0, 0, 90);
 
 		FillRooms ();
-//		PrintRooms ();
 		GenerateWalls ();
+		PlaceFogOfWar ();
 		MakeLoot ();
 	}
 
@@ -71,7 +71,9 @@ public class MakeWalls : MonoBehaviour {
 
 		//make new stuff
 		FillRooms ();
-		GenerateWalls ();
+		//PrintRooms();
+		GenerateWalls ();	
+		PlaceFogOfWar ();
 		MakeLoot ();
 	}
 
@@ -130,7 +132,7 @@ public class MakeWalls : MonoBehaviour {
 	}
 
 	void GenerateWalls(){
-		print ("makin dungeon walls and fog of war");
+		print ("makin dungeon walls");
 		VoidArray = new GameObject[width, height];
 		for (int x = -1; x < width; x++) {
 			for (int y = -1; y < height; y++) {
@@ -153,6 +155,10 @@ public class MakeWalls : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	void PlaceFogOfWar(){
+		print ("placing fog of war objects");
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				PlaceFogOfWarAt (x, y);
@@ -223,7 +229,7 @@ public class MakeWalls : MonoBehaviour {
 			GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * smallWallOffset, -cellSize * 0.5f, 0f), Quaternion.identity, WallContainer.transform);
 			GameObject newDoor = GameObject.Instantiate (Door, GetCellPositionFor (x, y) + new Vector3 (0f,-cellSize * 0.5f, 0f), Quaternion.identity, DoorContainer.transform);
 			GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (-cellSize * smallWallOffset, -cellSize * 0.5f, 0f), Quaternion.identity, WallContainer.transform);
-			newDoor.GetComponent<Door> ().keyNum = (int)((Vector2)newDoor.transform.position).magnitude;
+			newDoor.GetComponent<Door> ().keyNum = (int)(((Vector2)newDoor.transform.position).magnitude);
 			return;
 		}
 		GameObject.Instantiate(Wall,GetCellPositionFor(x,y) + new Vector3(0f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
@@ -263,7 +269,8 @@ public class MakeWalls : MonoBehaviour {
 		}
 	}
 	void MakeLoot(){
-		for (int i = 0; i < 150; i++) {
+		print ("making some sweet loot");
+		for (int i = 0; i < (width*height)/16; i++) {
 			GameObject.Instantiate (Tile, Random.insideUnitCircle * cellSize*width/2, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
 		}
 	}

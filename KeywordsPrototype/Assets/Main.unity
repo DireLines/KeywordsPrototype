@@ -160,8 +160,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0.5
-    width: 0.495
-    height: 0.495
+    width: 0.5
+    height: 0.5
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -311,6 +311,10 @@ Prefab:
     - target: {fileID: 1617699060482744, guid: 4908f74bb8e1e4b9ebe60dd080313319, type: 2}
       propertyPath: m_Name
       value: Player4UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1617699060482744, guid: 4908f74bb8e1e4b9ebe60dd080313319, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4908f74bb8e1e4b9ebe60dd080313319, type: 2}
@@ -476,6 +480,10 @@ Prefab:
     - target: {fileID: 1617699060482744, guid: 4908f74bb8e1e4b9ebe60dd080313319, type: 2}
       propertyPath: m_Name
       value: Player1UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1617699060482744, guid: 4908f74bb8e1e4b9ebe60dd080313319, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4908f74bb8e1e4b9ebe60dd080313319, type: 2}
@@ -1287,8 +1295,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.495
-    height: 0.495
+    width: 0.5
+    height: 0.5
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1494,8 +1502,8 @@ Camera:
     serializedVersion: 2
     x: 0.5
     y: 0.5
-    width: 0.495
-    height: 0.495
+    width: 0.5
+    height: 0.5
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1630,8 +1638,8 @@ Camera:
     serializedVersion: 2
     x: 0.5
     y: 0
-    width: 0.495
-    height: 0.495
+    width: 0.5
+    height: 0.5
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1986,6 +1994,10 @@ Prefab:
     - target: {fileID: 1617699060482744, guid: 4908f74bb8e1e4b9ebe60dd080313319, type: 2}
       propertyPath: m_Name
       value: Player2UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1617699060482744, guid: 4908f74bb8e1e4b9ebe60dd080313319, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4908f74bb8e1e4b9ebe60dd080313319, type: 2}
@@ -2591,6 +2603,10 @@ Prefab:
     - target: {fileID: 1617699060482744, guid: 4908f74bb8e1e4b9ebe60dd080313319, type: 2}
       propertyPath: m_Name
       value: Player3UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1617699060482744, guid: 4908f74bb8e1e4b9ebe60dd080313319, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4908f74bb8e1e4b9ebe60dd080313319, type: 2}

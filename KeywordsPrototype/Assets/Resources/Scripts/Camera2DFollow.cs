@@ -27,25 +27,31 @@ namespace UnityStandardAssets._2D
         }
 
 		private void ConstructCullingMask(int playerNum){
+			Camera cam = GetComponent<Camera> ();
+			cam.cullingMask &= ~(1 << LayerMask.NameToLayer ("P1"));
+			cam.cullingMask &= ~(1 << LayerMask.NameToLayer ("P2"));
+			cam.cullingMask &= ~(1 << LayerMask.NameToLayer ("P3"));
+			cam.cullingMask &= ~(1 << LayerMask.NameToLayer ("P4"));
+			cam.cullingMask |= 1 << LayerMask.NameToLayer ("P"+playerNum);
 			if (playerNum == 1) {
 				for (int i = 1; i < 16; i += 2) {
-					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i, 2).PadLeft(4,'0')));
+					cam.cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i, 2).PadLeft(4,'0')));
 				}
 			} else if (playerNum == 2) {
 				for (int i = 2; i < 16; i += 4) {
-					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i, 2).PadLeft(4,'0')));
-					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i + 1, 2).PadLeft(4,'0')));
+					cam.cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i, 2).PadLeft(4,'0')));
+					cam.cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i + 1, 2).PadLeft(4,'0')));
 				}
 			} else if (playerNum == 3) {
 				for (int i = 4; i < 16; i += 8) {
-					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i, 2).PadLeft(4,'0')));
-					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i + 1, 2).PadLeft(4,'0')));
-					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i + 2, 2).PadLeft(4,'0')));
-					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i + 3, 2).PadLeft(4,'0')));
+					cam.cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i, 2).PadLeft(4,'0')));
+					cam.cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i + 1, 2).PadLeft(4,'0')));
+					cam.cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i + 2, 2).PadLeft(4,'0')));
+					cam.cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i + 3, 2).PadLeft(4,'0')));
 				}
 			} else if (playerNum == 4) {
 				for (int i = 8; i < 16; i++) {
-					GetComponent<Camera> ().cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i, 2).PadLeft(4,'0')));
+					cam.cullingMask &= ~(1 << LayerMask.NameToLayer (Convert.ToString (i, 2).PadLeft(4,'0')));
 				}
 			} else {
 				print ("ConstructCullingMask called on weird value of playerNum");

@@ -7,10 +7,7 @@ TODO:
         -place doors intelligently
         -add secret rooms, required rooms
         -place loot intelligently
-        -fog of war objects (which disappear upon collision along with their neighbors)
-            -start with one per grid cell
-            -Make neighbors any fog of war objects in the same room
-            -If that's too many objects, figure out the largest rectangle method (i.e. rescaling a fog of war object to fit the largest rectangle entirely within its room)
+        -Possible optimization for fog of war objects : rescale them to fill the largest possible rectangle instead of just having a bunch of square ones (it would require fewer objects)
         -Minimap
         -adjust weights on doors according to loot
     -Scrabble Thing:
