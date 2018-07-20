@@ -34,11 +34,14 @@ public class MakeWalls : MonoBehaviour {
 	public GameObject DoorContainer;
 	public GameObject WallContainer;
 	public GameObject TileContainer;
+	public GameObject VoidContainer;//container for fog of war objects
+	public GameObject[,] VoidArray;//grid of fog of war objects
 	public GameObject Wall;
 	public GameObject Corner;
 	public GameObject Door;
 	public GameObject WallSmall;
 	public GameObject Tile;
+	public GameObject Void;//fog of war objects
 
 	// Use this for initialization
 	void Awake(){
@@ -127,7 +130,8 @@ public class MakeWalls : MonoBehaviour {
 	}
 
 	void GenerateWalls(){
-		print ("makin dungeon walls");
+		print ("makin dungeon walls and fog of war");
+		VoidArray = new GameObject[width, height];
 		for (int x = -1; x < width; x++) {
 			for (int y = -1; y < height; y++) {
 				if (ThereShouldBeARightWallAt(x,y)) {
@@ -147,6 +151,11 @@ public class MakeWalls : MonoBehaviour {
 				if (ThereShouldBeABottomRightCornerAt (x,y)) {
 					PlaceBottomRightCornerAt(x,y);
 				}
+			}
+		}
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				PlaceFogOfWarAt (x, y);
 			}
 		}
 	}
@@ -241,6 +250,18 @@ public class MakeWalls : MonoBehaviour {
 		GameObject.Instantiate(Corner,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
 	}
 
+	void PlaceFogOfWarAt(int x, int y){
+		GameObject newFog = GameObject.Instantiate(Void,GetCellPositionFor(x,y),Quaternion.identity,VoidContainer.transform);
+		VoidArray [x, y] = newFog;
+		if (!ThereShouldBeARightWallAt (x - 1, y)) {
+			newFog.GetComponent<FogOfWar> ().neighbors.Add (VoidArray [x - 1, y]);
+			VoidArray [x-1, y].GetComponent<FogOfWar> ().neighbors.Add (newFog);
+		}
+		if (!ThereShouldBeABottomWallAt (x, y-1)) {
+			newFog.GetComponent<FogOfWar> ().neighbors.Add (VoidArray [x, y-1]);
+			VoidArray [x, y-1].GetComponent<FogOfWar> ().neighbors.Add (newFog);
+		}
+	}
 	void MakeLoot(){
 		for (int i = 0; i < 150; i++) {
 			GameObject.Instantiate (Tile, Random.insideUnitCircle * cellSize*width/2, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
