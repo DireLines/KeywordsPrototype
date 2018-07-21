@@ -169,3 +169,4 @@ Solution:
     If you make a short word, you get a key from it and so can anybody else who was screenpeeking and has the necessary tiles.
     If you make a longer word, you get a key from it but nobody else can for the rest of the level. So it's like calling dibs on a word because you were the first to think of it (well, be able to make it)
     Currently I think 3 to 5-letter words should count as "short" and 6 or above count as "long"
+    Another idea, to sweeten the pot, is that making some substantial number of longer words over the course of the game awards you a victory point at the end 

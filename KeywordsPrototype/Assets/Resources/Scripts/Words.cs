@@ -13,6 +13,8 @@ public class Words : MonoBehaviour {
 	List<string> madeLevelWords;//all words from currentLevelWords not yet made (by somebody).
 	List<string>[] madeLevelWordsForEachPlayer;
 	List<char> currentSourceChars;//all chars in the current source word.
+	public int levelScore;//how fertile are the characters in the level?
+	public float humanKnowledgeFactor = 0.7f; //approximately what percentage of words less than 8 letters long does the average player actually know?
 
 	private AudioSource GetKeySFX;
 	private AudioSource AlreadyMadeWordSFX;
@@ -39,6 +41,7 @@ public class Words : MonoBehaviour {
 	public void UpdateLevelWords(int level){
 		madeLevelWords.Clear ();
 		currentLevelWords = GetWords (currentSourceWords[level]);
+		levelScore = currentLevelWords.Count;
 		char[] sourceChars = currentSourceWords [level].ToCharArray ();
 		currentSourceChars.Clear ();
 		foreach (char c in sourceChars) {
