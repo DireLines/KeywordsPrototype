@@ -53,7 +53,7 @@ public class MakeWalls : MonoBehaviour {
 
 		FillRooms ();
 		GenerateWalls ();
-//		PlaceFogOfWar ();
+		PlaceFogOfWar ();
 		MakeLoot ();
 	}
 

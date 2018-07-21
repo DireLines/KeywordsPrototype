@@ -90,6 +90,8 @@ Behind the locked doors are
     -set of letters that will be used next level
     -words on the current level nobody has made yet (or maybe definitions of them, as hints)
 -weapons: pretty basic set of weapons. Infinite ammo and all that (combat is not really a focus of the game)
+    -Main deal is that all enemies are weak except boss's minions, but higher damage weapons make it faster to kill things (wider area of effect / faster attack speed)
+    -however, as a cost, higher damage weapons damage letter tiles dropped by killed / injured enemies more
     -sword
     -mace
     -warhammer
@@ -156,3 +158,14 @@ Behind the locked doors are
     -Reward for beating the Final Boss:
         -Game is over
         -The person who deals the final blow to the boss gets FIVE victory points
+
+
+Problem: 
+    making shorter words is objectively less cool in all word games. 
+    However, according to the current game mechanics it's advantageous because you get more keys per tile use. 
+    How can you make making longer words cooler than making shorter words?
+Solution:
+    Make it so that each player has a list of short words they've made, but there is a global list of longer words anybody has made.
+    If you make a short word, you get a key from it and so can anybody else who was screenpeeking and has the necessary tiles.
+    If you make a longer word, you get a key from it but nobody else can for the rest of the level. So it's like calling dibs on a word because you were the first to think of it (well, be able to make it)
+    Currently I think 3 to 5-letter words should count as "short" and 6 or above count as "long"
