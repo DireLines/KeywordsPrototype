@@ -24,5 +24,6 @@ public class FogOfWar : MonoBehaviour {
 			neighbor.GetComponent<FogOfWar> ().HideMyselfAndMyNeighbors();
 		}
 		gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+		gameObject.GetComponent<BoxCollider2D>().enabled = false;//prevent repeat triggering
 	}
 }

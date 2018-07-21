@@ -32,11 +32,11 @@ public class LetterTile : MonoBehaviour {
 
 	public void SetMatches(int newmatches){
 		if (newmatches < 0 || newmatches > 16) {//out of range
-			print("tried to set to weird number");
+			print("tried to set letter tile to weird number");
 			return;
 		}
 		if (newmatches == 0) {
-			print ("tile dead");
+//			print ("tile dead");
 			GridSquare gc = transform.parent.gameObject.GetComponent<GridSquare> ();
 			if (gc != null) {
 				gc.SetTile (null);

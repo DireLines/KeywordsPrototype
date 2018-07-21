@@ -62,6 +62,7 @@ public class MakeWalls : MonoBehaviour {
 		ConnectRooms ();
 		PlaceFogOfWar ();
 		MakeLoot ();
+		print ("level Score: " + GetComponent<Words> ().levelScore);
 	}
 
 	//BACK END

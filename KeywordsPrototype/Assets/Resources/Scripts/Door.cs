@@ -8,11 +8,9 @@ public class Door : MonoBehaviour {
 	public int keyNum; //how many keys does the player need to unlock the door?
 	private AudioSource unlockDoorSFX;
 	private bool[] locked;
-	private SetInvis invis;
 	private GameObject lockedSprite;//child sprite object showing door as locked to players who haven't unlocked it
 
 	void Start(){
-		invis = GameObject.Find ("GM").GetComponent<SetInvis> ();
 		unlockDoorSFX = GameObject.Find ("UnlockDoorSFX").GetComponent<AudioSource>();
 		locked = new bool[4]{true,true,true,true};
 		lockedSprite = transform.GetChild (0).gameObject;

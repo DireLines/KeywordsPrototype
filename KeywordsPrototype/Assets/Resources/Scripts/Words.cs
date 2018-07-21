@@ -22,7 +22,7 @@ public class Words : MonoBehaviour {
 	void Awake(){
 		words = File.ReadAllLines("Assets/Words.txt");
 		numletterwords = GetNumLetterWords ();
-		currentSourceWords = GetSomeSourceWords (numLevels, 40, 250);
+		currentSourceWords = GetSomeSourceWords (numLevels, 75, 250);
 		currentSourceChars = new List<char> ();
 		madeLevelWords = new List<string> ();
 		madeLevelWordsForEachPlayer = new List<string>[4];
@@ -116,6 +116,7 @@ public class Words : MonoBehaviour {
 		}
 		if(currentLevelWords.Contains(word)){
 			madeWords.Add (word);
+			madeLevelWords.Add (word);
 			GetKeySFX.Play ();
 			return true;
 		}

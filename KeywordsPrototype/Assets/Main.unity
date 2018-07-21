@@ -4294,7 +4294,6 @@ GameObject:
   - component: {fileID: 1569157445}
   - component: {fileID: 1569157444}
   - component: {fileID: 1569157447}
-  - component: {fileID: 1569157448}
   - component: {fileID: 1569157449}
   m_Layer: 0
   m_Name: GM
@@ -4314,6 +4313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e97317da1214185ad745df1773f47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  demo: 0
   width: 50
   height: 50
   DoorContainer: {fileID: 541289253}
@@ -4338,6 +4338,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numLevels: 12
+  levelScore: 0
+  humanKnowledgeFactor: 0.7
 --- !u!4 &1569157446
 Transform:
   m_ObjectHideFlags: 0
@@ -4395,17 +4397,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!114 &1569157448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1569157443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66859909dd4dd4307a6e7e7c24ee1433, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1569157449
 MonoBehaviour:
   m_ObjectHideFlags: 0
