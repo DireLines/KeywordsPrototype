@@ -9,6 +9,8 @@ public class GridControl : MonoBehaviour {
 	public char placeholder = ' ';
 	private Words words;
 	private AudioSource getKeySource;
+	public int ownerNum;
+	private GameObject owner;
 
 	void Awake(){
 		grid = new GameObject[GetComponent<MakeGrid> ().width, GetComponent<MakeGrid> ().width]; 
@@ -19,44 +21,59 @@ public class GridControl : MonoBehaviour {
 	void Start(){
 		words = GameObject.Find ("GM").GetComponent<Words> ();
 		getKeySource = GameObject.Find ("GetKeySFX").GetComponent<AudioSource> ();
+		if (ownerNum != 0) {
+			owner = GameObject.Find ("Player" + ownerNum);
+			//recolor grid squares
+			foreach (Transform child in transform) {
+				Color ownerColor = owner.GetComponent<SpriteRenderer> ().color;
+				float d = 0.7f;
+				Color darkerColor = new Color (ownerColor.r * d, ownerColor.g * d, ownerColor.b * d, 1f);
+				child.gameObject.GetComponent<SpriteRenderer> ().color = darkerColor;
+				child.gameObject.GetComponent<GridSquare> ().normalColor = darkerColor;
+				child.gameObject.GetComponent<GridSquare>().highlightedColor = ownerColor;
+			}
+		}
 	}
 
 	//called on any space in the grid the player just interacted with to see if any new words have formed
 	public void ValidateWords(int x,int y, GameObject player){
+		if (ownerNum != 0 && owner != player) {
+			return;
+		}
 		validWordTiles.Clear ();
 		if (grid [x, y].GetComponent<GridSquare> ().GetLetter() == placeholder) {
-			if(words.ValidateWord(GetHorizontalWord(x-1,y))){
+			if(words.ValidateWord(GetHorizontalWord(x-1,y),ownerNum)){
 				player.GetComponent<DoorCollisionCheck>().keys++;
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
-			if(words.ValidateWord(GetHorizontalWord(x+1,y))){
+			if(words.ValidateWord(GetHorizontalWord(x+1,y),ownerNum)){
 				player.GetComponent<DoorCollisionCheck>().keys++;
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
-			if(words.ValidateWord(GetVerticalWord(x,y-1))){
+			if(words.ValidateWord(GetVerticalWord(x,y-1),ownerNum)){
 				player.GetComponent<DoorCollisionCheck>().keys++;
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
-			if(words.ValidateWord(GetVerticalWord(x,y+1))){
+			if(words.ValidateWord(GetVerticalWord(x,y+1),ownerNum)){
 				player.GetComponent<DoorCollisionCheck>().keys++;
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
 		} else {
-			if(words.ValidateWord(GetHorizontalWord(x,y))){
+			if(words.ValidateWord(GetHorizontalWord(x,y),ownerNum)){
 				player.GetComponent<DoorCollisionCheck>().keys++;
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
-			if(words.ValidateWord(GetVerticalWord(x,y))){
+			if(words.ValidateWord(GetVerticalWord(x,y),ownerNum)){
 				player.GetComponent<DoorCollisionCheck>().keys++;
 				foreach(GameObject tile in reachedTiles){
 					if (!validWordTiles.Contains (tile)) {

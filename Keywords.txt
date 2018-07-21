@@ -5,11 +5,37 @@ TODO:
         -Display number of keys needed to open the door
     -Dungeons:
         -place doors intelligently
-        -add secret rooms, required rooms
-        -place loot intelligently
+            -Scan back end grid once to generate border graph
+                -Exclude secret rooms / rooms containing only 1 or 2 squares
+            -Make a dummy node connected to each of the player starting rooms
+            -Run breadth first search on the graph starting from this node
+            -Place a door at each edge reached
+            -Roll dice to figure out whether to give the door a special weighting or not
+            -if not special weighting, weight the door according to the depth it was reached at
+        -add required rooms
+            +player grids
+            -Two secret rooms + chance of more
+            -One dumbwaiter
+            +Boss chamber in the center
+                -Special doors with special weights
+            -Ultra Boss Chamber
+            -One Treasure Room per player
+                -Special doors
+            -One external global grid room + chance of more
+        -place loot intelligently (probably kinda hard)
+            -Function in MakeWalls for placing loot in a particular room
+            -Place letter tiles generously so that players can't get screwed over too bad by them
+                -Function in Words for getting all level words player can make with *exactly* a set of letters
+                -Function in Words for getting all words player could have made in a particular state of the game (?)
+                -higher frequency letters get longer lifespans
+                -throw in a few letter tiles not in the source word at the extremities of the level
+            -One duplicator per player
+            -One dumbwaiter
+            -Treasure room stuff
         -Possible optimization for fog of war objects : rescale them to fill the largest possible rectangle instead of just having a bunch of square ones (it would require fewer objects)
         -Minimap
         -adjust weights on doors according to loot
+            -for each room that contains loot, bump up the door weightings by a bit
     -Scrabble Thing:
         -Make some kind of flash effect or animation to indicate that a word was made
             -sufficient to make an effect for decrementing a letter tile.
@@ -18,8 +44,27 @@ TODO:
             -only player who sees it is the player who unlocked the door
     -Make stuff multiplayer:
         -Make UI element for each player's number of keys
-        -Split list of already made words into one for each player, check against that
         -Visible inventory UI
+    -Game meta:
+        -make dungeon gen seed based
+        -Title screen with options for:
+            -start game
+            -quit
+            -coop / competitive
+            -player joining
+            -seed
+        -make game interface adapt to num players
+            -"press A to join!"
+        -ugh
+
+
+
+
+
+ ----------
+|Design Doc|
+ ----------
+
 
 
 

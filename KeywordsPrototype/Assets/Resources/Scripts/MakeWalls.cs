@@ -53,7 +53,7 @@ public class MakeWalls : MonoBehaviour {
 
 		FillRooms ();
 		GenerateWalls ();
-		PlaceFogOfWar ();
+//		PlaceFogOfWar ();
 		MakeLoot ();
 	}
 
@@ -87,7 +87,14 @@ public class MakeWalls : MonoBehaviour {
 			MakeRoom (Random.Range(0,width),Random.Range(0,width),Random.Range(4,7),Random.Range(4,7));
 		}
 		//Starting Room
-		MakeRoom(width/2,height/2,3,3);
+		int halfX = width/2;
+		int halfY = height/2;
+		int num = 6;
+		MakeRoom(halfX,halfY,7,7);
+		MakeRoom(halfX - num, halfY - num,3,3);
+		MakeRoom(halfX + num, halfY - num,3,3);
+		MakeRoom(halfX - num, halfY + num,3,3);
+		MakeRoom(halfX + num, halfY + num,3,3);
 
 	}
 
@@ -159,8 +166,8 @@ public class MakeWalls : MonoBehaviour {
 
 	void PlaceFogOfWar(){
 		print ("placing fog of war objects");
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
+		for (int x = -3; x < width+3; x++) {
+			for (int y = -3; y < height+3; y++) {
 				PlaceFogOfWarAt (x, y);
 			}
 		}
@@ -257,6 +264,10 @@ public class MakeWalls : MonoBehaviour {
 	}
 
 	void PlaceFogOfWarAt(int x, int y){
+		if (!InBounds (x, y)) {
+			GameObject.Instantiate(Void,GetCellPositionFor(x,y),Quaternion.identity,VoidContainer.transform);
+			return;
+		}
 		GameObject newFog = GameObject.Instantiate(Void,GetCellPositionFor(x,y),Quaternion.identity,VoidContainer.transform);
 		VoidArray [x, y] = newFog;
 		if (!ThereShouldBeARightWallAt (x - 1, y)) {
