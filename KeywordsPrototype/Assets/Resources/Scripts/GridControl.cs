@@ -11,6 +11,7 @@ public class GridControl : MonoBehaviour {
 	private AudioSource getKeySource;
 	public int ownerNum;
 	private GameObject owner;
+	public bool globalGrid;
 
 	void Awake(){
 		grid = new GameObject[GetComponent<MakeGrid> ().width, GetComponent<MakeGrid> ().width]; 
@@ -21,7 +22,8 @@ public class GridControl : MonoBehaviour {
 	void Start(){
 		words = GameObject.Find ("GM").GetComponent<Words> ();
 		getKeySource = GameObject.Find ("GetKeySFX").GetComponent<AudioSource> ();
-		if (ownerNum != 0) {
+		globalGrid = ownerNum == 0;
+		if (!globalGrid) {
 			owner = GameObject.Find ("Player" + ownerNum);
 			//recolor grid squares
 			foreach (Transform child in transform) {
@@ -36,45 +38,44 @@ public class GridControl : MonoBehaviour {
 	}
 
 	//called on any space in the grid the player just interacted with to see if any new words have formed
+	//player is the player who just placed the tile in the grid
 	public void ValidateWords(int x,int y, GameObject player){
-		if (ownerNum != 0 && owner != player) {
-			return;
-		}
 		validWordTiles.Clear ();
+		int ownerOrMakerNum = globalGrid ? player.GetComponent<PlayerInfo> ().playerNum : ownerNum; //whose made words should be added to?
 		if (grid [x, y].GetComponent<GridSquare> ().GetLetter() == placeholder) {
-			if(words.ValidateWord(GetHorizontalWord(x-1,y),ownerNum)){
-				player.GetComponent<DoorCollisionCheck>().keys++;
+			if(words.ValidateWord(GetHorizontalWord(x-1,y),ownerOrMakerNum,globalGrid)){
+				AddKey();
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
-			if(words.ValidateWord(GetHorizontalWord(x+1,y),ownerNum)){
-				player.GetComponent<DoorCollisionCheck>().keys++;
+			if(words.ValidateWord(GetHorizontalWord(x+1,y),ownerOrMakerNum,globalGrid)){
+				AddKey();
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
-			if(words.ValidateWord(GetVerticalWord(x,y-1),ownerNum)){
-				player.GetComponent<DoorCollisionCheck>().keys++;
+			if(words.ValidateWord(GetVerticalWord(x,y-1),ownerOrMakerNum,globalGrid)){
+				AddKey();
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
-			if(words.ValidateWord(GetVerticalWord(x,y+1),ownerNum)){
-				player.GetComponent<DoorCollisionCheck>().keys++;
+			if(words.ValidateWord(GetVerticalWord(x,y+1),ownerOrMakerNum,globalGrid)){
+				AddKey();
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
 		} else {
-			if(words.ValidateWord(GetHorizontalWord(x,y),ownerNum)){
-				player.GetComponent<DoorCollisionCheck>().keys++;
+			if(words.ValidateWord(GetHorizontalWord(x,y),ownerOrMakerNum,globalGrid)){
+				AddKey();
 				foreach(GameObject tile in reachedTiles){
 					validWordTiles.Add(tile);
 				}
 			}
-			if(words.ValidateWord(GetVerticalWord(x,y),ownerNum)){
-				player.GetComponent<DoorCollisionCheck>().keys++;
+			if(words.ValidateWord(GetVerticalWord(x,y),ownerOrMakerNum,globalGrid)){
+				AddKey();
 				foreach(GameObject tile in reachedTiles){
 					if (!validWordTiles.Contains (tile)) {
 						validWordTiles.Add (tile);
@@ -86,6 +87,18 @@ public class GridControl : MonoBehaviour {
 			tile.GetComponent<LetterTile> ().Dec ();
 		}
 		validWordTiles.Clear ();
+	}
+
+	public void AddKey(){
+		if (globalGrid){
+			//give everyone a key
+			GameObject.Find ("Player1").GetComponent<DoorCollisionCheck> ().keys++;
+			GameObject.Find ("Player2").GetComponent<DoorCollisionCheck> ().keys++;
+			GameObject.Find ("Player3").GetComponent<DoorCollisionCheck> ().keys++;
+			GameObject.Find ("Player4").GetComponent<DoorCollisionCheck> ().keys++;
+		} else {
+			owner.GetComponent<DoorCollisionCheck> ().keys++;
+		}
 	}
 
 	//Gets the longest word including tile [x,y] which is horizontal

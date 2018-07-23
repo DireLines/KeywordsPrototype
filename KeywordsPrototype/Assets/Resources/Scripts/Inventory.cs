@@ -30,37 +30,40 @@ public class Inventory : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Interact with world
-		if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown (AButton)) {
+		if (Input.GetKeyDown (AButton) || (me.playerNum == 1 && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E)))) {
 			Interact ();
-		} else if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown (BButton)) {
+		} else if (Input.GetKeyDown(KeyCode.R) || (me.playerNum == 1 && (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.R)))) {
 			Drop ();
 		}
 
 		//Change which item is active
-		if (Input.GetKeyDown (LeftBumper)) {
+		if (Input.GetKeyDown (LeftBumper) || (me.playerNum == 1 && Input.GetKeyDown(KeyCode.LeftArrow))) {
 			SwitchSlot (correctmod (inventorySlot - 1, inventorySize));
-		} else if (Input.GetKeyDown (RightBumper)) {
+		} else if (Input.GetKeyDown (RightBumper) || (me.playerNum == 1 && Input.GetKeyDown(KeyCode.RightArrow))) {
 			SwitchSlot (correctmod (inventorySlot + 1, inventorySize));
 		}
-//		if (Input.GetKeyDown (KeyCode.Alpha1)) {
-//			SwitchSlot (0);
-//		} else if (Input.GetKeyDown (KeyCode.Alpha2)) {
-//			SwitchSlot (1);
-//		} else if (Input.GetKeyDown (KeyCode.Alpha3)) {
-//			SwitchSlot (2);
-//		} else if (Input.GetKeyDown (KeyCode.Alpha4)) {
-//			SwitchSlot (3);
-//		} else if (Input.GetKeyDown (KeyCode.Alpha5)) {
-//			SwitchSlot (4);
-//		} else if (Input.GetKeyDown (KeyCode.Alpha6)) {
-//			SwitchSlot (5);
-//		} else if (Input.GetKeyDown (KeyCode.Alpha7)) {
-//			SwitchSlot (6);
-//		} else if (Input.GetKeyDown (KeyCode.Alpha8)) {
-//			SwitchSlot (7);
-//		} else if (Input.GetKeyDown (KeyCode.Alpha9)) {
-//			SwitchSlot (8);
-//		}
+		//make player 1 controllable by keyboard
+		if (me.playerNum == 1) {
+			if (Input.GetKeyDown (KeyCode.Alpha1)) {
+				SwitchSlot (0);
+			} else if (Input.GetKeyDown (KeyCode.Alpha2)) {
+				SwitchSlot (1);
+			} else if (Input.GetKeyDown (KeyCode.Alpha3)) {
+				SwitchSlot (2);
+			} else if (Input.GetKeyDown (KeyCode.Alpha4)) {
+				SwitchSlot (3);
+			} else if (Input.GetKeyDown (KeyCode.Alpha5)) {
+				SwitchSlot (4);
+			} else if (Input.GetKeyDown (KeyCode.Alpha6)) {
+				SwitchSlot (5);
+			} else if (Input.GetKeyDown (KeyCode.Alpha7)) {
+				SwitchSlot (6);
+			} else if (Input.GetKeyDown (KeyCode.Alpha8)) {
+				SwitchSlot (7);
+			} else if (Input.GetKeyDown (KeyCode.Alpha9)) {
+				SwitchSlot (8);
+			}
+		}
 	}
 
 	//C# mod is not too useful

@@ -5,16 +5,15 @@ TODO:
         -Display number of keys needed to open the door
     -Dungeons:
         -place doors intelligently
-            -Scan back end grid once to generate border graph
-                -Exclude secret rooms / rooms containing only 1 or 2 squares
-            -Make a dummy node connected to each of the player starting rooms
-            -Run breadth first search on the graph starting from this node
-            -Place a door at each edge reached
+            -For each door,
             -Roll dice to figure out whether to give the door a special weighting or not
             -if not special weighting, weight the door according to the depth it was reached at
+            -ensure that all player rooms are connected in a cycle and there are lots of doors into the boss room
+                -probably treat center including player rooms as a huge node and run a separate algorithm for everything inside it
         -add required rooms
             +player grids
             -Two secret rooms + chance of more
+                -should replace two lowest-area rooms
             -One dumbwaiter
             +Boss chamber in the center
                 -Special doors with special weights
@@ -164,9 +163,11 @@ Problem:
     making shorter words is objectively less cool in all word games. 
     However, according to the current game mechanics it's advantageous because you get more keys per tile use. 
     How can you make making longer words cooler than making shorter words?
-Solution:
+Solution A:
     Make it so that each player has a list of short words they've made, but there is a global list of longer words anybody has made.
     If you make a short word, you get a key from it and so can anybody else who was screenpeeking and has the necessary tiles.
     If you make a longer word, you get a key from it but nobody else can for the rest of the level. So it's like calling dibs on a word because you were the first to think of it (well, be able to make it)
     Currently I think 3 to 5-letter words should count as "short" and 6 or above count as "long"
-    Another idea, to sweeten the pot, is that making some substantial number of longer words over the course of the game awards you a victory point at the end 
+Solution B:
+    Another idea, to sweeten the pot, is that making some substantial number of longer words over the course of the game awards you a victory point at the end
+

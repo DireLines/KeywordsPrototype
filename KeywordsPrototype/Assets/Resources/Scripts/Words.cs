@@ -4,6 +4,35 @@ using UnityEngine;
 using System.IO;
 
 public class Words : MonoBehaviour {
+	private Dictionary<char,int> characterFrequencies = new Dictionary<char, int> {
+		{'e',37902},
+		{'s',30209},
+		{'a',26651},
+		{'r',23054},
+		{'i',22785},
+		{'o',19721},
+		{'l',17828},
+		{'n',17826},
+		{'t',17684},
+		{'d',13635},
+		{'u',12276},
+		{'c',11174},
+		{'p',9792},
+		{'g',9593},
+		{'m',9395},
+		{'h',8073},
+		{'b',7666},
+		{'y',6601},
+		{'k',5159},
+		{'f',5153},
+		{'w',4144},
+		{'v',3043},
+		{'z',1589},
+		{'x',1150},
+		{'j',1052},
+		{'q',575}
+	};
+	private const int sumOfCharacterFrequencies = 323730;
 	private const int numLettersInSource = 7;
 	string[] words;//all words in the dictionary file
 	string[] numletterwords;//all words of exactly numLettersInSource letters in length
@@ -88,29 +117,33 @@ public class Words : MonoBehaviour {
 		return currentSourceChars [Random.Range (0, currentSourceChars.Count)];
 	}
 
-	public bool ValidateWord(string word){
-		if (madeLevelWords.Contains (word)) {
-//			AlreadyMadeWordSFX.Play ();
-			return false;
-		}
-		if(currentLevelWords.Contains(word)){
-			madeLevelWords.Add (word);
-			GetKeySFX.Play ();
-			return true;
-		}
-		return false;
-	}
-
-	public bool ValidateWord(string word,int playerNum){
-		if (playerNum == 0) {
-			return ValidateWord (word);
-		}
+	//if not global grid:
+	//	if owner's made words contains word:
+	//		return false
+	//	else if word is valid:
+	//		add word to owner's words
+	//		add word to global words
+	//		return true
+	//	else:
+	//		return false
+	//else:
+	//	if global words contains word:
+	//		return false
+	//	else if word is valid:
+	//		add word to maker's words
+	//		add word to global words
+	//		return true
+	public bool ValidateWord(string word,int playerNum, bool globalGrid = false){
 		if (playerNum < 1 || playerNum > 4) {
 			print ("ValidateWord called on weird player num - returning false");
 			return false;
 		}
 		List<string> madeWords = madeLevelWordsForEachPlayer [playerNum - 1];
-		if (madeWords.Contains (word)) {
+		if (!globalGrid && madeWords.Contains (word)) {
+			//			AlreadyMadeWordSFX.Play ();
+			return false;
+		}
+		if (globalGrid && madeLevelWords.Contains (word)) {
 			//			AlreadyMadeWordSFX.Play ();
 			return false;
 		}
