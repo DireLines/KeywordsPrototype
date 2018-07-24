@@ -50,7 +50,7 @@ public class PlayerInfo : MonoBehaviour {
 				print ("playerNum not a valid number fix it");
 				return 0f;
 			}
-		} else if (axisName == "Vertical") {
+		} else if (axisName == "Vertical") { 
 			if (playerNum > 0 && playerNum < 5) {
 				return Input.GetAxis ("P" + playerNum + "_Vertical");
 			} else {

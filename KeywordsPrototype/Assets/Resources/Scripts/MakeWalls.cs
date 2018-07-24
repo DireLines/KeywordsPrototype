@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//A representation of a room in a dungeon
 class Room {
 	public List<Vector2Int> squares;
 	public List<Room> neighbors;//list of all neighboring rooms
@@ -11,12 +13,40 @@ class Room {
 		neighbors = new List<Room> ();
 		reached = false;
 	}
+
+	//spawns item somewhere within the confines of the room
+	//default rotation
+	public void SpawnItem (GameObject item, Transform parent = null){
+		int randomSquareIndex = Random.Range (0, squares.Count);
+		Vector2Int square = squares [randomSquareIndex];
+		Vector3 pos = GameObject.Find ("GM").GetComponent<MakeWalls> ().GetCellPositionFor (square.x, square.y);
+		float centerToWall = GameObject.Find ("GM").GetComponent<MakeWalls> ().Wall.transform.localScale.x / 2f;
+		pos += new Vector3 (Random.Range (-centerToWall, centerToWall), Random.Range (-centerToWall, centerToWall), 0f);
+		GameObject.Instantiate (item, pos,Quaternion.identity,parent);
+	}
+
+	//spawns item somewhere within the confines of the room
+	//specified rotation
+	public void SpawnItem (GameObject item, Quaternion rot, Transform parent = null){
+		int randomSquareIndex = Random.Range (0, squares.Count);
+		Vector2Int square = squares [randomSquareIndex];
+		Vector3 pos = GameObject.Find ("GM").GetComponent<MakeWalls> ().GetCellPositionFor (square.x, square.y);
+		float centerToWall = GameObject.Find ("GM").GetComponent<MakeWalls> ().Wall.transform.localScale.x / 2f;
+		pos += new Vector3 (Random.Range (-centerToWall, centerToWall), Random.Range (-centerToWall, centerToWall), 0f);
+		GameObject.Instantiate (item, pos,rot,parent);
+	}
+
+	//spawns item at the center of the room (average of square positions)
+	public void SpawnItemAtCenter(GameObject item, Transform parent = null){
+		Vector3 weightedAvg = new Vector3 (0,0,0);
+		foreach (Vector2Int square in squares) {
+			weightedAvg += GameObject.Find ("GM").GetComponent<MakeWalls> ().GetCellPositionFor (square.x, square.y);
+		}
+		weightedAvg *= (1f / squares.Count);
+		GameObject.Instantiate (item, weightedAvg,Quaternion.identity,parent);
+	}
 }
 public class MakeWalls : MonoBehaviour {
-//	public MakeWalls(int w, int h){
-//		width = w;
-//		height = h;
-//	}
 	//back end - grid of rooms
 	public bool demo;
 	public int width;
@@ -26,8 +56,6 @@ public class MakeWalls : MonoBehaviour {
 	private int roomNum;
 	[HideInInspector]
 	public int[,] rooms;
-
-	//translation - variables for turning grid into gameobjects
 	Dictionary<int,Room> roomGraph;
 
 	//front end - generated game objects
@@ -59,7 +87,7 @@ public class MakeWalls : MonoBehaviour {
 
 		FillRooms ();
 		FillRoomGraph ();
-		ConnectRooms ();
+		GenerateWalls ();
 		PlaceFogOfWar ();
 		MakeLoot ();
 		print ("level Score: " + GetComponent<Words> ().levelScore);
@@ -87,7 +115,6 @@ public class MakeWalls : MonoBehaviour {
 		MakeRoom(halfX + num, halfY - num,3,3,-2);//P2 start
 		MakeRoom(halfX - num, halfY + num,3,3,-3);//P3 start
 		MakeRoom(halfX + num, halfY + num,3,3,-4);//P4 start
-
 	}
 
 	//is this coordinate in bounds?
@@ -147,10 +174,7 @@ public class MakeWalls : MonoBehaviour {
 		print (result);
 	}
 
-
-
-
-	//TRANSLATION
+	//analyze room grid and convert it into an adjacency list of room objects
 	void FillRoomGraph(){
 		roomGraph = new Dictionary<int, Room> ();
 		for (int x = 0; x < width; x++) {
@@ -179,8 +203,9 @@ public class MakeWalls : MonoBehaviour {
 		}
 	}
 
+	//FRONT END
 	//runs BFS starting from player starting rooms.
-	void ConnectRooms(){
+	void GenerateWalls(){
 		print ("makin dungeon walls");
 		Queue<Room> q1 = new Queue<Room> ();//all rooms at the current layer of depth
 		Queue<Room> q2 = new Queue<Room> ();//all rooms at the next layer of depth
@@ -279,7 +304,7 @@ public class MakeWalls : MonoBehaviour {
 			return;
 		}
 		//Pick a random square on the border, make a door there
-		int randomIndex = Random.Range (0, rightBorderSquares.Count + bottomBorderSquares.Count - 1);
+		int randomIndex = Random.Range (0, rightBorderSquares.Count + bottomBorderSquares.Count);
 		Vector2Int selectedBorder = new Vector2Int ();
 		if (randomIndex >= rightBorderSquares.Count) {
 			randomIndex -= rightBorderSquares.Count;
@@ -365,7 +390,7 @@ public class MakeWalls : MonoBehaviour {
 		return false;
 	}
 
-	Vector3 GetCellPositionFor(int x, int y){
+	public Vector3 GetCellPositionFor(int x, int y){
 		return new Vector3 (basePosition.x + x * cellSize, basePosition.y - y * cellSize,basePosition.z);
 	}
 	void PlaceRightDoorAt(int x, int y, int keyNum){
@@ -426,6 +451,20 @@ public class MakeWalls : MonoBehaviour {
 		print ("making some sweet loot");
 		for (int i = 0; i < (width*height)/16; i++) {
 			GameObject.Instantiate (Tile, Random.insideUnitCircle * cellSize*width/2, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
+		}
+		Room p1StartingRoom = roomGraph [-1];
+		for (int i = 0; i < 8; i++) {
+			p1StartingRoom.SpawnItem (Tile, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
+		}
+		if (!demo) {
+			Room p2StartingRoom = roomGraph [-2];
+			Room p3StartingRoom = roomGraph [-3];
+			Room p4StartingRoom = roomGraph [-4];
+			for (int i = 0; i < 8; i++) {
+				p2StartingRoom.SpawnItem (Tile, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
+				p3StartingRoom.SpawnItem (Tile, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
+				p4StartingRoom.SpawnItem (Tile, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
+			}
 		}
 	}
 }

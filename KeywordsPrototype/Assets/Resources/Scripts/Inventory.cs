@@ -32,7 +32,7 @@ public class Inventory : MonoBehaviour {
 		//Interact with world
 		if (Input.GetKeyDown (AButton) || (me.playerNum == 1 && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E)))) {
 			Interact ();
-		} else if (Input.GetKeyDown(KeyCode.R) || (me.playerNum == 1 && (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.R)))) {
+		} else if (Input.GetKeyDown(BButton) || (me.playerNum == 1 && (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.R)))) {
 			Drop ();
 		}
 
