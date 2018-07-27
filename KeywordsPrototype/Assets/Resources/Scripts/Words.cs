@@ -90,7 +90,7 @@ public class Words : MonoBehaviour {
 		return result.ToArray();
 	}
 
-	List<string> GetWords(string letters){
+	public List<string> GetWords(string letters){
 		List<string> result = new List<string> ();
 		foreach (string word in words) {
 			int c = 0;
@@ -108,10 +108,36 @@ public class Words : MonoBehaviour {
 		return result;
 	}
 
-	int GetScore(string letters){
+	public int GetScore(string letters){
 		return GetWords (letters).Count;
 	}
 
+	public List<string> GetWordsExact(string letters){
+		List<string> result = new List<string> ();
+		string lettersRemaining = "";
+		foreach (string word in currentLevelWords) {
+			lettersRemaining = letters;
+			int c = 0;
+			bool done = false;
+			while (c < word.Length && !done) {
+				string sub = word.Substring (c, 1);
+				if (!lettersRemaining.Contains (sub)) {
+					done = true;
+				} else {
+					lettersRemaining = lettersRemaining.Remove(lettersRemaining.IndexOf (sub), 1);
+				}
+				c++;
+			}
+			if (!done) {
+				result.Add (word);
+			}
+		}
+		return result;
+	}
+
+	public int GetScoreExact(string letters){
+		return GetWordsExact (letters).Count;
+	}
 
 	public char GetRandomSourceChar(){
 		return currentSourceChars [Random.Range (0, currentSourceChars.Count)];

@@ -11,6 +11,7 @@ TODO:
             -ensure that all player rooms are connected in a cycle and there are lots of doors into the boss room
                 -probably treat center including player rooms as a huge node and run a separate algorithm for everything inside it
         -add required rooms
+            -Function for replacing wall/door with another thing
             +player grids
             -Two secret rooms + chance of more
                 -should replace two lowest-area rooms
@@ -22,12 +23,9 @@ TODO:
                 -Special doors
             -One external global grid room + chance of more
         -place loot intelligently (probably kinda hard)
-            -Function in MakeWalls for placing loot in a particular room
-            -Place letter tiles generously so that players can't get screwed over too bad by them
-                -Function in Words for getting all level words player can make with *exactly* a set of letters
-                -Function in Words for getting all words player could have made in a particular state of the game (?)
-                -higher frequency letters get longer lifespans
-                -throw in a few letter tiles not in the source word at the extremities of the level
+            -Function in Words for getting all words player could have made in a particular state of the game (?)
+            -higher frequency letters get longer lifespans
+            -throw in a few letter tiles not in the source word at the extremities of the level
             -One duplicator per player
             -One dumbwaiter
             -Treasure room stuff
@@ -35,6 +33,9 @@ TODO:
         -Minimap
         -adjust weights on doors according to loot
             -for each room that contains loot, bump up the door weightings by a bit
+            -Add list of door objects to the room class
+                -Maybe list of wall objects as well
+            -Function in room for replacing a door with a special door or a wall
     -Scrabble Thing:
         -Make some kind of flash effect or animation to indicate that a word was made
             -sufficient to make an effect for decrementing a letter tile.
@@ -42,7 +43,6 @@ TODO:
             -flash starts at word just made, moves toward unlocked door
             -only player who sees it is the player who unlocked the door
     -Make stuff multiplayer:
-        -Make UI element for each player's number of keys
         -Visible inventory UI
     -Game meta:
         -make dungeon gen seed based
@@ -163,11 +163,21 @@ Problem:
     making shorter words is objectively less cool in all word games. 
     However, according to the current game mechanics it's advantageous because you get more keys per tile use. 
     How can you make making longer words cooler than making shorter words?
+    (Clarification: currently I think 3 to 5-letter words should count as "short" and 6 or above count as "long")
 Solution A:
     Make it so that each player has a list of short words they've made, but there is a global list of longer words anybody has made.
     If you make a short word, you get a key from it and so can anybody else who was screenpeeking and has the necessary tiles.
     If you make a longer word, you get a key from it but nobody else can for the rest of the level. So it's like calling dibs on a word because you were the first to think of it (well, be able to make it)
-    Currently I think 3 to 5-letter words should count as "short" and 6 or above count as "long"
 Solution B:
-    Another idea, to sweeten the pot, is that making some substantial number of longer words over the course of the game awards you a victory point at the end
+    Making some substantial number of longer words over the course of the game awards you a victory point at the end
+Solution C:
+    Making longer words gives you a speed boost with duration proportional to the score of the word you just made. Longer words give higher score.
+Solution D:
+    Just give more keys for longer words, in some balanced way that's not 
+        3 letters = 1 key
+        4 letters = 2 keys
+        5 letters = 3 keys
+        etc.
+
+
 

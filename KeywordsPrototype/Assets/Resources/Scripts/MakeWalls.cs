@@ -16,34 +16,35 @@ class Room {
 
 	//spawns item somewhere within the confines of the room
 	//default rotation
-	public void SpawnItem (GameObject item, Transform parent = null){
+	public GameObject SpawnItem (GameObject item, Transform parent = null){
 		int randomSquareIndex = Random.Range (0, squares.Count);
 		Vector2Int square = squares [randomSquareIndex];
 		Vector3 pos = GameObject.Find ("GM").GetComponent<MakeWalls> ().GetCellPositionFor (square.x, square.y);
 		float centerToWall = GameObject.Find ("GM").GetComponent<MakeWalls> ().Wall.transform.localScale.x / 2f;
 		pos += new Vector3 (Random.Range (-centerToWall, centerToWall), Random.Range (-centerToWall, centerToWall), 0f);
-		GameObject.Instantiate (item, pos,Quaternion.identity,parent);
+		return GameObject.Instantiate (item, pos,Quaternion.identity,parent);
 	}
 
 	//spawns item somewhere within the confines of the room
 	//specified rotation
-	public void SpawnItem (GameObject item, Quaternion rot, Transform parent = null){
+	public GameObject SpawnItem (GameObject item, Quaternion rot, Transform parent = null){
 		int randomSquareIndex = Random.Range (0, squares.Count);
 		Vector2Int square = squares [randomSquareIndex];
 		Vector3 pos = GameObject.Find ("GM").GetComponent<MakeWalls> ().GetCellPositionFor (square.x, square.y);
 		float centerToWall = GameObject.Find ("GM").GetComponent<MakeWalls> ().Wall.transform.localScale.x / 2f;
 		pos += new Vector3 (Random.Range (-centerToWall, centerToWall), Random.Range (-centerToWall, centerToWall), 0f);
-		GameObject.Instantiate (item, pos,rot,parent);
+		return GameObject.Instantiate (item, pos,rot,parent);
 	}
 
 	//spawns item at the center of the room (average of square positions)
-	public void SpawnItemAtCenter(GameObject item, Transform parent = null){
+	//will be used for rare/unique items for dramatic effect
+	public GameObject SpawnItemAtCenter(GameObject item, Transform parent = null){
 		Vector3 weightedAvg = new Vector3 (0,0,0);
 		foreach (Vector2Int square in squares) {
 			weightedAvg += GameObject.Find ("GM").GetComponent<MakeWalls> ().GetCellPositionFor (square.x, square.y);
 		}
 		weightedAvg *= (1f / squares.Count);
-		GameObject.Instantiate (item, weightedAvg,Quaternion.identity,parent);
+		return GameObject.Instantiate (item, weightedAvg,Quaternion.identity,parent);
 	}
 }
 public class MakeWalls : MonoBehaviour {
@@ -92,7 +93,6 @@ public class MakeWalls : MonoBehaviour {
 		MakeLoot ();
 		print ("level Score: " + GetComponent<Words> ().levelScore);
 	}
-
 	//BACK END
 	void FillRooms(){
 		rooms = new int[width, height];
@@ -254,18 +254,22 @@ public class MakeWalls : MonoBehaviour {
 
 	}
 
-	int DoorWeightFor (int depth){
+	int DoorBaseWeightFor(int depth){
 		Words w = GetComponent<Words> ();
 		int averageMaxDepth = 7;
 		if (depth == 1) {
 			return 2;
 		}
 		int deepestAmount = (int)(w.levelScore * w.humanKnowledgeFactor);//scale according to how good the level is
-		float howDeepAmI = (float)(depth * depth) / (averageMaxDepth * averageMaxDepth);//scale quadratically with depth
-		int baseWeight = (int)(deepestAmount*howDeepAmI);
+		//		float howDeepAmI = (float)(depth * depth) / (averageMaxDepth * averageMaxDepth);//scale quadratically with depth
+		float howDeepAmI = (float)(depth) / (averageMaxDepth);//scale linearly with depth
+		return (int)(deepestAmount*howDeepAmI);
+	}
+
+	int DoorWeightFor (int depth){
 		int variance = Random.Range (-(depth - 1), depth + 1); //add a pinch of salt
 //		print ("depth: " + depth +" fancy number: " + baseWeight);
-		return baseWeight + variance;
+		return variance + DoorBaseWeightFor(depth);
 	}
 		
 	void MakeBorderBetween(Room a, Room b, bool door, int weight = 1, float doorChance = 0f){
@@ -449,22 +453,39 @@ public class MakeWalls : MonoBehaviour {
 	}
 	void MakeLoot(){
 		print ("making some sweet loot");
+		Words w = GetComponent<Words> ();
 		for (int i = 0; i < (width*height)/16; i++) {
-			GameObject.Instantiate (Tile, Random.insideUnitCircle * cellSize*width/2, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
+			GameObject newTile = GameObject.Instantiate (Tile, Random.insideUnitCircle * cellSize*width/2, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
+			newTile.GetComponent<LetterTile> ().SetLetter (w.GetRandomSourceChar());
+			newTile.GetComponent<LetterTile> ().SetMatches (Random.Range (3, 9));
 		}
-		Room p1StartingRoom = roomGraph [-1];
-		for (int i = 0; i < 8; i++) {
-			p1StartingRoom.SpawnItem (Tile, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
-		}
+		PlaceGoodTilesInRoom (-1);
 		if (!demo) {
-			Room p2StartingRoom = roomGraph [-2];
-			Room p3StartingRoom = roomGraph [-3];
-			Room p4StartingRoom = roomGraph [-4];
-			for (int i = 0; i < 8; i++) {
-				p2StartingRoom.SpawnItem (Tile, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
-				p3StartingRoom.SpawnItem (Tile, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
-				p4StartingRoom.SpawnItem (Tile, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
+			PlaceGoodTilesInRoom (-2);
+			PlaceGoodTilesInRoom (-3);
+			PlaceGoodTilesInRoom (-4);
+			PlaceGoodTilesInRoom (-5);
+		}
+	}
+
+	void PlaceGoodTilesInRoom(int roomNum){
+		if (!roomGraph.ContainsKey (roomNum)) {
+			return;
+		}
+		Words w = GetComponent<Words> ();
+		Room r = roomGraph [roomNum];
+		string startingTileSet = "";
+		do{
+			startingTileSet= "";
+			for(int i = 0; i < 8; i++){
+				startingTileSet += w.GetRandomSourceChar();
 			}
+		} while (w.GetScoreExact(startingTileSet) < DoorBaseWeightFor(2));
+		char[] startingTiles = startingTileSet.ToCharArray ();
+		for (int i = 0; i < 8; i++) {
+			GameObject newTile = r.SpawnItem (Tile, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
+			newTile.GetComponent<LetterTile> ().SetLetter (startingTiles [i]);
+			newTile.GetComponent<LetterTile> ().SetMatches (Random.Range (3, 9));
 		}
 	}
 }

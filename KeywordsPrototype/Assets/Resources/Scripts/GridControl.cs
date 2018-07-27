@@ -92,12 +92,12 @@ public class GridControl : MonoBehaviour {
 	public void AddKey(){
 		if (globalGrid){
 			//give everyone a key
-			GameObject.Find ("Player1").GetComponent<DoorCollisionCheck> ().keys++;
-			GameObject.Find ("Player2").GetComponent<DoorCollisionCheck> ().keys++;
-			GameObject.Find ("Player3").GetComponent<DoorCollisionCheck> ().keys++;
-			GameObject.Find ("Player4").GetComponent<DoorCollisionCheck> ().keys++;
+			GameObject.Find ("Player1").GetComponent<DoorCollisionCheck> ().AddKey();
+			GameObject.Find ("Player2").GetComponent<DoorCollisionCheck> ().AddKey();
+			GameObject.Find ("Player3").GetComponent<DoorCollisionCheck> ().AddKey();
+			GameObject.Find ("Player4").GetComponent<DoorCollisionCheck> ().AddKey();
 		} else {
-			owner.GetComponent<DoorCollisionCheck> ().keys++;
+			owner.GetComponent<DoorCollisionCheck> ().AddKey();
 		}
 	}
 

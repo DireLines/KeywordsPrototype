@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DoorCollisionCheck : MonoBehaviour {
 
 	public Transform doors;//door container object
 	public int keys;//how many keys does the player have?
+	public Text keyUI;
 
 	void Start(){
 		keys = 0;
@@ -28,4 +30,8 @@ public class DoorCollisionCheck : MonoBehaviour {
 		}
 	}
 
+	public void AddKey(){
+		keys++;
+		keyUI.text = keys.ToString ();
+	}
 }

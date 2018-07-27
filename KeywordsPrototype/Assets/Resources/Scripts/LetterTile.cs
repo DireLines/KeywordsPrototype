@@ -10,13 +10,13 @@ public class LetterTile : MonoBehaviour {
 
 	private Words words;
 
-	void Start(){
+	void Awake(){
 		words = GameObject.Find ("GM").GetComponent<Words> ();
 		letterSprite = transform.GetChild (0).gameObject;
 		numberSprite = transform.GetChild (1).gameObject;
-		SetLetter (words.GetRandomSourceChar ());
+//		SetLetter (words.GetRandomSourceChar ());
 //		SetLetter ((char)Random.Range (97, 123));
-		SetMatches (Random.Range(3,9));
+//		SetMatches (Random.Range(3,9));
 //		Dec ();
 
 	}
@@ -37,9 +37,9 @@ public class LetterTile : MonoBehaviour {
 		}
 		if (newmatches == 0) {
 //			print ("tile dead");
-			GridSquare gc = transform.parent.gameObject.GetComponent<GridSquare> ();
-			if (gc != null) {
-				gc.SetTile (null);
+			GridSquare gs = transform.parent.gameObject.GetComponent<GridSquare> ();
+			if (gs != null) {
+				gs.SetTile (null);
 			}
 			Destroy (gameObject);
 			return;
