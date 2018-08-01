@@ -7,6 +7,45 @@ public class PlayerInfo : MonoBehaviour {
 	public int playerNum;
 
 	public KeyCode GetKeyCode(string controlName){
+		if (Game.IsOnOSX) {
+			return GetKeyCodeOSX (controlName);
+		}
+		KeyCode[] controlSet = new KeyCode[4];
+		if (controlName == "A") {
+			controlSet = new KeyCode[4] {
+				KeyCode.Joystick1Button0,
+				KeyCode.Joystick2Button0,
+				KeyCode.Joystick3Button0,
+				KeyCode.Joystick4Button0
+			};
+		} else if (controlName == "B") {
+			controlSet = new KeyCode[4] {
+				KeyCode.Joystick1Button1,
+				KeyCode.Joystick2Button1,
+				KeyCode.Joystick3Button1,
+				KeyCode.Joystick4Button1
+			};
+		} else if (controlName == "LeftBumper") {
+			controlSet = new KeyCode[4] {
+				KeyCode.Joystick1Button4,
+				KeyCode.Joystick2Button4,
+				KeyCode.Joystick3Button4,
+				KeyCode.Joystick4Button4
+			};
+		} else if (controlName == "RightBumper") {
+			controlSet = new KeyCode[4] {
+				KeyCode.Joystick1Button5,
+				KeyCode.Joystick2Button5,
+				KeyCode.Joystick3Button5,
+				KeyCode.Joystick4Button5
+			};
+		} else {
+			print ("control name not recognized");
+		}
+		return controlSet [playerNum-1];
+	}
+
+	public KeyCode GetKeyCodeOSX(string controlName){
 		KeyCode[] controlSet = new KeyCode[4];
 		if (controlName == "A") {
 			controlSet = new KeyCode[4] {

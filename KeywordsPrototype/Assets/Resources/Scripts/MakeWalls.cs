@@ -7,10 +7,12 @@ using UnityEngine;
 class Room {
 	public List<Vector2Int> squares;
 	public List<Room> neighbors;//list of all neighboring rooms
+	public List<GameObject> doors;//list of doors at edge of this room
 	public bool reached; //have I been reached in MST?
 	public Room(){
 		squares = new List<Vector2Int> ();
 		neighbors = new List<Room> ();
+		doors = new List<GameObject> ();
 		reached = false;
 	}
 
@@ -49,9 +51,8 @@ class Room {
 }
 public class MakeWalls : MonoBehaviour {
 	//back end - grid of rooms
-	public bool demo;
+	public bool coop;
 	public int width;
-	public int height;
 	private int numSquares;
 	private int numCheckedOff;
 	private int roomNum;
@@ -82,9 +83,9 @@ public class MakeWalls : MonoBehaviour {
 		Destroy (GetComponent<SpriteRenderer> ());
 		cellSize = Wall.transform.localScale.x + Corner.transform.localScale.x - epsilon;
 		print ("cellSize: " + cellSize);
-		basePosition = new Vector3 (-(width / 2) * cellSize, (height / 2) * cellSize,0f);
+		basePosition = new Vector3 (-(width / 2) * cellSize, (width / 2) * cellSize,0f);
 		vertical = Quaternion.Euler (0, 0, 90);
-		VoidArray = new GameObject[width, height];
+		VoidArray = new GameObject[width, width];
 
 		FillRooms ();
 		FillRoomGraph ();
@@ -95,31 +96,30 @@ public class MakeWalls : MonoBehaviour {
 	}
 	//BACK END
 	void FillRooms(){
-		rooms = new int[width, height];
+		rooms = new int[width, width];
 		roomNum = 1;
 		numCheckedOff = 0;
-		numSquares = width * height;
+		numSquares = width * width;
 		while (numCheckedOff < numSquares) {
 			MakeRoom (Random.Range(0,width),Random.Range(0,width),Random.Range(4,7),Random.Range(4,7));
 		}
 		//Starting Room
 		int halfX = width/2;
-		int halfY = height/2;
-		if (demo) {
-			MakeRoom (halfX, halfY, 3, 3,-1);
+		if (coop) {
+			MakeRoom (halfX, halfX, 3, 3,-1);
 			return;
 		}
 		int num = 6;//how far are player starting rooms from the center?
-		MakeRoom(halfX,halfY,7,7,-5);//Boss Chamber
-		MakeRoom(halfX - num, halfY - num,3,3,-1);//P1 start
-		MakeRoom(halfX + num, halfY - num,3,3,-2);//P2 start
-		MakeRoom(halfX - num, halfY + num,3,3,-3);//P3 start
-		MakeRoom(halfX + num, halfY + num,3,3,-4);//P4 start
+		MakeRoom(halfX,halfX,7,7,-5);//Boss Chamber
+		MakeRoom(halfX - num, halfX - num,3,3,-1);//P1 start
+		MakeRoom(halfX + num, halfX - num,3,3,-2);//P2 start
+		MakeRoom(halfX - num, halfX + num,3,3,-3);//P3 start
+		MakeRoom(halfX + num, halfX + num,3,3,-4);//P4 start
 	}
 
 	//is this coordinate in bounds?
 	bool InBounds(int x, int y){
-		return (x >= 0 && x < width && y >= 0 && y < height);
+		return (x >= 0 && x < width && y >= 0 && y < width);
 	}
 
 	//makes a room of width w and height h centered at [x,y]
@@ -165,7 +165,7 @@ public class MakeWalls : MonoBehaviour {
 	//makes it absurdly slow for large sizes because Unity's print buffer is expecting a whole bunch of small messages rather than a single large message
 	void PrintRooms(){
 		string result = "";
-		for (int i = 0; i < height; i++) {
+		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < width; j++) {
 				result += (char)(correctmod (rooms [j, i], 94) + 32) + " ";
 			}
@@ -178,7 +178,7 @@ public class MakeWalls : MonoBehaviour {
 	void FillRoomGraph(){
 		roomGraph = new Dictionary<int, Room> ();
 		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
+			for (int y = 0; y < width; y++) {
 				int roomnum = rooms [x, y];
 				if (!roomGraph.ContainsKey(roomnum)) {
 					roomGraph.Add (roomnum, new Room ());
@@ -212,7 +212,7 @@ public class MakeWalls : MonoBehaviour {
 
 		//start with player starting rooms
 		q1.Enqueue (roomGraph [-1]);
-		if (!demo) {
+		if (!coop) {
 			q1.Enqueue (roomGraph [-2]);
 			q1.Enqueue (roomGraph [-3]);
 			q1.Enqueue (roomGraph [-4]);
@@ -244,14 +244,25 @@ public class MakeWalls : MonoBehaviour {
 			q2.Clear ();
 			depth++;
 		}
+
+		//make corners
 		for (int x = -1; x < width; x++) {
-			for (int y = -1; y < height; y++) {
+			for (int y = -1; y < width; y++) {
 				if (ThereShouldBeABottomRightCornerAt (x,y)) {
 					PlaceBottomRightCornerAt(x,y);
 				}
 			}
 		}
 
+		//make walls at edge of floor
+		for (int i = 0; i < width; i++) {
+			PlaceRightWallAt (-1, i);
+			PlaceRightWallAt (width-1, i);
+		}
+		for (int i = 0; i < width; i++) {
+			PlaceBottomWallAt (i,-1);
+			PlaceBottomWallAt (i,width-1);
+		}
 	}
 
 	int DoorBaseWeightFor(int depth){
@@ -345,7 +356,7 @@ public class MakeWalls : MonoBehaviour {
 	void PlaceFogOfWar(){
 		print ("placing fog of war objects");
 		for (int x = -3; x < width+3; x++) {
-			for (int y = -3; y < height+3; y++) {
+			for (int y = -3; y < width+3; y++) {
 				PlaceFogOfWarAt (x, y);
 			}
 		}
@@ -397,39 +408,39 @@ public class MakeWalls : MonoBehaviour {
 	public Vector3 GetCellPositionFor(int x, int y){
 		return new Vector3 (basePosition.x + x * cellSize, basePosition.y - y * cellSize,basePosition.z);
 	}
-	void PlaceRightDoorAt(int x, int y, int keyNum){
+	GameObject PlaceRightDoorAt(int x, int y, int keyNum){
 		GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * 0.5f, cellSize * smallWallOffset, 0f), vertical, WallContainer.transform);
 		GameObject newDoor = GameObject.Instantiate (Door, GetCellPositionFor (x, y) + new Vector3 (cellSize * 0.5f,0f, 0f), vertical, DoorContainer.transform);
 		GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * 0.5f, -cellSize * smallWallOffset, 0f), vertical, WallContainer.transform);
 		newDoor.GetComponent<Door> ().keyNum = keyNum;
+		return newDoor;
 	}
-	void PlaceBottomDoorAt(int x, int y, int keyNum){
+	GameObject PlaceBottomDoorAt(int x, int y, int keyNum){
 		GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (cellSize * smallWallOffset, -cellSize * 0.5f, 0f), Quaternion.identity, WallContainer.transform);
 		GameObject newDoor = GameObject.Instantiate (Door, GetCellPositionFor (x, y) + new Vector3 (0f,-cellSize * 0.5f, 0f), Quaternion.identity, DoorContainer.transform);
 		GameObject.Instantiate (WallSmall, GetCellPositionFor (x, y) + new Vector3 (-cellSize * smallWallOffset, -cellSize * 0.5f, 0f), Quaternion.identity, WallContainer.transform);
 		newDoor.GetComponent<Door> ().keyNum = keyNum;
+		return newDoor;
 	}
-	void PlaceRightWallAt(int x, int y){
-		GameObject.Instantiate(Wall,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,0f,0f),vertical, WallContainer.transform);
+	GameObject PlaceRightWallAt(int x, int y){
+		return GameObject.Instantiate(Wall,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,0f,0f),vertical, WallContainer.transform);
 	}
-	void PlaceBottomWallAt(int x, int y){
-		GameObject.Instantiate(Wall,GetCellPositionFor(x,y) + new Vector3(0f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
+	GameObject PlaceBottomWallAt(int x, int y){
+		return GameObject.Instantiate(Wall,GetCellPositionFor(x,y) + new Vector3(0f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
 	}
-	void PlaceRightWallAndMaybeDoorAt(int x, int y,float doorChance, int weight){
+	GameObject PlaceRightWallAndMaybeDoorAt(int x, int y,float doorChance, int weight){
 		float randy = Random.value;
 		if (randy <= doorChance) {
-			PlaceRightDoorAt (x, y, weight);
-			return;
+			return PlaceRightDoorAt (x, y, weight);
 		}
-		GameObject.Instantiate(Wall,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,0f,0f),vertical, WallContainer.transform);
+		return PlaceRightWallAt (x, y);
 	}
-	void PlaceBottomWallAndMaybeDoorAt(int x, int y,float doorChance, int weight){
+	GameObject PlaceBottomWallAndMaybeDoorAt(int x, int y,float doorChance, int weight){
 		float randy = Random.value;
 		if (randy <= doorChance) {
-			PlaceBottomDoorAt (x, y, weight);
-			return;
+			return PlaceBottomDoorAt (x, y, weight);
 		}
-		GameObject.Instantiate(Wall,GetCellPositionFor(x,y) + new Vector3(0f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
+		return PlaceBottomWallAt (x, y);
 	}
 	void PlaceBottomRightCornerAt(int x, int y){
 		GameObject.Instantiate(Corner,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
@@ -451,16 +462,17 @@ public class MakeWalls : MonoBehaviour {
 			VoidArray [x, y-1].GetComponent<FogOfWar> ().neighbors.Add (newFog);
 		}
 	}
+
 	void MakeLoot(){
 		print ("making some sweet loot");
 		Words w = GetComponent<Words> ();
-		for (int i = 0; i < (width*height)/16; i++) {
+		for (int i = 0; i < (width*width)/16; i++) {
 			GameObject newTile = GameObject.Instantiate (Tile, Random.insideUnitCircle * cellSize*width/2, Quaternion.Euler (0, 0, Random.Range (-30f, 30f)), TileContainer.transform);
 			newTile.GetComponent<LetterTile> ().SetLetter (w.GetRandomSourceChar());
 			newTile.GetComponent<LetterTile> ().SetMatches (Random.Range (3, 9));
 		}
 		PlaceGoodTilesInRoom (-1);
-		if (!demo) {
+		if (!coop) {
 			PlaceGoodTilesInRoom (-2);
 			PlaceGoodTilesInRoom (-3);
 			PlaceGoodTilesInRoom (-4);

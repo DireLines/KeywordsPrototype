@@ -11,8 +11,8 @@ TODO:
             -ensure that all player rooms are connected in a cycle and there are lots of doors into the boss room
                 -probably treat center including player rooms as a huge node and run a separate algorithm for everything inside it
         -add required rooms
+            -Function for converting a room into a given special type of room
             -Function for replacing wall/door with another thing
-            +player grids
             -Two secret rooms + chance of more
                 -should replace two lowest-area rooms
             -One dumbwaiter
@@ -24,6 +24,7 @@ TODO:
             -One external global grid room + chance of more
         -place loot intelligently (probably kinda hard)
             -Function in Words for getting all words player could have made in a particular state of the game (?)
+                -Really just a special case of GetScoreExact
             -higher frequency letters get longer lifespans
             -throw in a few letter tiles not in the source word at the extremities of the level
             -One duplicator per player
@@ -173,7 +174,7 @@ Solution B:
 Solution C:
     Making longer words gives you a speed boost with duration proportional to the score of the word you just made. Longer words give higher score.
 Solution D:
-    Just give more keys for longer words, in some balanced way that's not 
+    Just give more keys for longer words, in some balanced way that's not just
         3 letters = 1 key
         4 letters = 2 keys
         5 letters = 3 keys

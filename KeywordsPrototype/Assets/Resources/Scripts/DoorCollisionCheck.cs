@@ -12,26 +12,23 @@ public class DoorCollisionCheck : MonoBehaviour {
 	void Start(){
 		keys = 0;
 	}
-	void Update(){
+	public void AddKey(){
+		keys++;
+		keyUI.text = keys.ToString ();
 		SetDoorCollisions ();
 	}
 	private void SetDoorCollisions(){
 		foreach (Transform child in doors) {
 			Door door = child.gameObject.GetComponent<Door> ();
 			if (keys >= door.keyNum) {
-//				print ("Ayy");
-				door.Unlock(gameObject);
+				//				print ("Ayy");
+				door.Unlock(GetComponent<PlayerInfo>().playerNum);
 				Physics2D.IgnoreCollision (GetComponent<CircleCollider2D> (), door.GetComponent<BoxCollider2D> ());
 			}
 			else {
-//				print ("yyA");
+				//				print ("yyA");
 				Physics2D.IgnoreCollision (GetComponent<CircleCollider2D> (), door.GetComponent<BoxCollider2D> (),false);
 			}
 		}
-	}
-
-	public void AddKey(){
-		keys++;
-		keyUI.text = keys.ToString ();
 	}
 }

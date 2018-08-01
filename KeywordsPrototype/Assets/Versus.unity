@@ -2820,9 +2820,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e97317da1214185ad745df1773f47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  demo: 0
+  coop: 0
   width: 50
-  height: 50
   DoorContainer: {fileID: 541289253}
   WallContainer: {fileID: 95303994}
   TileContainer: {fileID: 1350805110}

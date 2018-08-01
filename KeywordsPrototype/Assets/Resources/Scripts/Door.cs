@@ -16,17 +16,10 @@ public class Door : MonoBehaviour {
 		lockedSprite = transform.GetChild (0).gameObject;
 	}
 
-	public void SetInvis(GameObject obj, int playerNum){
-		int oldLayerValue = Convert.ToInt32(LayerMask.LayerToName (obj.layer),2);
-		oldLayerValue |= (1 << (playerNum - 1));
-		obj.layer = LayerMask.NameToLayer(Convert.ToString (oldLayerValue, 2).PadLeft(4,'0'));
-	}
-
-	public void Unlock(GameObject ByWhom){
-		int playerNum = ByWhom.GetComponent<PlayerInfo> ().playerNum;
+	public void Unlock(int playerNum){
 		if (locked[playerNum-1] == true) {
 			locked[playerNum-1] = false;
-			SetInvis (lockedSprite, playerNum);
+			Game.SetInvis (lockedSprite, playerNum);
 			unlockDoorSFX.Play ();
 		}
 	}
