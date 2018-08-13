@@ -122,6 +122,7 @@ Behind the locked doors are
     -Shield Potion: Creates a shield which lasts 20 seconds. During that time the player cannot be bonked.
     -Barrier: Used on a doorway. Prevents anybody from going through that doorway for 2 minutes.
     -Lockpick: Used on a door. Decreases the key barrier for that door by 1. Cannot be used on the boss door or ultra boss door.
+    -Portable Grid: Placed on the floor. Expands into a 5x5 global grid which lasts 5 minutes
 -stationary machines which do various things
     -Duplicator: has a slot where you can put a letter tile. Leaving it there for one minute will create a fresh duplicate of it.
     -Deleter: has a slot where you can put a letter tile. Leaving it there for one minute will delete it.

@@ -19,7 +19,6 @@ public class Move : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-//		Vector2 original = new Vector2 (Input.GetAxis ("Horizontal"), Input.GetAxis ("Vertical"));
 		rb.velocity = playerSpeed * new Vector2 (me.GetAxis ("Horizontal"), me.GetAxis ("Vertical"));
 		//make player 1 also controllable by keyboard
 		if (playerNum == 1) {

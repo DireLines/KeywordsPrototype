@@ -30,7 +30,7 @@ public class Inventory : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Interact with world
-		if (Input.GetKeyDown (AButton) || (me.playerNum == 1 && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E)))) {
+		if (Input.GetKeyDown (AButton) || (me.playerNum == 1 && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E))) || (me.playerNum == 2 && (Input.GetKeyDown(KeyCode.P)))) {
 			Interact ();
 		} else if (Input.GetKeyDown(BButton) || (me.playerNum == 1 && (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.R)))) {
 			Drop ();
@@ -127,7 +127,7 @@ public class Inventory : MonoBehaviour {
 		bool x = (activeSquare != null);
 		bool y = (items [inventorySlot] != null); 
 		bool z = y ? items [inventorySlot].CompareTag ("LetterTile") : false;
-		bool w = x ? activeSquare.GetComponent<GridSquare> ().GetLetter () != activeSquare.transform.parent.gameObject.GetComponent<GridControl> ().placeholder : false;
+		bool w = x ? activeSquare.GetComponent<GridSquare> ().tile != null : false;
 //		print (x + " " + y + " " + z + " " + w);
 
 		if (!y && !z && !w) {
@@ -185,7 +185,9 @@ public class Inventory : MonoBehaviour {
 		items [inventorySlot] = null;
 		int x = activeSquare.GetComponent<GridSquare> ().x;
 		int y = activeSquare.GetComponent<GridSquare> ().y;
-		activeSquare.transform.parent.gameObject.GetComponent<GridControl> ().ValidateWords (x, y,gameObject);
+		if (activeSquare.transform.parent.gameObject.GetComponent<GridControl> () != null) {
+			activeSquare.transform.parent.gameObject.GetComponent<GridControl> ().ValidateWords (x, y,gameObject);
+		}
 	}
 
 
@@ -202,7 +204,9 @@ public class Inventory : MonoBehaviour {
 		activeSquare.GetComponent<GridSquare> ().SetTile (null);
 		int x = activeSquare.GetComponent<GridSquare> ().x;
 		int y = activeSquare.GetComponent<GridSquare> ().y;
-		activeSquare.transform.parent.gameObject.GetComponent<GridControl> ().ValidateWords (x, y,gameObject);
+		if (activeSquare.transform.parent.gameObject.GetComponent<GridControl> () != null) {
+			activeSquare.transform.parent.gameObject.GetComponent<GridControl> ().ValidateWords (x, y, gameObject);
+		}
 	}
 	private void SwapWithSquare(){
 //		print ("swapping tile with square");
