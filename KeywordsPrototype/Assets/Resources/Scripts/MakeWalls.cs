@@ -92,6 +92,9 @@ public class MakeWalls : MonoBehaviour {
 		GenerateWalls ();
 		PlaceFogOfWar ();
 		MakeLoot ();
+		for (int i = 1; i < 10; i++) {
+			print (i + " : " + DoorBaseWeightFor (i));
+		}
 		print ("level Score: " + GetComponent<Words> ().levelScore);
 	}
 	//BACK END
@@ -272,8 +275,8 @@ public class MakeWalls : MonoBehaviour {
 			return 2;
 		}
 		int deepestAmount = (int)(w.levelScore * w.humanKnowledgeFactor);//scale according to how good the level is
-		//		float howDeepAmI = (float)(depth * depth) / (averageMaxDepth * averageMaxDepth);//scale quadratically with depth
-		float howDeepAmI = (float)(depth) / (averageMaxDepth);//scale linearly with depth
+		float howDeepAmI = (float)(depth * depth) / (averageMaxDepth * averageMaxDepth);//scale quadratically with depth
+//		float howDeepAmI = (float)(depth) / (averageMaxDepth);//scale linearly with depth
 		return (int)(deepestAmount*howDeepAmI);
 	}
 
