@@ -56,6 +56,11 @@ TODO:
         -make game interface adapt to num players
             -"press A to join!"
         -ugh
+    -Implement features:
+        -Interfaces / abstract classes for:
+            -pickup item
+            +machine
+            -enemy
 
 
 
@@ -78,8 +83,7 @@ Behind the locked doors are
 
 -more locked doors
 -kinda weak enemies which drop letter tiles
--free keys (rarely)
--free letter tiles
+-free letter tiles (rarely)
 -puzzles
     -doors locked by things other than keys
         -riddle/tiny grid to make the answer on.
@@ -92,6 +96,7 @@ Behind the locked doors are
 -weapons: pretty basic set of weapons. Infinite ammo and all that (combat is not really a focus of the game)
     -Main deal is that all enemies are weak except boss's minions, but higher damage weapons make it faster to kill things (wider area of effect / faster attack speed)
     -however, as a cost, higher damage weapons damage letter tiles dropped by killed / injured enemies more
+    -higher damage weapons also kill boss's minions (which have a lot of health and don't drop letter tiles) faster
     -sword
     -mace
     -warhammer
@@ -115,6 +120,8 @@ Behind the locked doors are
     -Minimap Watch: Reveals a minimap of the player's surrounding rooms (not present by default)
     -Perfectionist Watch: Reveals the maximum number of words possible to make on the current floor.
     -Robo Arms: Strong mech arms which allow a player to pick up and carry machines. While carrying a machine, the player can only move by walking and is slowed a bit.
+    -Wrench: allows machines to be converted into other machine types. Players activate the wrench standing next to a machine, then pick a machine they want to convert it to. 
+     They must then stand continuously in the immediate vicinity of the machine for a little while (about 20 sec) before the machine finishes
     -Privacy Watch: holding this in your inventory will hide your inventory HUD, preventing others from figuring out your plans just by screenpeeking your inventory (and preventing you from seeing it too)
 -misc. consumables
     -Poison Vial: thrown at a player or enemy, dealing 0 damage and knocking the player/enemy out cold for 10 seconds
@@ -124,8 +131,8 @@ Behind the locked doors are
     -Lockpick: Used on a door. Decreases the key barrier for that door by 1. Cannot be used on the boss door or ultra boss door.
     -Portable Grid: Placed on the floor. Expands into a 5x5 global grid which lasts 5 minutes
 -stationary machines which do various things
-    -Duplicator: has a slot where you can put a letter tile. Leaving it there for one minute will create a fresh duplicate of it.
-    -Deleter: has a slot where you can put a letter tile. Leaving it there for one minute will delete it.
+    +Duplicator: has a slot where you can put a letter tile. Leaving it there for one minute will create a fresh duplicate of it.
+    +Deleter: has a slot where you can put a letter tile. Leaving it there for one minute will delete it.
     -Oracle: has a slot where you can put a letter tile. Leaving it there for one minute will delete it and it will spit out a piece of paper with a previously uncreated valid word on it.
     -Altar: has a slot where you can put a letter tile. Leaving it there for one minute will delete it and unlock a random currently locked door.
     -Generator: Has a button which, when pushed, immediately completes all cooldowns of all other machines (including other Generators). Has a cooldown of one minute.

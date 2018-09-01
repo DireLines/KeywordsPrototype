@@ -2,27 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Duplicator : MonoBehaviour {
-	private GameObject slot;
+public class Machine : MonoBehaviour {
+	[HideInInspector]
+	public GameObject slot;
 	private GameObject progressIndicator;
-	private Vector3 placePosition;
-	public GameObject Tile;
-	private Transform TileContainer;
 	public float chargeTime;
 	private float timer;
 	public bool ticking;
 
 	// Use this for initialization
-	void Start () {
+	public virtual void Start () {
 		ticking = false;
-		placePosition = new Vector3 (0.5f, 0, 0);
 		slot = transform.GetChild (0).gameObject;
 		progressIndicator = transform.GetChild (1).gameObject;
-		TileContainer = GameObject.Find ("Tiles").transform;
 		timer = 0;
 	}
 
-	void Update(){
+	public virtual void Update(){
 		if (slot.GetComponent<GridSquare> ().tile != null) {
 			ticking = true;
 		} else {
@@ -37,14 +33,12 @@ public class Duplicator : MonoBehaviour {
 		}
 		if (timer >= chargeTime) {
 			timer = 0f;
-			Duplicate ();
+			PerformMachineAction();
 		}
 	}
-	void Duplicate(){
-		GameObject tile = slot.GetComponent<GridSquare>().tile;
-		Vector3 pos = transform.position + placePosition;
-		GameObject newTile = GameObject.Instantiate (Tile, pos, Quaternion.identity, TileContainer);
-		newTile.GetComponent<LetterTile> ().SetLetter (tile.GetComponent<LetterTile> ().letter);
-		newTile.GetComponent<LetterTile> ().SetMatches (tile.GetComponent<LetterTile> ().matches);
+
+	public virtual void PerformMachineAction(){
+		print ("Im a machine doin a thing");
 	}
+	
 }

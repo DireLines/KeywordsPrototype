@@ -30,7 +30,7 @@ public class Inventory : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Interact with world
-		if (Input.GetKeyDown (AButton) || (me.playerNum == 1 && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E))) || (me.playerNum == 2 && (Input.GetKeyDown(KeyCode.P)))) {
+		if (Input.GetKeyDown (AButton) || (me.playerNum == 1 && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E)))) {
 			Interact ();
 		} else if (Input.GetKeyDown(BButton) || (me.playerNum == 1 && (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.R)))) {
 			Drop ();

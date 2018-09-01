@@ -54,10 +54,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4450761929908664}
   - component: {fileID: 212059444376730912}
-  - component: {fileID: 114569686944480024}
+  - component: {fileID: 114321327603286508}
   - component: {fileID: 60909820124226432}
   m_Layer: 8
-  m_Name: Duplicator
+  m_Name: Deleter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
   normalColor: {r: 0, g: 0, b: 0, a: 0}
   x: 0
   y: 0
---- !u!114 &114569686944480024
+--- !u!114 &114321327603286508
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -183,10 +183,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1832904815124234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e6f68111670e4a1ab99f5a4bd4dbc6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 420cce63ef55640ca959f67151635165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tile: {fileID: 1328259343011714, guid: f2c8f2487583c4c89bc6dd4a23624369, type: 2}
   chargeTime: 60
   ticking: 0
 --- !u!212 &212059444376730912
@@ -224,7 +223,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: b4d6a8e8cbd2c4df48fe84fc66d2a50b, type: 3}
-  m_Color: {r: 0.44812077, g: 0.5735294, b: 0.24881056, a: 1}
+  m_Color: {r: 0.60294116, g: 0.27043685, b: 0.27043685, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -268,7 +267,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -15
   m_Sprite: {fileID: 21300000, guid: b29241ba67ba54476b85e6b7bf95d187, type: 3}
-  m_Color: {r: 0.44705883, g: 0.57254905, b: 0.24705882, a: 0.7411765}
+  m_Color: {r: 0.7794118, g: 0.3323962, b: 0.3323962, a: 0.7411765}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
