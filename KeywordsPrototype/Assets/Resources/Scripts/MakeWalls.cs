@@ -292,7 +292,7 @@ public class MakeWalls : MonoBehaviour {
 //		int smallID = Mathf.Min (a.roomID, b.roomID);
 //		int bigID = Mathf.Max (a.roomID, b.roomID);
 //		print ("making border between " + smallID + " and " + bigID);
-		print ("making border between " + a.roomID + " and " + b.roomID);
+//		print ("making border between " + a.roomID + " and " + b.roomID);
 		//Find border
 		List<Vector2Int> rightBorderSquares = new List<Vector2Int> ();//squares immediately to the left of the border (so, if you placed a wall to the right it would be the border)
 		List<Vector2Int> bottomBorderSquares = new List<Vector2Int> ();//squares immediately above the border (so, if you placed a wall on the bottom it would be the border)
