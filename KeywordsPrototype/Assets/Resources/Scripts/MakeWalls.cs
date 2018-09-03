@@ -9,11 +9,13 @@ class Room {
 	public List<Room> neighbors;//list of all neighboring rooms
 	public List<GameObject> doors;//list of doors at edge of this room
 	public bool reached; //have I been reached in MST?
-	public Room(){
+	public int roomID;
+	public Room(int roomnum){
 		squares = new List<Vector2Int> ();
 		neighbors = new List<Room> ();
 		doors = new List<GameObject> ();
 		reached = false;
+		this.roomID = roomnum;
 	}
 
 	//spawns item somewhere within the confines of the room
@@ -92,9 +94,6 @@ public class MakeWalls : MonoBehaviour {
 		GenerateWalls ();
 		PlaceFogOfWar ();
 		MakeLoot ();
-		for (int i = 1; i < 10; i++) {
-			print (i + " : " + DoorBaseWeightFor (i));
-		}
 		print ("level Score: " + GetComponent<Words> ().levelScore);
 	}
 	//BACK END
@@ -184,7 +183,7 @@ public class MakeWalls : MonoBehaviour {
 			for (int y = 0; y < width; y++) {
 				int roomnum = rooms [x, y];
 				if (!roomGraph.ContainsKey(roomnum)) {
-					roomGraph.Add (roomnum, new Room ());
+					roomGraph.Add (roomnum, new Room (roomnum));
 				}
 				roomGraph [roomnum].squares.Add (new Vector2Int (x, y));
 			}
@@ -226,6 +225,8 @@ public class MakeWalls : MonoBehaviour {
 		for (int i = 0; i < 10; i++) {
 			while (q1.Count > 0) {
 				Room a = q1.Dequeue ();
+//				GameObject roomnumIndicator = a.SpawnItemAtCenter (Door, null);
+//				roomnumIndicator.GetComponent<Door> ().keyNum = a.roomID;
 				a.reached = true;
 				foreach (Room neighbor in a.neighbors) {
 					int w = DoorWeightFor (depth);
@@ -238,7 +239,8 @@ public class MakeWalls : MonoBehaviour {
 							neighbor.neighbors.Remove (a);
 							MakeBorderBetween (a, neighbor, true, w);
 						} else {
-							MakeBorderBetween (a, neighbor, false,w,doorChance:0.05f);
+							MakeBorderBetween (a, neighbor, false, w, doorChance: 0.05f);
+							neighbor.neighbors.Remove (a);
 						}
 					}
 				}
@@ -287,6 +289,10 @@ public class MakeWalls : MonoBehaviour {
 	}
 		
 	void MakeBorderBetween(Room a, Room b, bool door, int weight = 1, float doorChance = 0f){
+//		int smallID = Mathf.Min (a.roomID, b.roomID);
+//		int bigID = Mathf.Max (a.roomID, b.roomID);
+//		print ("making border between " + smallID + " and " + bigID);
+		print ("making border between " + a.roomID + " and " + b.roomID);
 		//Find border
 		List<Vector2Int> rightBorderSquares = new List<Vector2Int> ();//squares immediately to the left of the border (so, if you placed a wall to the right it would be the border)
 		List<Vector2Int> bottomBorderSquares = new List<Vector2Int> ();//squares immediately above the border (so, if you placed a wall on the bottom it would be the border)
