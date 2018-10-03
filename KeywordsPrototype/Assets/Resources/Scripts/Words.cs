@@ -39,7 +39,8 @@ public class Words : MonoBehaviour {
 	string[] currentSourceWords;//a selection of words which each floor in the dungeon will be based on
 	public int numLevels;//how many levels in the dungeon
 	List<string> currentLevelWords;//all words it's possible to make with the letters of the current source word
-	List<string> madeLevelWords;//all words from currentLevelWords not yet made (by somebody).
+	List<string> unmadeLevelWords;//all words from currentLevelWords that have not been made yet (by anybody)
+	List<string> madeLevelWords;//all words from currentLevelWords that have been made (by somebody).
 	List<string>[] madeLevelWordsForEachPlayer;
 	List<char> currentSourceChars;//all chars in the current source word.
 	public int levelScore;//how fertile are the characters in the level?
@@ -71,6 +72,7 @@ public class Words : MonoBehaviour {
 		madeLevelWords.Clear ();
 		currentLevelWords = GetWords (currentSourceWords[level]);
 		levelScore = currentLevelWords.Count;
+		unmadeLevelWords = new List<string> (currentLevelWords);
 		char[] sourceChars = currentSourceWords [level].ToCharArray ();
 		currentSourceChars.Clear ();
 		foreach (char c in sourceChars) {
@@ -174,6 +176,7 @@ public class Words : MonoBehaviour {
 			return false;
 		}
 		if(currentLevelWords.Contains(word)){
+			unmadeLevelWords.Remove (word);
 			madeWords.Add (word);
 			madeLevelWords.Add (word);
 			GetKeySFX.Play ();
@@ -195,5 +198,9 @@ public class Words : MonoBehaviour {
 			result.Add (randomword);
 		}
 		return result.ToArray ();
+	}
+
+	public string GetRandomUnmadeWord(){
+		return unmadeLevelWords [Random.Range (0, unmadeLevelWords.Count)];
 	}
 }

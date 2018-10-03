@@ -17,11 +17,11 @@ public class Door : MonoBehaviour {
 		locked = new bool[4]{true,true,true,true};
 		lockedSprite = transform.GetChild (0).gameObject;
 		keyNumText1 = transform.GetChild (1);
-		keyNumText1.rotation = Quaternion.identity;
-		keyNumText1.GetComponent<TextMesh>().text = keyNum.ToString ();
+        keyNumText1.rotation = Quaternion.identity;
+		keyNumText1.GetComponent<TMPro.TextMeshPro>().text = keyNum.ToString ();
 		keyNumText2 = transform.GetChild (2);
 		keyNumText2.rotation = Quaternion.identity;
-		keyNumText2.GetComponent<TextMesh>().text = keyNum.ToString ();
+        keyNumText2.GetComponent<TMPro.TextMeshPro>().text = keyNum.ToString ();
 		if (transform.rotation != Quaternion.identity) {
 			keyNumText1.localScale = new Vector3 (keyNumText1.localScale.y,keyNumText1.localScale.x,keyNumText1.localScale.z);
 			keyNumText2.localScale = new Vector3 (keyNumText2.localScale.y,keyNumText2.localScale.x,keyNumText2.localScale.z);

@@ -2,6 +2,8 @@
 using System.Collections;
 using System;
 
+
+//globals and game specific global functions
 public static class Game
 {
 	public static bool IsOnOSX = (Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer);

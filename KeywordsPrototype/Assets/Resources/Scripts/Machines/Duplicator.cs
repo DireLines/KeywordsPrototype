@@ -11,7 +11,6 @@ public class Duplicator : Machine {
 		base.Start ();
 		placePosition = new Vector3 (0.5f, 0, 0);
 		TileContainer = GameObject.Find ("Tiles").transform;
-
 	}
 	public override void PerformMachineAction(){
 		//duplicate tile

@@ -239,7 +239,7 @@ public class MakeWalls : MonoBehaviour {
 							neighbor.neighbors.Remove (a);
 							MakeBorderBetween (a, neighbor, true, w);
 						} else {
-							MakeBorderBetween (a, neighbor, false, w, doorChance: 0.05f);
+							MakeBorderBetween (a, neighbor, false, w, doorChance: 0.1f);
 							neighbor.neighbors.Remove (a);
 						}
 					}
@@ -451,7 +451,7 @@ public class MakeWalls : MonoBehaviour {
 		}
 		return PlaceBottomWallAt (x, y);
 	}
-	void PlaceBottomRightCornerAt(int x, int y){
+    void PlaceBottomRightCornerAt(int x, int y){
 		GameObject.Instantiate(Corner,GetCellPositionFor(x,y) + new Vector3(cellSize*0.5f,-cellSize*0.5f,0f),Quaternion.identity,WallContainer.transform);
 	}
 

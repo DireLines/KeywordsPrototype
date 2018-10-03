@@ -136,7 +136,8 @@ Behind the locked doors are
 -stationary machines which do various things
     +Duplicator: has a slot where you can put a letter tile. Leaving it there for one minute will create a fresh duplicate of it.
     +Deleter: has a slot where you can put a letter tile. Leaving it there for one minute will delete it.
-    -Oracle: has a slot where you can put a letter tile. Leaving it there for one minute will delete it and it will spit out a piece of paper with a previously uncreated valid word on it.
+    +Oracle: has a slot where you can put a letter tile. Leaving it there for one minute will delete it and it will spit out a piece of paper with a previously uncreated valid word on it.
+        -change print to create piece of paper object
     -Altar: has a slot where you can put a letter tile. Leaving it there for one minute will delete it and unlock a random currently locked door.
     -Generator: Has a button which, when pushed, immediately completes all cooldowns of all other machines (including other Generators). Has a cooldown of one minute.
         This creates a kind of exploit thing with 2 generators, a duplicator and an altar. 2 Generators can recharge each other and allow all devices to be used arbitrarily frequently.
