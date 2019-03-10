@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Machine : MonoBehaviour {
-	[HideInInspector]
-	public GameObject slot;
+	protected GameObject slot;
 	private GameObject progressIndicator;
 	public float chargeTime;
 	private float timer;
-	public bool ticking;
+	protected bool ticking;
 
 	// Use this for initialization
-	public virtual void Start () {
+	protected virtual void Start () {
 		ticking = false;
 		slot = transform.GetChild (0).gameObject;
 		progressIndicator = transform.GetChild (1).gameObject;
 		timer = 0;
 	}
 
-	public virtual void Update(){
+	protected virtual void Update(){
 		if (slot.GetComponent<GridSquare> ().tile != null) {
 			ticking = true;
 		} else {
@@ -37,7 +36,7 @@ public class Machine : MonoBehaviour {
 		}
 	}
 
-	public virtual void PerformMachineAction(){
+	protected virtual void PerformMachineAction(){
 		print ("Im a machine doin a thing");
 	}
 	

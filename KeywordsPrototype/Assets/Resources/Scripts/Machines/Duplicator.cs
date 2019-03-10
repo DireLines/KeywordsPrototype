@@ -7,12 +7,12 @@ public class Duplicator : Machine {
 	public GameObject Tile;
 	private Transform TileContainer;
 
-	public override void Start(){
+	protected override void Start(){
 		base.Start ();
 		placePosition = new Vector3 (0.5f, 0, 0);
 		TileContainer = GameObject.Find ("Tiles").transform;
 	}
-	public override void PerformMachineAction(){
+	protected override void PerformMachineAction(){
 		//duplicate tile
 		GameObject tile = slot.GetComponent<GridSquare>().tile;
 		Vector3 pos = transform.position + placePosition;

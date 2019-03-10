@@ -1,0 +1,40 @@
+﻿<Properties StartupConfiguration="{70BD318C-9CA8-CD41-2A6C-8BF9EB7E2EC6}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/Scripts/Move.cs">
+    <Files>
+      <File FileName="Assets/Resources/Scripts/Words.cs" Line="26" Column="14" />
+      <File FileName="Assets/Resources/Scripts/Game.cs" Line="21" Column="2" />
+      <File FileName="Assets/Resources/Scripts/FogOfWar.cs" Line="13" Column="3" />
+      <File FileName="Assets/Resources/Scripts/MakeWalls.cs" Line="431" Column="49" />
+      <File FileName="Assets/Resources/Scripts/Door.cs" Line="25" Column="39" />
+      <File FileName="../../../Library/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TextMeshPro.cs" Line="8" Column="2" />
+      <File FileName="Assets/Resources/Scripts/Machines/Machine.cs" Line="5" Column="39" />
+      <File FileName="Assets/Resources/Scripts/Machines/Duplicator.cs" Line="15" Column="11" />
+      <File FileName="Assets/Resources/Scripts/Machines/Deleter.cs" Line="6" Column="11" />
+      <File FileName="Assets/Resources/Scripts/Machines/Oracle.cs" Line="1" Column="1" />
+      <File FileName="Assets/Resources/Scripts/Camera2DFollow.cs" Line="1" Column="1" />
+      <File FileName="Assets/Resources/Scripts/Move.cs" Line="18" Column="34" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="KeywordsPrototype" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Resources" expanded="True">
+                <Node name="Scripts" expanded="True">
+                  <Node name="Move.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
